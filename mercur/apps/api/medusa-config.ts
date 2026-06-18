@@ -8,9 +8,8 @@ module.exports = withMercur({
     databaseUrl: process.env.DATABASE_URL,
     redisUrl: process.env.REDIS_URL,
     // Neon (and other remote Postgres) can take >5s to connect on cold start.
-    // Medusa's default connectionTimeoutMillis is 5000ms.
     databaseDriverOptions: {
-      connection: {
+      pool: {
         connectionTimeoutMillis: 30000,
       },
     },
