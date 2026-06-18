@@ -1,0 +1,493 @@
+# Mercur Marketplace — End-to-End Process Guide
+
+This document covers every major lifecycle flow on the platform, from a vendor signing up to a customer completing checkout and everything in between.
+
+---
+
+## Table of Contents
+
+1. [Vendor Onboarding & Approval](#1-vendor-onboarding--approval)
+2. [Vendor Setup Checklist](#2-vendor-setup-checklist)
+3. [Product Publishing Workflow](#3-product-publishing-workflow)
+4. [Customer Browsing & Search](#4-customer-browsing--search)
+5. [Cart & Multi-Vendor Checkout](#5-cart--multi-vendor-checkout)
+6. [Payment Capture](#6-payment-capture)
+7. [Order Fulfillment (Vendor Side)](#7-order-fulfillment-vendor-side)
+8. [Vendor Payout (Stripe Connect)](#8-vendor-payout-stripe-connect)
+9. [Returns & Refunds](#9-returns--refunds)
+10. [Notifications & Events](#10-notifications--events)
+
+---
+
+## 1. Vendor Onboarding & Approval
+
+### Step 1.1 — Register & Request to Become a Seller
+
+A user authenticates via standard Medusa auth (email/password), then submits a seller registration request. This does **not** create a seller account immediately — it creates a **pending Request** that the admin must review.
+
+```
+POST /vendor/sellers
+{
+  "name": "My Shop",
+  "handle": "my-shop",
+  "description": "...",
+  "email": "vendor@example.com",
+  "address_line": "123 Main St",
+  "city": "London",
+  "postal_code": "EC1A 1BB",
+  "country_code": "GB",
+  "member": { "name": "John Doe", "email": "john@example.com" }
+}
+```
+
+**Internal:** Emits `SellerRequest.TO_CREATE` event → creates a `request` record (`type: "seller"`, `status: "pending"`).
+
+---
+
+### Step 1.2 — Admin Reviews the Request
+
+```
+GET  /admin/requests             ← list all pending requests
+GET  /admin/requests/:id         ← view details
+POST /admin/requests/:id         { "status": "accepted" | "rejected" }
+```
+
+**On `rejected`:** Request marked as rejected. Vendor stays as a plain auth user.
+
+**On `accepted`:** The system looks up the workflow by request type (`"seller"`) and runs `createSellerWorkflow` atomically:
+
+| Sub-step | What happens |
+|---|---|
+| `createSellerStep` | Creates the [Seller](file:///c:/Projects/BAW/mercur/packages/modules/b2c-core/src/workflows/seller/workflows/create-seller.ts#18-23) record in DB |
+| `createMemberStep` | Creates the first team member (owner role) |
+| `createSellerOnboardingStep` | Initialises onboarding tracker, all 4 milestones = `false` |
+| `setAuthAppMetadataStep` | **Links the vendor's existing JWT to the seller** — unlocks `/vendor/*` routes |
+| `createSellerShippingProfileStep` | Auto-creates a default shipping profile |
+
+> After approval, the vendor logs in with the same credentials and now has full access to the Vendor Panel.
+
+---
+
+## 2. Vendor Setup Checklist
+
+Once approved, the vendor must complete 4 milestones before going live. Check status via:
+
+```
+GET  /vendor/sellers/me/onboarding   ← returns current status of all 4 milestones
+POST /vendor/sellers/me/onboarding   ← triggers recalculation of milestone completion
+```
+
+### Milestone 1 — Store Information
+```
+POST /vendor/sellers/me
+{ "name", "handle", "description", "address_line", "city", "postal_code", "country_code" }
+```
+All required fields must be filled. `photo` and `tax_id` are optional.
+
+### Milestone 2 — Add a Product
+```
+POST /vendor/products
+{ "title", "description", "variants": [...], "options": [...] }
+```
+At least one product must be linked to the seller.
+
+### Milestone 3 — Add a Stock Location (Warehouse)
+```
+POST /vendor/stock-locations
+POST /vendor/stock-locations/:id/fulfillment-sets
+POST /vendor/stock-locations/:id/sales-channels
+```
+At least one physical stock/warehouse location must be configured, with fulfillment sets and sales channels assigned.
+
+### Milestone 4 — Connect Stripe (Payout Account)
+```
+POST /vendor/payout-account               ← creates Stripe Connect Express account
+POST /vendor/payout-account/onboarding    ← returns Stripe-hosted onboarding URL
+GET  /vendor/payout-account               ← polls Stripe; auto-updates status to "active" when verified
+```
+
+**Full detail on Stripe Connect setup is in [Section 8](#8-vendor-payout-stripe-connect).**
+
+> When all 4 milestones are `true`, the seller is fully set up and their products are visible on the storefront.
+
+---
+
+## 3. Product Publishing Workflow
+
+Mercur has an **approval-gated publishing system** — vendors submit change requests for admin to review before products go live.
+
+### Step 3.1 — Vendor Creates/Updates a Product
+```
+POST /vendor/products                    ← create
+POST /vendor/products/:id                ← update
+POST /vendor/products/:id/variants       ← add variant
+POST /vendor/products/batch              ← batch operations
+POST /vendor/products/import             ← CSV import
+```
+
+Products are created with `status: "draft"` by default.
+
+### Step 3.2 — Vendor Submits a Publish Request
+```
+POST /vendor/requests
+{ "type": "product", "data": { "product_id": "..." } }
+```
+Creates a `request` record (`status: "pending"`) for admin review.
+
+### Step 3.3 — Admin Approves/Rejects
+```
+GET  /admin/requests         ← list all pending product requests
+POST /admin/requests/:id     { "status": "accepted" | "rejected" }
+```
+
+- **Accepted** → product status changes to `"published"`, Algolia index updated
+- **Rejected** → product stays in draft
+
+### Step 3.4 — Algolia Search Sync
+When a seller's status changes or products are approved, the `seller-status-changed` subscriber fires:
+```
+SellerEvents.STORE_STATUS_CHANGED → emit AlgoliaEvents.PRODUCTS_CHANGED
+→ re-indexes all seller products in Algolia
+```
+
+---
+
+## 4. Customer Browsing & Search
+
+Customers interact through the `/store/*` endpoints (no authentication required for browsing).
+
+### Browse Sellers
+```
+GET /store/seller                      ← list all active sellers
+GET /store/seller/:handle              ← individual seller storefront (by handle)
+```
+
+### Browse & Search Products
+```
+GET  /store/products?...               ← standard Medusa product listing with filters
+POST /store/products/search            ← Algolia-powered full-text search
+Body: { "q": "sneakers", "filters": { "seller_id": "..." } }
+```
+
+The Algolia search supports:
+- Full-text search across product title, description, tags
+- Filtering by seller, category, price range
+- Geolocation-aware shipping (uses seller stock locations synced to Algolia)
+
+### Wishlists (Authenticated)
+```
+POST   /store/wishlist                              ← create wishlist / add item
+GET    /store/wishlist                              ← get wishlist
+DELETE /store/wishlist/product/:reference_id        ← remove item
+```
+
+---
+
+## 5. Cart & Multi-Vendor Checkout
+
+This is the most complex flow. A single cart can contain products from **multiple vendors** and is split into separate per-vendor orders at checkout.
+
+### Step 5.1 — Build the Cart (Medusa Standard)
+Standard Medusa cart flow applies:
+```
+POST /store/carts                                  ← create cart (Medusa built-in)
+POST /store/carts/:id/line-items                   ← add items (Medusa built-in)
+DELETE /store/carts/:id/line-items/:line_id        ← remove item
+POST /store/carts/:id/promotions                   ← apply promo code
+```
+
+### Step 5.2 — Select Shipping Per Vendor
+```
+GET  /store/shipping-options          ← list available options (per region, per seller)
+POST /store/carts/:id/shipping-methods
+{ "option_id": "..." }
+```
+Each vendor's products may have different shipping options depending on their configured fulfillment sets and service zones.
+
+### Step 5.3 — Add Payment (Medusa Standard)
+```
+POST /store/payment-collections/:id/payment-sessions   ← init Stripe payment (Medusa built-in)
+POST /store/payment-collections/:id/payment-sessions/:id   ← update (Medusa built-in)
+```
+
+### Step 5.4 — Complete the Cart (THE KEY STEP)
+```
+POST /store/carts/:id/complete
+```
+
+**Internal — `splitAndCompleteCartWorkflow` runs:**
+
+```
+1. Validates the cart and payment
+2. Splits the cart by seller:
+   - One sub-order per vendor in the cart
+   - Each sub-order is linked to its seller
+3. Creates an OrderSet — a parent container grouping all sub-orders
+4. Associates the single payment collection with the OrderSet
+5. Emits OrderSetWorkflowEvents.PLACED event
+```
+
+**Response:**
+```json
+{
+  "order_set": {
+    "id": "...",
+    "orders": [
+      { "id": "...", "seller": { "name": "Shop A" }, "items": [...] },
+      { "id": "...", "seller": { "name": "Shop B" }, "items": [...] }
+    ],
+    "payment_collection": { ... }
+  }
+}
+```
+
+> The customer placed **one checkout** but the system created **one order per vendor** internally, all under one `order_set`.
+
+---
+
+## 6. Payment Capture
+
+Payment capture is fully **automated** — no manual step needed.
+
+**Trigger:** `OrderSetWorkflowEvents.PLACED` (emitted at end of Step 5.4)
+
+**Subscriber:** `order-set-placed-payment-capture`
+
+```
+1. Looks up the order set's payment_collection
+2. Calls capturePaymentWorkflow (Medusa core) → charges the customer's card via Stripe
+3. If capture succeeds → runs markSplitOrderPaymentsAsCapturedWorkflow
+   → marks each per-vendor sub-order's payment as "captured"
+4. If capture fails → throws PAYMENT_AUTHORIZATION_ERROR
+```
+
+**Separately**, `OrderWorkflowEvents.PLACED` triggers the **notification subscriber**:
+```
+notification-seller-new-order → for each sub-order, sends a "seller_feed" notification
+to the respective seller containing order ID and customer name
+```
+
+---
+
+## 7. Order Fulfillment (Vendor Side)
+
+After payment is captured, each vendor independently fulfills their portion of the order.
+
+### Step 7.1 — Vendor Views Their Orders
+```
+GET /vendor/orders               ← list (only their own orders)
+GET /vendor/orders/:id           ← detail view
+GET /vendor/orders/:id/changes   ← change history
+```
+
+### Step 7.2 — Create a Fulfillment (Pack & Ship)
+```
+POST /vendor/orders/:id/fulfillments
+{ "items": [{ "id": "...", "quantity": 1 }], "location_id": "..." }
+```
+Creates a fulfillment record. Integrates with the vendor's configured fulfillment provider.
+
+### Step 7.3 — Mark as Shipped
+```
+POST /vendor/orders/:id/fulfillments/:fulfillment_id/shipments
+{ "tracking_number": "1Z999...", "tracking_url": "..." }
+```
+
+### Step 7.4 — Mark as Delivered
+```
+POST /vendor/orders/:id/fulfillments/:fulfillment_id/mark-as-delivered
+```
+
+### Step 7.5 — Complete the Order
+```
+POST /vendor/orders/:id/complete
+```
+Marks the order as fully complete. This **triggers the payout flow** (see Section 8).
+
+### Step 7.6 — Cancel (if needed)
+```
+POST /vendor/orders/:id/cancel
+POST /vendor/orders/:id/fulfillments/:fulfillment_id/cancel
+```
+
+---
+
+## 8. Vendor Payout (Stripe Connect)
+
+Mercur uses **Stripe Connect** so vendors receive their earnings directly, minus commission.
+
+### Setup (one-time, during onboarding)
+```
+POST /vendor/payout-account
+→ creates Stripe Connect Express account for the seller
+→ payout_account.status = "pending"
+
+POST /vendor/payout-account/onboarding
+→ returns Stripe-hosted URL for the vendor to verify identity & bank details
+
+GET /vendor/payout-account
+→ if status != "active", runs syncStripeAccountWorkflow to poll Stripe
+→ once Stripe verifies, status becomes "active"
+```
+
+### Payout Triggered After Order Completion
+
+When an order is marked complete, the payout flow fires:
+
+```
+PayoutWorkflowEvents.RECEIVED → payout-order subscriber
+→ processPayoutForOrderWorkflow runs:
+  1. Calculates vendor earnings = order total - commission rate
+  2. Creates a Stripe Connect transfer to the vendor's Stripe account
+  3. Records a Payout record in the DB
+```
+
+### Commission Deduction
+Commission is calculated per-order based on rules configured by admin:
+```
+GET /admin/commission/default         ← global default rate
+GET /admin/commission/rules           ← per-seller or per-category overrides
+GET /vendor/orders/:id/commission     ← breakdown for a specific order
+GET /vendor/commission                ← vendor's commission summary
+```
+
+### Stripe Webhook
+```
+POST /hooks/payouts     ← Stripe sends payout events here
+```
+The `payout-webhook` subscriber receives events (e.g. `account.updated`, payout failures) and runs `processPayoutWebhookActionWorkflow` to update local payout account status accordingly.
+
+### Vendor Views Payouts
+```
+GET /vendor/payouts         ← payout history
+GET /vendor/payouts/:id     ← single payout detail
+```
+
+---
+
+## 9. Returns & Refunds
+
+There are two distinct return flows: a simple return and a request-based return.
+
+### Flow A — Direct Return (Store-initiated)
+
+```
+POST /store/returns
+{ "order_id": "...", "items": [{ "id": "...", "quantity": 1 }], "reason": "..." }
+```
+Creates a return request. Customer receives a return label if configured.
+
+```
+GET /store/returns/:id    ← track return status
+```
+
+**Vendor processes the return:**
+```
+GET  /vendor/returns                    ← list inbound returns
+GET  /vendor/returns/:id                ← view details
+POST /vendor/returns/:id/receive-items  ← mark items as physically received
+POST /vendor/returns/:id/receive        ← confirm receipt of all items
+POST /vendor/returns/:id/receive/confirm ← finalise return → triggers refund
+POST /vendor/returns/:id/dismiss-items  ← reject specific items (not accepted)
+```
+
+### Flow B — Return Request (Customer Submits, Vendor Approves)
+
+Used when the vendor must explicitly approve before the customer ships the item back.
+
+**Customer submits:**
+```
+POST /store/return-request
+{ "order_id": "...", "items": [...], "reason": "..." }
+
+GET /store/return-request/:id    ← track approval status
+```
+
+**Vendor reviews:**
+```
+GET  /vendor/return-request           ← list incoming requests
+GET  /vendor/return-request/:id       ← view details
+POST /vendor/return-request/:id       { "status": "approved" | "denied" }
+```
+
+**Admin oversight:**
+```
+GET /admin/requests                   ← all return requests visible here too
+```
+
+---
+
+## 10. Notifications & Events
+
+Mercur uses an event-driven architecture. Key events and their effects:
+
+| Event | Trigger | Result |
+|---|---|---|
+| `SellerRequest.TO_CREATE` | Vendor POSTs `/vendor/sellers` | Creates pending request |
+| `SellerAccountRequestUpdatedEvent.ACCEPTED` | Admin approves request | `createSellerWorkflow` runs → seller account created |
+| `OrderSetWorkflowEvents.PLACED` | Cart completed | Payment auto-captured |
+| `OrderWorkflowEvents.PLACED` | Each sub-order placed | Seller receives in-app notification via `seller_feed` |
+| `PayoutWorkflowEvents.RECEIVED` | Order marked complete | Stripe transfer sent to vendor |
+| `PayoutWebhookEvents.ACCOUNT_WEBHOOK_RECEIVED` | Stripe webhook fires | Payout account status synced |
+| `SellerEvents.STORE_STATUS_CHANGED` | Seller status changes | All seller products re-indexed in Algolia |
+| `AlgoliaEvents.PRODUCTS_CHANGED` | Products updated | Algolia search index refreshed |
+
+---
+
+## Full Platform Flow (Summary Diagram)
+
+```
+VENDOR SIDE                           CUSTOMER SIDE
+───────────                           ─────────────
+
+[1] Register + Request
+      │
+      ▼
+[2] Admin Approves
+      │  ← createSellerWorkflow (5 steps atomically)
+      ▼
+[3] Seller Account Live
+      │
+      ▼
+[4] Complete Setup Checklist          [4] Customer browses sellers & products
+    - Store info                           GET /store/seller
+    - Add products → request → approved    GET /store/products/search (Algolia)
+    - Add stock location
+    - Connect Stripe                  [5] Customer builds cart
+      │                                    POST /store/carts/:id/line-items
+      ▼                                    POST /store/carts/:id/shipping-methods
+[5] Seller LIVE on storefront         [6] Customer completes checkout
+                                           POST /store/carts/:id/complete
+                                                │
+                                    splitAndCompleteCartWorkflow
+                                                │
+                                    ┌───────────┴────────────┐
+                                 OrderSet              Sub-orders
+                               (1 per checkout)    (1 per vendor)
+                                    │
+                          [7] Payment auto-captured
+                              (Stripe charge)
+                                    │
+                         [8] Seller notified (seller_feed)
+                                    │
+VENDOR SIDE                         │
+───────────                         │
+[9] Vendor fulfills order           │
+    - Pack items                    │
+    - Create fulfillment            │
+    - Add tracking number           │
+    - Mark delivered                │
+    - Mark complete                 │
+        │                           │
+        ▼                           │
+[10] Payout triggered               │
+    - Commission deducted           │
+    - Stripe Connect transfer       │
+    - Payout record created         │
+        │                           │
+        ▼                      [11] Customer may return
+[11] Vendor receives earnings        POST /store/return-request
+                                     → Vendor approves/denies
+                                     → Vendor receives item
+                                     → Refund issued
+```

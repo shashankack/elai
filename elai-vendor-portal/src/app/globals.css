@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  --elai-cream: #fff7d4;
+  --elai-green: #34421e;
+  --background: var(--elai-cream);
+  --foreground: var(--elai-green);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--elai-cream);
+  color: var(--elai-green);
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.font-serif {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+@keyframes onboarding-enter-forward {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes onboarding-enter-back {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.onboarding-step-forward {
+  animation: onboarding-enter-forward 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.onboarding-step-back {
+  animation: onboarding-enter-back 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.onboarding-panel {
+  animation-delay: 0.05s;
+}

@@ -1,0 +1,173 @@
+// Elai - Why Elai Section
+$bg: #fff7d4;
+$fg: #2e3e20;
+$highlight: #748956;
+
+.section4 {
+  position: relative;
+  background: $bg;
+  padding: 120px 0;
+  font-family: var(--font-body), serif;
+  overflow: hidden;
+
+  @media (max-width: 768px) { padding: 80px 0; }
+}
+
+.section4-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+// Left — image stack
+.section4-left { position: relative; }
+
+.s4-img-stack {
+  position: relative;
+  height: 560px;
+
+  @media (max-width: 768px) { height: 340px; }
+}
+
+.s4-img {
+  position: absolute;
+  border-radius: 20px;
+  object-fit: cover;
+
+  &--back {
+    width: 78%;
+    height: 88%;
+    top: 0;
+    left: 0;
+    filter: brightness(0.88);
+  }
+
+  &--front {
+    width: 60%;
+    height: 66%;
+    bottom: 0;
+    right: 0;
+    border: 4px solid $bg;
+    box-shadow: 0 20px 50px rgba(46,62,32,0.22);
+  }
+}
+
+.s4-glass-tag {
+  position: absolute;
+  top: 24px;
+  left: 40;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255, 247, 212, 0.25);
+  border: 1px solid rgba(255, 247, 212, 0.35);
+  border-radius: 16px;
+  padding: 16px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__num {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: $fg;
+    font-family: var(--font-heading), serif;
+    line-height: 1;
+  }
+
+  &__label {
+    display: block;
+    font-size: 0.78rem;
+    color: $highlight;
+    font-family: var(--font-subheading), serif;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+}
+
+// Right — content
+.section4-subtitle {
+  font-family: var(--font-subheading), serif;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: $highlight;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.section4-title {
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  font-family: var(--font-heading), serif;
+  color: $fg;
+  margin-bottom: 24px;
+}
+
+.section4-description {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: rgba(46, 62, 32, 0.7);
+  margin-bottom: 40px;
+}
+
+.benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 0.97rem;
+  line-height: 1.55;
+  color: rgba(46, 62, 32, 0.85);
+}
+
+.check-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+// UVP Strip
+.uvp-strip {
+  overflow: hidden;
+  background: $highlight;
+  padding: 16px 0;
+}
+
+.uvp-strip__inner {
+  display: flex;
+  white-space: nowrap;
+  animation: uvp-scroll 22s linear infinite;
+}
+
+.uvp-strip__tag {
+  font-family: var(--font-subheading), serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: $bg;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0 16px;
+}
+
+.uvp-strip__dot { color: rgba(255, 247, 212, 0.5); }
+
+@keyframes uvp-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}

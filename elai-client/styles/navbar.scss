@@ -1,0 +1,277 @@
+// Elai Floating Navbar
+$bg: #fff7d4;
+$fg: #2e3e20;
+$highlight: #748956;
+$white: #ffffff;
+
+// Outer wrapper — positions the pill in the viewport
+.nav-outer {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 100;
+  pointer-events: none; // let clicks pass through the wrapper
+}
+
+.header {
+  pointer-events: all;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border-radius: 100px;
+  width: clamp(320px, 88vw, 860px);
+  font-family: var(--font-subheading), serif;
+  overflow: hidden;
+
+  // floating glass — always visible
+  background: rgba(46, 62, 32, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 247, 212, 0.18);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.18),
+    0 1px 0 rgba(255, 247, 212, 0.1) inset;
+
+  transition:
+    background 0.4s ease,
+    border-color 0.4s ease,
+    border-radius 0.3s ease,
+    box-shadow 0.4s ease;
+
+  &--open {
+    border-radius: 20px;
+  }
+
+  &--scrolled {
+    background: rgba(255, 247, 212, 0.88);
+    border-color: rgba(46, 62, 32, 0.12);
+    box-shadow:
+      0 12px 40px rgba(46, 62, 32, 0.16),
+      0 1px 0 rgba(255, 247, 212, 0.6) inset;
+
+    .header-brand {
+      color: $fg;
+    }
+
+    .header-nav a {
+      color: rgba(46, 62, 32, 0.75);
+      &:hover {
+        color: $fg;
+      }
+    }
+
+    .header-nav__cta {
+      background: $fg;
+      color: $fg !important;
+      border-color: $fg;
+      &:hover {
+        background: $highlight;
+        border-color: $highlight;
+      }
+    }
+
+    .menu-toggle span {
+      background: $fg;
+    }
+    .menu-toggle {
+      border-color: rgba(46, 62, 32, 0.2);
+      background: rgba(46, 62, 32, 0.06);
+    }
+
+    .mobile-menu {
+      border-top-color: rgba(46, 62, 32, 0.1);
+
+      a {
+        color: $fg;
+        &:hover {
+          color: $highlight;
+        }
+      }
+    }
+
+    .mobile-menu__cta {
+      background: $fg !important;
+      color: $bg !important;
+      &:hover {
+        background: $highlight !important;
+      }
+    }
+  }
+}
+
+// The single row inside the pill
+.header-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 10px 10px 24px;
+  width: 100%;
+}
+
+.header-brand {
+  font-size: 20px;
+  font-weight: 800;
+  color: $white;
+  letter-spacing: 5px;
+  text-transform: lowercase;
+  font-family: var(--font-heading), serif;
+  flex-shrink: 0;
+  transition: color 0.4s ease;
+  margin-right: 4px;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+
+  a {
+    color: rgba(255, 247, 212, 0.85);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    padding: 7px 14px;
+    border-radius: 100px;
+    transition:
+      color 0.25s ease,
+      background 0.25s ease;
+    font-family: var(--font-subheading), serif;
+    white-space: nowrap;
+
+    &:hover {
+      color: $white;
+      background: rgba(255, 247, 212, 0.1);
+    }
+  }
+
+  &__cta {
+    background: rgba(255, 247, 212, 0.15) !important;
+    color: $white !important;
+    border: 1px solid rgba(255, 247, 212, 0.35);
+    padding: 9px 20px !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    transition:
+      background 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease !important;
+    margin-left: 4px;
+
+    &:hover {
+      background: $white !important;
+      color: $fg !important;
+      border-color: $white !important;
+    }
+  }
+
+  @media (max-width: 700px) {
+    display: none;
+  }
+}
+
+.menu-toggle {
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 247, 212, 0.12);
+  border: 1px solid rgba(255, 247, 212, 0.25);
+  border-radius: 50%;
+  cursor: pointer;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-left: auto;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+
+  @media (max-width: 700px) {
+    display: flex;
+  }
+
+  span {
+    width: 16px;
+    height: 1.5px;
+    background: $white;
+    transition: all 0.3s ease;
+    display: block;
+  }
+
+  &.active {
+    span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 4.5px);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+    }
+    span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -4.5px);
+    }
+  }
+}
+
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  // Closed state
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding: 0 16px;
+  pointer-events: none;
+  transition:
+    max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.28s ease,
+    padding 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+
+  // Open state — driven by header--open
+  .header--open & {
+    max-height: 320px;
+    opacity: 1;
+    padding: 8px 16px 16px;
+    pointer-events: all;
+    border-top: 1px solid rgba(255, 247, 212, 0.14);
+  }
+
+  .header--scrolled.header--open & {
+    border-top-color: rgba(46, 62, 32, 0.1);
+  }
+
+  a {
+    color: rgba(255, 247, 212, 0.85);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: var(--font-subheading), serif;
+    padding: 12px 12px;
+    border-radius: 10px;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
+
+    &:hover {
+      color: $white;
+      background: rgba(255, 247, 212, 0.1);
+    }
+  }
+
+  &__cta {
+    margin-top: 6px;
+    color: $fg !important;
+    background: $bg !important;
+    border-radius: 10px !important;
+    padding: 13px 12px !important;
+    text-align: center;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+
+    &:hover {
+      background: rgba(255, 247, 212, 0.9) !important;
+    }
+  }
+}

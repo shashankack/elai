@@ -1,0 +1,330 @@
+// Elai Hero
+$bg: #fff7d4;
+$fg: #2e3e20;
+$highlight: #748956;
+$white: #ffffff;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body), serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.elai-container {
+  position: relative;
+  width: 100%;
+  background: $bg;
+  overflow-x: hidden;
+}
+
+// Hero
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-carousel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  will-change: opacity, transform;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.55);
+    transform: translateZ(0);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
+  }
+
+  &.active {
+    z-index: 1;
+  }
+}
+
+// Hero Content
+.hero-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0 0 120px;
+  z-index: 2;
+
+  @media (max-width: 768px) {
+    padding: 0 0 100px;
+  }
+}
+
+.hero-eyebrow {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 247, 212, 0.75);
+  margin-bottom: 20px;
+  font-family: var(--font-subheading), serif;
+}
+
+.hero-text {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 400;
+  color: $white;
+  line-height: 1;
+  margin-bottom: 24px;
+  font-family: var(--font-heading), serif;
+  max-width: 980px;
+  letter-spacing: -0.03em;
+}
+
+.hero-text-des {
+  font-size: clamp(15px, 2vw, 18px);
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-cta {
+  display: inline-block;
+  padding: 14px 32px;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  font-family: var(--font-subheading), serif;
+  transition: all 0.3s ease;
+
+  &--primary {
+    background: $highlight;
+    color: $white;
+    &:hover {
+      background: #5a6b42;
+    }
+  }
+
+  &--secondary {
+    background: rgba(255, 255, 255, 0.12);
+    color: $white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(8px);
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+// Arrows
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: $white;
+  font-size: 40px;
+  line-height: 1;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  &--prev {
+    left: 40px;
+  }
+  &--next {
+    right: 40px;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+// Indicators
+.carousel-indicators {
+  position: absolute;
+  bottom: 40px;
+  right: 80px;
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+
+  @media (max-width: 768px) {
+    right: 24px;
+    bottom: 60px;
+  }
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+
+  &.active {
+    background: $white;
+    width: 28px;
+    border-radius: 4px;
+  }
+}
+
+// Scroll indicator
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 80px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  font-family: var(--font-subheading), serif;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $white;
+  }
+
+  span:first-child {
+    font-size: 18px;
+    animation: bounce 2s infinite;
+  }
+
+  @media (max-width: 768px) {
+    left: 24px;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+// Stats Bar
+.hero-stats {
+  padding: 40px 0;
+  background: $fg;
+
+  @media (max-width: 768px) {
+    padding: 32px 0;
+  }
+}
+
+.hero-stats__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    gap: 24px;
+    flex-direction: column;
+  }
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 60px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
+
+  &__number {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800;
+    color: $bg;
+    font-family: var(--font-heading), serif;
+    line-height: 1;
+  }
+
+  &__label {
+    font-size: 12px;
+    color: rgba(255, 247, 212, 0.6);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 6px;
+    font-weight: 500;
+    font-family: var(--font-subheading), serif;
+  }
+}
+
+.hero-stat-divider {
+  width: 1px;
+  height: 48px;
+  background: rgba(255, 247, 212, 0.2);
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}

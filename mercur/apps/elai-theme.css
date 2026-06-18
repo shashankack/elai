@@ -1,0 +1,150 @@
+/**
+ * ELAI brand overrides for Mercur admin + vendor (Medusa UI tokens).
+ * Cream background (#FFF7D4), forest green foreground (#34421E).
+ */
+
+:root,
+.light {
+  --elai-bg: #fff7d4;
+  --elai-bg-subtle: #f5efcc;
+  --elai-bg-subtle-hover: #ebe4c4;
+  --elai-bg-field: #fffef8;
+  --elai-bg-field-hover: #faf3d0;
+  --elai-bg-component: #fffef8;
+  --elai-fg: #34421e;
+  --elai-fg-muted: rgba(52, 66, 30, 0.62);
+  --elai-border: rgba(52, 66, 30, 0.16);
+  --elai-border-strong: rgba(52, 66, 30, 0.28);
+  --elai-accent: #34421e;
+
+  --ui-bg-base: var(--elai-bg);
+  --ui-bg-subtle: var(--elai-bg-subtle);
+  --ui-bg-subtle-hover: var(--elai-bg-subtle-hover);
+  --ui-bg-field: var(--elai-bg-field);
+  --ui-bg-field-hover: var(--elai-bg-field-hover);
+  --ui-bg-field-component: var(--elai-bg-component);
+  --ui-bg-component: var(--elai-bg-component);
+  --ui-bg-component-hover: var(--elai-bg-subtle-hover);
+  --ui-bg-highlight: #ede8c8;
+  --ui-bg-highlight-hover: #e3dcb8;
+  --ui-bg-interactive: rgba(52, 66, 30, 0.08);
+  --ui-bg-overlay: rgba(52, 66, 30, 0.35);
+  --ui-bg-switch-off: rgba(52, 66, 30, 0.12);
+  --ui-bg-switch-off-hover: rgba(52, 66, 30, 0.18);
+
+  --ui-fg-base: var(--elai-fg);
+  --ui-fg-subtle: rgba(52, 66, 30, 0.88);
+  --ui-fg-muted: var(--elai-fg-muted);
+  --ui-fg-disabled: rgba(52, 66, 30, 0.38);
+  --ui-fg-interactive: var(--elai-accent);
+  --ui-fg-interactive-hover: #263318;
+  --ui-fg-on-color: var(--elai-bg);
+  --ui-fg-on-inverted: var(--elai-bg);
+  --ui-fg-error: #b42318;
+  --ui-fg-on-error: #fff;
+
+  --ui-border-base: var(--elai-border);
+  --ui-border-strong: var(--elai-border-strong);
+  --ui-border-interactive: var(--elai-accent);
+  --ui-border-error: #fda29b;
+  --ui-border-danger: #fda29b;
+  --ui-border-menu-top: var(--elai-border);
+  --ui-border-menu-bot: var(--elai-border);
+
+  --ui-button-inverted: var(--elai-accent);
+  --ui-button-inverted-hover: #263318;
+  --ui-button-inverted-pressed: #1c2612;
+  --ui-button-neutral: rgba(52, 66, 30, 0.1);
+  --ui-button-neutral-hover: rgba(52, 66, 30, 0.16);
+  --ui-button-neutral-pressed: rgba(52, 66, 30, 0.22);
+  --ui-button-transparent: transparent;
+  --ui-button-transparent-hover: rgba(52, 66, 30, 0.06);
+
+  --ui-contrast-bg-base: var(--elai-accent);
+  --ui-contrast-bg-base-hover: #263318;
+  --ui-contrast-bg-subtle: rgba(52, 66, 30, 0.88);
+  --ui-contrast-fg-primary: var(--elai-bg);
+  --ui-contrast-fg-secondary: rgba(255, 247, 212, 0.82);
+
+  --ui-tag-neutral-bg: rgba(52, 66, 30, 0.08);
+  --ui-tag-neutral-bg-hover: rgba(52, 66, 30, 0.12);
+  --ui-tag-neutral-text: var(--elai-fg);
+  --ui-tag-green-bg: rgba(52, 66, 30, 0.12);
+  --ui-tag-green-bg-hover: rgba(52, 66, 30, 0.18);
+  --ui-tag-green-text: var(--elai-fg);
+  --ui-tag-blue-bg: rgba(52, 66, 30, 0.1);
+  --ui-tag-blue-bg-hover: rgba(52, 66, 30, 0.14);
+  --ui-tag-blue-text: var(--elai-fg);
+
+  color-scheme: light;
+}
+
+.dark {
+  --elai-bg: #1f2814;
+  --elai-bg-subtle: #28321a;
+  --elai-bg-subtle-hover: #313c20;
+  --elai-bg-field: #232d18;
+  --elai-bg-field-hover: #2c3720;
+  --elai-bg-component: #232d18;
+  --elai-fg: #fff7d4;
+  --elai-fg-muted: rgba(255, 247, 212, 0.65);
+  --elai-border: rgba(255, 247, 212, 0.12);
+  --elai-border-strong: rgba(255, 247, 212, 0.22);
+  --elai-accent: #d4e4a8;
+
+  --ui-bg-base: var(--elai-bg);
+  --ui-bg-subtle: var(--elai-bg-subtle);
+  --ui-bg-subtle-hover: var(--elai-bg-subtle-hover);
+  --ui-bg-field: var(--elai-bg-field);
+  --ui-bg-field-hover: var(--elai-bg-field-hover);
+  --ui-bg-field-component: var(--elai-bg-component);
+  --ui-bg-component: var(--elai-bg-component);
+  --ui-bg-component-hover: var(--elai-bg-subtle-hover);
+  --ui-bg-highlight: #313c20;
+  --ui-bg-highlight-hover: #3a4626;
+  --ui-bg-interactive: rgba(255, 247, 212, 0.08);
+  --ui-bg-overlay: rgba(0, 0, 0, 0.55);
+
+  --ui-fg-base: var(--elai-fg);
+  --ui-fg-subtle: rgba(255, 247, 212, 0.88);
+  --ui-fg-muted: var(--elai-fg-muted);
+  --ui-fg-disabled: rgba(255, 247, 212, 0.38);
+  --ui-fg-interactive: var(--elai-accent);
+  --ui-fg-interactive-hover: #e8f2c8;
+  --ui-fg-on-color: #1f2814;
+  --ui-fg-on-inverted: #1f2814;
+
+  --ui-border-base: var(--elai-border);
+  --ui-border-strong: var(--elai-border-strong);
+  --ui-border-interactive: var(--elai-accent);
+
+  --ui-button-inverted: var(--elai-accent);
+  --ui-button-inverted-hover: #e8f2c8;
+  --ui-button-inverted-pressed: #f0f6dc;
+  --ui-button-neutral: rgba(255, 247, 212, 0.08);
+  --ui-button-neutral-hover: rgba(255, 247, 212, 0.12);
+  --ui-button-neutral-pressed: rgba(255, 247, 212, 0.16);
+
+  --ui-contrast-bg-base: var(--elai-accent);
+  --ui-contrast-bg-base-hover: #e8f2c8;
+  --ui-contrast-fg-primary: #1f2814;
+  --ui-contrast-fg-secondary: rgba(31, 40, 20, 0.82);
+
+  color-scheme: dark;
+}
+
+html,
+body {
+  background-color: var(--ui-bg-base);
+  color: var(--ui-fg-base);
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+/* Auth screens: cream canvas + card contrast */
+.bg-ui-bg-subtle.flex.min-h-dvh,
+.bg-ui-bg-base.flex.min-h-dvh {
+  background-color: var(--elai-bg) !important;
+}

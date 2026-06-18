@@ -1,0 +1,315 @@
+// Elai Footer
+$bg: #fff7d4;
+$fg: #2e3e20;
+$highlight: #748956;
+$white: #ffffff;
+
+.footer {
+  position: relative;
+  width: 100%;
+  background: $fg;
+  overflow: hidden;
+  font-family: var(--font-body), serif;
+
+  .grid-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0; // Behind content
+  }
+
+  .grid-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    &.horizontal {
+      background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 49px,
+        rgba(255, 255, 255, 0.3) 49px,
+        rgba(255, 255, 255, 0.3) 50px
+      );
+    }
+
+    &.vertical {
+      background-image: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 49px,
+        rgba(255, 255, 255, 0.3) 49px,
+        rgba(255, 255, 255, 0.3) 50px
+      );
+    }
+  }
+
+  .footer-content {
+    position: relative; // Lift content above the grid
+    z-index: 1;
+    padding: 100px 0 40px;
+    color: #ffffff;
+
+    @media (max-width: 768px) {
+      padding: 80px 0 40px;
+    }
+  }
+
+  // --- Grid Column & Newsletter Logic ---
+  .footer-columns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 60px;
+    margin-bottom: 80px;
+
+    @media (max-width: 1100px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+    }
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .column-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #748956;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin: 0;
+    font-family: var(--font-subheading), serif;
+  }
+
+  .column-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    li a {
+      color: rgba(255, 247, 212, 0.7);
+      text-decoration: none;
+      font-size: 14px;
+      font-family: var(--font-body), serif;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #fff7d4;
+      }
+    }
+  }
+
+  .newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .newsletter-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font-size: 16px;
+
+    &:focus {
+      outline: none;
+      border-color: #9ACD32;
+    }
+  }
+
+  .newsletter-button {
+    padding: 14px 32px;
+    background: #9ACD32;
+    color: #000;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: 0.3s;
+
+    &:hover {
+      background: #8BC41A;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 640px) {
+      width: 100%;
+      align-self: stretch;
+    }
+  }
+
+  .newsletter-checkbox {
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 14px;
+
+    input { display: none; }
+
+    .checkbox-custom {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    input:checked + .checkbox-custom {
+      background: #9ACD32;
+      border-color: #9ACD32;
+      &::after {
+        content: '✓';
+        position: absolute;
+        left: 3px;
+        top: -2px;
+        color: #000;
+      }
+    }
+  }
+
+  // --- Bottom Bar ---
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 14px;
+
+    @media (max-width: 968px) {
+      flex-direction: column;
+      gap: 24px;
+    }
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 20px;
+    
+    .social-link {
+      color: #748956;
+      transition: 0.3s;
+      &:hover {
+        color: #fff7d4;
+        transform: translateY(-4px);
+      }
+    }
+  }
+}
+
+// Elai footer brand column & bottom
+.footer-brand-col {
+  margin-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 360px;
+}
+
+.footer-logo {
+  font-size: 32px;
+  font-weight: 800;
+  color: #fff7d4;
+  letter-spacing: 4px;
+  font-family: var(--font-heading), serif;
+}
+
+.footer-tagline {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 247, 212, 0.6);
+  font-weight: 400;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 247, 212, 0.12);
+  flex-wrap: wrap;
+  gap: 12px;
+
+  .footer-copyright {
+    font-size: 13px;
+    color: rgba(255, 247, 212, 0.5);
+  }
+
+  .footer-credit {
+    font-size: 13px;
+    color: rgba(255, 247, 212, 0.5);
+
+    a { text-decoration: none; }
+  }
+}
+
+.column-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #748956;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: var(--font-subheading), serif;
+}
+
+.newsletter-input {
+  background: rgba(255, 247, 212, 0.1);
+  border: 1px solid rgba(255, 247, 212, 0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #fff7d4;
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+  font-family: var(--font-body), serif;
+  transition: border-color 0.2s ease;
+
+  &::placeholder { color: rgba(255, 247, 212, 0.4); }
+  &:focus { border-color: #748956; }
+}
+
+.newsletter-button {
+  background: #748956;
+  color: #fff7d4;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font-subheading), serif;
+  transition: background 0.2s ease;
+  margin-top: 8px;
+  width: 100%;
+
+  &:hover { background: #5a6b42; }
+}
+
+.newsletter-privacy {
+  font-size: 12px;
+  color: rgba(255, 247, 212, 0.4);
+  margin-top: 8px;
+
+  .privacy-link {
+    color: rgba(255, 247, 212, 0.6);
+    &:hover { color: #748956; }
+  }
+}

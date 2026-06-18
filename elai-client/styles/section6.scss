@@ -1,0 +1,251 @@
+// Elai - Features & Seller Section
+$bg: #fff7d4;
+$fg: #2e3e20;
+$highlight: #748956;
+
+.section6 {
+  font-family: var(--font-body), serif;
+  background: $bg;
+}
+
+.section6-content {
+  padding: 120px 0 80px;
+
+  @media (max-width: 768px) {
+    padding: 80px 0 60px;
+  }
+}
+
+.section6-header {
+  margin-bottom: 60px;
+}
+
+.section6-subtitle {
+  font-family: var(--font-subheading), serif;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: $highlight;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.section6-title {
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  font-family: var(--font-heading), serif;
+  color: $fg;
+  margin: 0;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.feature-card {
+  background: rgba(116, 137, 86, 0.07);
+  border: 1px solid rgba(116, 137, 86, 0.2);
+  border-radius: 20px;
+  padding: 36px 30px;
+  backdrop-filter: blur(8px);
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    background: rgba(116, 137, 86, 0.14);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 48px rgba(46, 62, 32, 0.12);
+  }
+}
+
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 18px;
+  display: block;
+}
+
+.feature-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: $fg;
+  margin-bottom: 10px;
+}
+
+.feature-desc {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(46, 62, 32, 0.7);
+  margin: 0;
+}
+
+// Revenue section
+.section6-revenue {
+  padding: 100px 0;
+
+  @media (max-width: 900px) {
+    padding: 60px 0;
+  }
+}
+
+.section6-revenue__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+.revenue-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.revenue-title {
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  font-family: var(--font-heading), serif;
+  color: $fg;
+  margin-bottom: 20px;
+}
+
+.revenue-desc {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: rgba(46, 62, 32, 0.7);
+  margin-bottom: 32px;
+}
+
+.revenue-cta {
+  display: inline-block;
+  background: $fg;
+  color: $bg;
+  padding: 14px 32px;
+  border-radius: 100px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  align-self: flex-start;
+  transition: background 0.25s ease;
+
+  &:hover {
+    background: $highlight;
+  }
+}
+
+.revenue-right {
+}
+
+.revenue-img-wrap {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.65);
+  }
+}
+
+.revenue-img-glass {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 28px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(46, 62, 32, 0.4);
+  border-top: 1px solid rgba(255, 247, 212, 0.18);
+}
+
+.revenue-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.revenue-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.88rem;
+  color: #fff7d4;
+  font-weight: 500;
+}
+
+.revenue-dot {
+  width: 7px;
+  height: 7px;
+  min-width: 7px;
+  border-radius: 50%;
+  background: $highlight;
+  display: inline-block;
+}
+
+// Marquee
+.clients-carousel {
+  overflow: hidden;
+  border-top: 1px solid rgba(46, 62, 32, 0.12);
+  padding: 24px 0;
+  background: $bg;
+}
+
+.clients-track {
+  display: flex;
+  animation: marquee-scroll 28s linear infinite;
+  width: max-content;
+}
+
+.client-logo {
+  padding: 0 20px;
+}
+
+.logo-frame {
+  border: 1px solid rgba(46, 62, 32, 0.18);
+  border-radius: 100px;
+  padding: 10px 24px;
+  white-space: nowrap;
+}
+
+.logo-text {
+  font-family: var(--font-subheading), serif;
+  font-size: 0.78rem;
+  color: rgba(46, 62, 32, 0.65);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

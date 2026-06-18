@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fff7d4;
+  --foreground: #2e3e20;
+  --highlight: #748956;
+  --highlight-light: rgba(116, 137, 86, 0.15);
+  --highlight-dark: #5a6b42;
+  --card-bg: rgba(255, 247, 212, 0.6);
+  --border-color: rgba(46, 62, 32, 0.12);
+  /* Landing page layout */
+  --elai-shell-width: 1200px;
+  --font-heading: "Kingred";
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #fff7d4;
+    --foreground: #2e3e20;
+    --highlight: #748956;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), serif;
+  font-weight: 700;
+}
+
+/* Font utilities */
+.font-heading {
+  font-family: var(--font-heading), serif;
+}
+.font-subheading {
+  font-family: var(--font-subheading), serif;
+}
+.font-body {
+  font-family: var(--font-body), serif;
+}
+
+/* Shared layout container for consistent section alignment */
+.elai-shell {
+  width: 100%;
+  max-width: var(--elai-shell-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: clamp(20px, 5vw, 72px);
+}
+
+/* Utility: Space Mono for mono/accent text */
+.mono {
+  font-family: "Space Mono", monospace;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

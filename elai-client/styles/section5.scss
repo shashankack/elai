@@ -1,0 +1,150 @@
+// Elai - Who Is Elai For Section
+$bg: #fff7d4;
+$fg: #2e3e20;
+$highlight: #748956;
+
+.section5 {
+  padding: 120px 0;
+  background: $bg;
+  font-family: var(--font-body), serif;
+
+  @media (max-width: 768px) { padding: 80px 0; }
+}
+
+.section5-content { width: 100%; }
+
+.section5-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.section5-subtitle {
+  font-family: var(--font-subheading), serif;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: $highlight;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.section5-title {
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  font-family: var(--font-heading), serif;
+  color: $fg;
+  margin-bottom: 18px;
+}
+
+.section5-description {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: rgba(46, 62, 32, 0.7);
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.criteria-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+
+  @media (max-width: 900px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 600px) { grid-template-columns: 1fr; }
+}
+
+.criteria-card {
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+  &:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 24px 56px rgba(46, 62, 32, 0.18);
+
+    .criteria-card__img img { transform: scale(1.1); }
+  }
+}
+
+.criteria-card__img {
+  position: absolute;
+  inset: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+
+  }
+}
+
+.criteria-card__body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 22px 20px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(46, 62, 32, 0.35);
+  border-top: 1px solid rgba(255, 247, 212, 0.18);
+}
+
+.criteria-title {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff7d4;
+  margin-bottom: 5px;
+}
+
+.criteria-desc {
+  display: block;
+  font-size: 0.82rem;
+  color: rgba(255, 247, 212, 0.72);
+  line-height: 1.5;
+}
+
+// CTA card
+.cta-card {
+  border-radius: 20px;
+  background: $highlight;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4/5;
+
+  &:hover { transform: translateY(-6px) scale(1.02); }
+}
+
+.cta-content { text-align: center; padding: 24px; }
+
+.cta-text {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: $bg;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.cta-link {
+  display: inline-block;
+  color: $bg;
+  border: 2px solid $bg;
+  border-radius: 100px;
+  padding: 12px 28px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.25s ease, color 0.25s ease;
+
+  &:hover {
+    background: $bg;
+    color: $highlight;
+  }
+}

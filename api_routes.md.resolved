@@ -1,0 +1,483 @@
+# Mercur API Route Reference
+
+All routes are served from `http://localhost:9000`. The API has **three access contexts**:
+
+| Context | Base Path | Who uses it |
+|---|---|---|
+| **Admin** | `/admin/...` | Marketplace operators |
+| **Vendor** | `/vendor/...` | Sellers / shop owners |
+| **Store** | `/store/...` | Buyers / public storefront |
+
+> Authentication uses JWT bearer tokens. Vendor/Admin routes require auth headers.
+
+---
+
+## 🛡️ ADMIN ROUTES
+
+### Sellers (Vendor Management)
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/admin/sellers` | List all sellers on the marketplace |
+| `POST` | `/admin/sellers/:id` | Update a seller (approve, block, edit details) |
+| `POST` | `/admin/sellers/invite` | Invite a new vendor to register |
+| `GET` | `/admin/sellers/:id/products` | List all products for a specific seller |
+| `GET` | `/admin/sellers/:id/orders` | List all orders for a specific seller |
+| `GET` | `/admin/sellers/:id/customer-groups` | Get customer groups assigned to a seller |
+
+### Attributes
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/admin/attributes` | List all product attributes |
+| `POST` | `/admin/attributes` | Create a new product attribute |
+| `GET` | `/admin/attributes/:id` | Get a single attribute |
+| `POST` | `/admin/attributes/:id` | Update an attribute |
+| `DELETE` | `/admin/attributes/:id` | Delete an attribute |
+| `GET` | `/admin/attributes/:id/values` | List values for an attribute |
+| `POST` | `/admin/attributes/:id/values` | Add values to an attribute |
+| `GET` | `/admin/attributes/:id/values/:value_id` | Get a single attribute value |
+| `POST` | `/admin/attributes/:id/values/:value_id` | Update an attribute value |
+
+### Configuration
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/admin/configuration` | Get marketplace configuration |
+| `POST` | `/admin/configuration` | Create/set marketplace configuration |
+| `POST` | `/admin/configuration/:id` | Update a specific configuration entry |
+
+### Orders & Order Sets
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/admin/orders/:id` | Get a single order (extended with marketplace data) |
+| `GET` | `/admin/order-sets` | List all order sets (grouped multi-vendor orders) |
+| `GET` | `/admin/order-sets/:id` | Get a specific order set |
+
+### Products
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/admin/products/:id/applicable-attributes` | Get attributes applicable for a product |
+| `GET` | `/admin/custom/product-variants` | List product variants with extended marketplace data |
+
+### Notifications
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/admin/notifications` | List all admin notifications (order events, seller events) |
+
+### Inventory & Logistics
+
+| Method | Path | Description |
+|---|---|---|
+| `DELETE` | `/admin/inventory-items/:id/location-levels/:location_id` | Remove a stock location level for an inventory item |
+| `GET` | `/admin/stock-locations` | List all stock locations |
+
+### Integrations
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/admin/talk-js` | Get TalkJS credentials for admin chat |
+
+---
+
+### Commission (admin)
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/admin/commission/default` | Get the default commission rate |
+| `GET` | `/admin/commission/rules` | List all commission rules |
+| `POST` | `/admin/commission/rules` | Create a commission rule |
+| `GET` | `/admin/commission/rules/:id` | Get a specific commission rule |
+| `POST` | `/admin/commission/rules/:id` | Update a commission rule |
+| `DELETE` | `/admin/commission/rules/:id` | Delete a commission rule |
+| `GET` | `/admin/commission/commission-lines` | List all commission line items |
+| `GET` | `/admin/commission/search` | Search commission records |
+
+---
+
+### Reviews (admin)
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/admin/reviews` | List all product reviews |
+| `GET` | `/admin/reviews/:id` | Get a single review |
+| `POST` | `/admin/reviews/:id` | Update a review (moderate/approve/reject) |
+| `DELETE` | `/admin/reviews/:id` | Delete a review |
+
+---
+
+### Requests (admin — vendor onboarding approvals)
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/admin/requests` | List all pending/processed vendor requests |
+| `GET` | `/admin/requests/:id` | Get a specific request |
+| `POST` | `/admin/requests/:id` | Approve or reject a request |
+
+---
+
+## 🏪 VENDOR ROUTES
+
+> All vendor routes require vendor JWT authentication.
+
+### Seller Identity
+
+| Method | Path | Description |
+|---|---|---|
+| `POST` | `/vendor/sellers` | Register a new seller account |
+| `GET` | `/vendor/sellers/me` | Get the current seller's profile |
+| `POST` | `/vendor/sellers/me` | Update the current seller's profile |
+| `GET` | `/vendor/sellers/me/onboarding` | Get onboarding status/steps |
+| `POST` | `/vendor/sellers/me/onboarding` | Submit onboarding step data |
+
+### Products
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/products` | List the seller's products |
+| `POST` | `/vendor/products` | Create a new product |
+| `GET` | `/vendor/products/:id` | Get a single product |
+| `POST` | `/vendor/products/:id` | Update a product |
+| `DELETE` | `/vendor/products/:id` | Delete a product |
+| `POST` | `/vendor/products/:id/variants` | Add variant to a product |
+| `POST` | `/vendor/products/:id/variants/:variant_id` | Update a product variant |
+| `DELETE` | `/vendor/products/:id/variants/:variant_id` | Delete a product variant |
+| `POST` | `/vendor/products/:id/options/:option_id` | Update a product option |
+| `DELETE` | `/vendor/products/:id/options/:option_id` | Delete a product option |
+| `POST` | `/vendor/products/batch` | Batch create/update/delete products |
+| `POST` | `/vendor/products/import` | Import products via CSV |
+
+### Orders
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/orders` | List orders belonging to this seller |
+| `GET` | `/vendor/orders/:id` | Get a single order detail |
+| `POST` | `/vendor/orders/:id/cancel` | Cancel an order |
+| `POST` | `/vendor/orders/:id/complete` | Mark order as complete |
+| `GET` | `/vendor/orders/:id/changes` | Get order change history |
+| `POST` | `/vendor/orders/:id/fulfillments` | Create a fulfillment for an order |
+| `POST` | `/vendor/orders/:id/fulfillments/:fulfillment_id/shipments` | Mark a fulfillment as shipped |
+| `POST` | `/vendor/orders/:id/fulfillments/:fulfillment_id/cancel` | Cancel a fulfillment |
+| `POST` | `/vendor/orders/:id/fulfillments/:fulfillment_id/mark-as-delivered` | Mark fulfillment as delivered |
+
+### Returns
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/returns` | List all return requests for this seller |
+| `GET` | `/vendor/returns/:id` | Get a single return |
+| `POST` | `/vendor/returns/:id/receive` | Confirm receipt of returned items |
+| `POST` | `/vendor/returns/:id/receive/confirm` | Confirm and finalize return |
+| `POST` | `/vendor/returns/:id/receive-items` | Mark specific items as received |
+| `POST` | `/vendor/returns/:id/receive-items/:action_id` | Update specific receive-item action |
+| `DELETE` | `/vendor/returns/:id/receive-items/:action_id` | Remove a receive-item action |
+| `POST` | `/vendor/returns/:id/dismiss-items` | Dismiss return items (not accepted) |
+| `POST` | `/vendor/returns/:id/dismiss-items/:action_id` | Update a dismiss action |
+| `DELETE` | `/vendor/returns/:id/dismiss-items/:action_id` | Remove a dismiss action |
+
+### Inventory & Stock
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/inventory-items` | List all inventory items |
+| `GET` | `/vendor/inventory-items/:id` | Get a single inventory item |
+| `POST` | `/vendor/inventory-items/:id` | Update an inventory item |
+| `DELETE` | `/vendor/inventory-items/:id` | Delete an inventory item |
+| `GET` | `/vendor/inventory-items/:id/location-levels` | Get stock levels per location |
+| `POST` | `/vendor/inventory-items/:id/location-levels` | Set stock level at a location |
+| `POST` | `/vendor/inventory-items/:id/location-levels/:location_id` | Update stock level at location |
+| `DELETE` | `/vendor/inventory-items/:id/location-levels/:location_id` | Remove stock level |
+| `GET` | `/vendor/reservations` | List all inventory reservations |
+| `POST` | `/vendor/reservations` | Create a reservation |
+| `GET` | `/vendor/reservations/:id` | Get a single reservation |
+| `POST` | `/vendor/reservations/:id` | Update a reservation |
+| `DELETE` | `/vendor/reservations/:id` | Delete a reservation |
+
+### Stock Locations
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/stock-locations` | List vendor's stock locations |
+| `POST` | `/vendor/stock-locations` | Create a stock location |
+| `GET` | `/vendor/stock-locations/:id` | Get a stock location |
+| `POST` | `/vendor/stock-locations/:id` | Update a stock location |
+| `DELETE` | `/vendor/stock-locations/:id` | Delete a stock location |
+| `POST` | `/vendor/stock-locations/:id/sales-channels` | Assign sales channels to location |
+| `POST` | `/vendor/stock-locations/:id/fulfillment-sets` | Assign fulfillment sets |
+| `POST` | `/vendor/stock-locations/:id/fulfillment-providers` | Assign fulfillment providers |
+
+### Shipping
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/shipping-profiles` | List shipping profiles |
+| `POST` | `/vendor/shipping-profiles` | Create a shipping profile |
+| `GET` | `/vendor/shipping-profiles/:id` | Get a shipping profile |
+| `POST` | `/vendor/shipping-profiles/:id` | Update a shipping profile |
+| `DELETE` | `/vendor/shipping-profiles/:id` | Delete a shipping profile |
+| `GET` | `/vendor/shipping-options` | List shipping options |
+| `POST` | `/vendor/shipping-options` | Create a shipping option |
+| `GET` | `/vendor/shipping-options/:id` | Get a shipping option |
+| `POST` | `/vendor/shipping-options/:id` | Update a shipping option |
+| `DELETE` | `/vendor/shipping-options/:id` | Delete a shipping option |
+
+### Payouts & Payments
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/payout-account` | Get payout account (Stripe Connect) details |
+| `POST` | `/vendor/payout-account` | Create/link a payout account |
+| `GET` | `/vendor/payout-account/onboarding` | Get payout onboarding link (Stripe) |
+| `DELETE` | `/vendor/payout-account` | Unlink payout account |
+| `GET` | `/vendor/payouts` | List payout history |
+| `GET` | `/vendor/payouts/:id` | Get a single payout |
+
+### Customers & CRM
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/customers` | List customers of this vendor |
+| `GET` | `/vendor/customers/:id` | Get customer detail |
+| `GET` | `/vendor/customers/:id/orders` | Get orders by customer |
+| `GET` | `/vendor/customers/:id/customer-groups` | Get customer's groups |
+| `POST` | `/vendor/customer-groups` | Create a customer group |
+| `GET` | `/vendor/customer-groups` | List customer groups |
+| `GET` | `/vendor/customer-groups/:id` | Get a customer group |
+| `POST` | `/vendor/customer-groups/:id` | Update a customer group |
+| `DELETE` | `/vendor/customer-groups/:id` | Delete a customer group |
+| `POST` | `/vendor/customer-groups/:id/customers` | Add customers to a group |
+
+### Campaigns & Promotions
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/campaigns` | List campaigns |
+| `POST` | `/vendor/campaigns` | Create a campaign |
+| `GET` | `/vendor/campaigns/:id` | Get a campaign |
+| `POST` | `/vendor/campaigns/:id` | Update a campaign |
+| `DELETE` | `/vendor/campaigns/:id` | Delete a campaign |
+| `POST` | `/vendor/promotions` | Create a promotion |
+| `GET` | `/vendor/promotions` | List promotions |
+| `GET` | `/vendor/promotions/:id` | Get a promotion |
+| `POST` | `/vendor/promotions/:id` | Update a promotion |
+| `DELETE` | `/vendor/promotions/:id` | Delete a promotion |
+
+### Pricing
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/price-lists` | List price lists |
+| `POST` | `/vendor/price-lists` | Create a price list |
+| `GET` | `/vendor/price-lists/:id` | Get a price list |
+| `POST` | `/vendor/price-lists/:id` | Update a price list |
+| `DELETE` | `/vendor/price-lists/:id` | Delete a price list |
+| `GET` | `/vendor/price-preferences` | List price preferences |
+| `POST` | `/vendor/price-preferences` | Create a price preference |
+
+### Product Catalog Organization
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/product-categories` | List product categories |
+| `GET` | `/vendor/product-categories/:id` | Get a category |
+| `GET` | `/vendor/product-collections` | List product collections |
+| `POST` | `/vendor/product-collections` | Create a collection |
+| `GET` | `/vendor/product-collections/:id` | Get a collection |
+| `POST` | `/vendor/product-collections/:id` | Update a collection |
+| `DELETE` | `/vendor/product-collections/:id` | Delete a collection |
+| `GET` | `/vendor/product-tags` | List product tags |
+| `GET` | `/vendor/product-types` | List product types |
+| `GET` | `/vendor/attributes` | List attributes available to vendor |
+| `GET` | `/vendor/attributes/:id` | Get a specific attribute |
+
+### Store & Sales Channels
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/stores` | List stores |
+| `GET` | `/vendor/stores/:id` | Get a store |
+| `GET` | `/vendor/sales-channels` | List available sales channels |
+| `GET` | `/vendor/regions` | List available regions |
+| `GET` | `/vendor/regions/:id` | Get a region |
+
+### Team Management
+
+| Method | Path | Description |
+|---|---|---|
+| `POST` | `/vendor/invites` | Invite a team member to the vendor account |
+| `GET` | `/vendor/invites` | List pending invitations |
+| `GET` | `/vendor/members` | List team members |
+| `GET` | `/vendor/members/:id` | Get a member |
+| `POST` | `/vendor/members/:id` | Update a member |
+| `DELETE` | `/vendor/members/:id` | Remove a member |
+| `GET` | `/vendor/me` | Get current vendor user profile |
+
+### Fulfillment
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/fulfillment-providers` | List available fulfillment providers |
+| `GET` | `/vendor/fulfillment-providers/:id` | Get a fulfillment provider |
+| `GET` | `/vendor/fulfillment-sets` | List fulfillment sets |
+| `POST` | `/vendor/fulfillment-sets/:id/service-zones` | Add a service zone to a fulfillment set |
+| `POST` | `/vendor/fulfillment-sets/:id/service-zones/:zone_id` | Update a service zone |
+| `DELETE` | `/vendor/fulfillment-sets/:id/service-zones/:zone_id` | Delete a service zone |
+
+### Statistics & Notifications
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/statistics` | Get vendor dashboard stats (revenue, orders, etc.) |
+| `GET` | `/vendor/notifications` | List vendor notifications |
+| `GET` | `/vendor/notifications/:id` | Get a single notification |
+| `POST` | `/vendor/notifications/:id` | Mark notification as read |
+
+### Configuration
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/configuration` | Get vendor-facing marketplace config |
+
+### Integrations
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/talkjs` | Get TalkJS credentials for vendor chat |
+| `POST` | `/vendor/uploads` | Upload a file (product images, etc.) |
+
+---
+
+### Commission (vendor)
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/commission` | Get current vendor's commission rates/summary |
+| `GET` | `/vendor/orders/:id/commission` | Get commission breakdown for a specific order |
+
+---
+
+### Reviews (vendor)
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/sellers/me/reviews` | List all reviews for this vendor's products |
+| `GET` | `/vendor/sellers/me/reviews/:id` | Get a specific review |
+| `POST` | `/vendor/sellers/me/reviews/:id` | Reply to a review |
+
+---
+
+### Requests (vendor — publishing workflow)
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/vendor/requests` | List pending publish/change requests |
+| `POST` | `/vendor/requests` | Submit a new publish request (product, store, etc.) |
+| `GET` | `/vendor/requests/:id` | Get a specific request |
+| `POST` | `/vendor/requests/:id` | Update/cancel a request |
+| `POST` | `/vendor/requests/batch` | Batch submit requests |
+| `GET` | `/vendor/return-request` | List return requests submitted by customers |
+| `GET` | `/vendor/return-request/:id` | Get a specific return request |
+| `POST` | `/vendor/return-request/:id` | Approve or deny a return request |
+
+---
+
+## 🛍️ STORE ROUTES (Public / Buyer)
+
+### Sellers / Vendor Discovery
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/store/seller` | List all active sellers/vendors |
+| `GET` | `/store/seller/:handle` | Get a seller's public profile by handle |
+
+### Products
+
+| Method | Path | Description |
+|---|---|---|
+| `POST` | `/store/products/search` | Search products (powered by Algolia) |
+
+### Cart
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/store/carts/:id` | Get cart details |
+| `POST` | `/store/carts/:id` | Update cart |
+| `POST` | `/store/carts/:id/complete` | Complete cart → place order |
+| `POST` | `/store/carts/:id/promotions` | Apply a promotion code to cart |
+| `POST` | `/store/carts/:id/shipping-methods` | Add a shipping method to cart |
+| `DELETE` | `/store/carts/:id/shipping-methods` | Remove a shipping method |
+| `DELETE` | `/store/carts/:id/line-items/:line_id` | Remove a line item from the cart |
+
+### Order Sets (Multi-vendor Orders)
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/store/order-set` | List the customer's order sets |
+| `GET` | `/store/order-set/:id` | Get a specific order set (contains sub-orders per vendor) |
+
+### Shipping Options
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/store/shipping-options` | List available shipping options for a cart |
+| `GET` | `/store/shipping-options/return` | List available return shipping options |
+
+### Returns
+
+| Method | Path | Description |
+|---|---|---|
+| `POST` | `/store/returns` | Initiate a return |
+| `GET` | `/store/returns/:id` | Get a return status |
+
+### Wishlists
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/store/wishlist` | Get the current customer's wishlist |
+| `POST` | `/store/wishlist` | Create a wishlist or add a product |
+| `DELETE` | `/store/wishlist/product/:reference_id` | Remove a product from wishlist |
+
+---
+
+### Reviews (store)
+
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/store/reviews` | List reviews (filter by product_id) |
+| `POST` | `/store/reviews` | Create a new review |
+| `GET` | `/store/reviews/:id` | Get a specific review |
+| `POST` | `/store/reviews/:id` | Update a review (within edit window) |
+| `DELETE` | `/store/reviews/:id` | Delete a review |
+
+---
+
+### Requests (store — return requests)
+
+| Method | Path | Description |
+|---|---|---|
+| `POST` | `/store/return-request` | Submit a return request |
+| `GET` | `/store/return-request/:id` | Get status of a return request |
+
+---
+
+## 🪝 Webhooks
+
+| Method | Path | Description |
+|---|---|---|
+| `POST` | `/hooks/payouts` | Stripe webhook endpoint for payout events (split payment confirmations, reversals) |
+
+---
+
+## Summary Count
+
+| Context | Route Count |
+|---|---|
+| Admin | ~40 routes |
+| Vendor | ~120 routes |
+| Store | ~20 routes |
+| Webhooks | 1 |
+| **Total** | **~181 routes** |

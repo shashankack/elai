@@ -1,0 +1,97 @@
+// Elai - FAQ Section
+$bg: #2e3e20;
+$fg: #fff7d4;
+$highlight: #748956;
+
+.section7 {
+  background: $bg;
+  padding: 120px 0;
+  font-family: var(--font-body), serif;
+
+  @media (max-width: 768px) { padding: 80px 0; }
+}
+
+.section7-content {
+
+}
+
+.section7-header {
+  margin-bottom: 56px;
+}
+
+.section7-subtitle {
+  display: block;
+  font-family: var(--font-subheading), serif;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: $highlight;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.section7-title {
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  font-family: var(--font-heading), serif;
+  color: $fg;
+  margin: 0;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(255, 247, 212, 0.12);
+
+  &:first-child { border-top: 1px solid rgba(255, 247, 212, 0.12); }
+}
+
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  color: $fg;
+  font-family: var(--font-subheading), serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  text-align: left;
+  gap: 20px;
+  transition: color 0.2s ease;
+
+  &:hover { color: $highlight; }
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  font-size: 1.4rem;
+  color: $highlight;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.faq-answer-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  .faq-item.open & { max-height: 400px; }
+}
+
+.faq-answer-inner { padding-bottom: 24px; }
+
+.faq-answer p {
+  font-size: 0.97rem;
+  line-height: 1.75;
+  color: rgba(255, 247, 212, 0.72);
+  margin: 0;
+}

@@ -1,0 +1,112 @@
+# Mercur Dev Commands
+
+> All commands run from `C:\Projects\BAW\mercur` unless noted.
+
+---
+
+## 🚀 Starting the Dev Server
+
+### ⚠️ First time OR after a cold restart (node killed)
+
+You must build the framework package first — **always do this after `taskkill` or a fresh clone:**
+
+```powershell
+yarn workspace @mercurjs/framework build
+yarn dev
+```
+
+### Normal restart (server was stopped cleanly with Ctrl+C)
+
+```powershell
+yarn dev
+```
+
+---
+
+## 🛑 Stopping the Dev Server
+
+### Clean stop (preferred)
+Press **`Ctrl + C`** in the terminal running `yarn dev`.
+
+### Force kill all Node processes
+```powershell
+taskkill /F /IM node.exe
+```
+> ⚠️ Kills ALL Node.js processes on your machine. After this, always rebuild framework before `yarn dev`.
+
+---
+
+## 🔨 Build Commands
+
+| Command | What it does |
+|---|---|
+| `yarn workspace @mercurjs/framework build` | Build the shared framework package (required after cold restart) |
+| `yarn build` | Build all packages (production build) |
+| `yarn workspace api build` | Build only the backend app |
+| `yarn workspace @mercurjs/b2c-core build` | Build only the b2c-core plugin |
+
+---
+
+## 🗄️ Database Commands
+
+> Run from `apps/backend`
+
+```powershell
+cd apps\backend
+
+yarn db:migrate     # Run all pending migrations
+yarn seed           # Seed demo data (products, regions, etc.)
+```
+
+---
+
+## 🧹 Lint & Format
+
+```powershell
+yarn lint           # Check for lint errors
+yarn lint:fix       # Auto-fix lint errors
+yarn format         # Format all .ts/.tsx files
+yarn format:check   # Check formatting without writing
+```
+
+---
+
+## 🧪 Tests
+
+> Run from `apps/backend`
+
+```powershell
+cd apps\backend
+
+yarn test:unit                  # Unit tests
+yarn test:integration:http      # HTTP integration tests
+yarn test:integration:modules   # Module integration tests
+```
+
+---
+
+## 📦 Run a Single Package in Dev Mode
+
+```powershell
+yarn workspace @mercurjs/b2c-core dev
+yarn workspace @mercurjs/commission dev
+yarn workspace @mercurjs/reviews dev
+yarn workspace @mercurjs/requests dev
+yarn workspace @mercurjs/resend dev
+yarn workspace @mercurjs/algolia dev
+yarn workspace @mercurjs/payment-stripe-connect dev
+yarn workspace @mercurjs/stripe-tax-provider dev
+yarn workspace api dev
+```
+
+---
+
+## 🌐 Ports When Running
+
+| Service | URL |
+|---|---|
+| Backend API | http://localhost:9000 |
+| Health check | http://localhost:9000/health |
+| Store API | http://localhost:9000/store/... |
+| Vendor API | http://localhost:9000/vendor/... |
+| Admin API | http://localhost:9000/admin/... |
