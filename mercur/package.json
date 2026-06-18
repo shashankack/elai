@@ -6,6 +6,9 @@
     "dev": "turbo run dev",
     "dev:apps": "turbo run dev --filter=@acme/api --filter=@acme/admin --filter=@acme/vendor",
     "setup": "turbo run build",
+    "setup:api": "turbo run build --filter=@acme/api^...",
+    "setup:admin": "turbo run build --filter=@acme/admin^...",
+    "setup:vendor": "turbo run build --filter=@acme/vendor^...",
     "lint": "oxlint --quiet",
     "test:integration:http": "cd integration-tests && bun run test:integration:http"
   },
