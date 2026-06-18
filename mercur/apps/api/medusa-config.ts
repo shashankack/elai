@@ -7,10 +7,11 @@ module.exports = withMercur({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
     redisUrl: process.env.REDIS_URL,
-    // Neon (and other remote Postgres) can take >5s to connect on cold start.
+    // Neon cold starts: wait longer when acquiring a pool connection (Tarn option).
     databaseDriverOptions: {
       pool: {
-        connectionTimeoutMillis: 30000,
+        acquireTimeoutMillis: 30000,
+        createRetryIntervalMillis: 200,
       },
     },
     http: {
