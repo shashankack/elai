@@ -3,12 +3,24 @@ import { withMercur } from '@mercurjs/core'
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
+const isLocalDb =
+  !process.env.DATABASE_URL ||
+  process.env.DATABASE_URL.includes('localhost') ||
+  process.env.DATABASE_URL.includes('127.0.0.1')
+
 module.exports = withMercur({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
     redisUrl: process.env.REDIS_URL,
     // Neon cold starts: wait longer when acquiring a pool connection (Tarn option).
     databaseDriverOptions: {
+      ...(!isLocalDb
+        ? {
+            connection: {
+              ssl: { rejectUnauthorized: false },
+            },
+          }
+        : {}),
       pool: {
         acquireTimeoutMillis: 30000,
         createRetryIntervalMillis: 200,
