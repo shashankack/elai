@@ -152,7 +152,7 @@ const Footer = () => {
 
           <div className="footer-bottom">
             <div className="footer-copyright">
-              © 2025 ELAI. All rights reserved.
+              © 2026 ELAI. All rights reserved.
             </div>
             <div className="footer-credit">
               Built by{" "}

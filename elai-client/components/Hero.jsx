@@ -42,7 +42,7 @@ const Hero = () => {
           <div className="elai-shell">
             <div ref={heroTextRef}>
               <span className="hero-eyebrow">
-                India&apos;s Accessory Destination · 2025
+                India&apos;s Accessory Destination · 2026
               </span>
               <h1 className="hero-text">
                 Every accessory.

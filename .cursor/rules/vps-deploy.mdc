@@ -1,0 +1,138 @@
+---
+description: ELAI production VPS layout and local-build deploy workflow (WSL → scp/rsync)
+alwaysApply: true
+---
+
+# ELAI VPS deploy (remember this)
+
+## Server
+
+- SSH: `elaai@51.21.141.111` (hostname `mail`) — use **WSL**, not PowerShell SSH unless asked
+- User `elaai` has **no sudo** — never suggest `sudo reboot`, `drop_caches`, `certbot`, or system service restarts; ask Ruban/aaPanel for those
+- Repo on VPS: `~/elai` (not `/www/wwwroot/elaai.co`)
+- **~2 GB RAM** — never run `bun run setup` / full monorepo builds on VPS (causes swap thrash)
+
+## Domains
+
+| URL | App |
+|-----|-----|
+| `https://api.elaai.co` | Mercur API |
+| `https://admin.elaai.co` | Mercur Admin (API via `/__api` proxy) |
+
+## Nginx: admin.elaai.co `/__api` proxy
+
+Admin UI is static `dist/`; API calls go to `https://admin.elaai.co/__api/...`. Nginx must **strip** `/__api` before forwarding to Mercur on `:9000` (Medusa expects `/admin/...`, not `/__api/admin/...`).
+
+```nginx
+location /__api/ {
+    proxy_pass http://127.0.0.1:9000/;   # trailing slash on proxy_pass strips /__api/
+    proxy_http_version 1.1;
+    proxy_set_header Host api.elaai.co;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+}
+```
+
+**Why the trailing slash matters:** `location /__api/` + `proxy_pass http://127.0.0.1:9000/` replaces the matched prefix. Request `/__api/admin/users` → upstream `/admin/users`. Without trailing slash (`proxy_pass http://127.0.0.1:9000`), nginx forwards the full URI `/__api/admin/users` → 404.
+
+Requires aaPanel/Ruban (no sudo for `elaai`). After change: `nginx -t && systemctl reload nginx`.
+| `https://vendor.elaai.co` | Mercur Vendor (register + onboarding) |
+| `https://elaai.co` / `www` | elai-client |
+
+## PM2 (only these two)
+
+- `mercur-api` — API on `127.0.0.1:9000`
+- `elai-client` — Next.js marketing site
+
+Vendor and admin are **nginx static `dist/`** — no PM2, no restart after upload.
+
+`elai-vendor-portal` is **deprecated** — not deployed; seller flow is Mercur `vendor.elaai.co/register`.
+
+## Build locally (WSL), upload `dist/`
+
+Local path: `/mnt/c/crucifer/BAW/ELAI`
+
+### Mercur Vendor (most common)
+
+```bash
+cd /mnt/c/crucifer/BAW/ELAI/mercur
+export VITE_MERCUR_BACKEND_URL=https://api.elaai.co TSUP_DTS=0
+bun run setup:vendor && cd apps/vendor && bun run build
+rsync -avz --delete dist/ elaai@51.21.141.111:~/elai/mercur/apps/vendor/dist/
+```
+
+Prod env: `mercur/apps/vendor/.env.production` → `VITE_MERCUR_BACKEND_URL=https://api.elaai.co`
+
+### Mercur Admin
+
+```bash
+cd /mnt/c/crucifer/BAW/ELAI/mercur
+export TSUP_DTS=0
+bun run setup:admin && cd apps/admin-test && bun run build
+rsync -avz --delete dist/ elaai@51.21.141.111:~/elai/mercur/apps/admin-test/dist/
+```
+
+Prod env: `VITE_MERCUR_BACKEND_URL=https://admin.elaai.co/__api`, `VITE_MERCUR_VENDOR_URL=https://vendor.elaai.co`
+
+### elai-client (landing + shop, PM2)
+
+Runs as **`pm2` `elai-client`** → nginx proxies `elaai.co` to `localhost:3000`.
+
+**1. Build locally (WSL)** — env is baked in at build time:
+
+```bash
+cd /mnt/c/crucifer/BAW/ELAI/elai-client
+
+cat > .env.production.local << 'EOF'
+NEXT_PUBLIC_MERCUR_BACKEND_URL=https://api.elaai.co
+NEXT_PUBLIC_MERCUR_VENDOR_URL=https://vendor.elaai.co
+NEXT_PUBLIC_MERCUR_PUBLISHABLE_API_KEY=pk_YOUR_KEY
+MERCUR_BACKEND_URL=https://api.elaai.co
+MERCUR_PUBLISHABLE_API_KEY=pk_YOUR_KEY
+EOF
+
+npm ci
+npm run build
+```
+
+Get `pk_...` from admin → Settings → Publishable API keys (or seed output).
+
+**2. Upload** (do not build on VPS):
+
+```bash
+rsync -avz --delete --no-perms --no-owner --no-group --omit-dir-times \
+  .next/ elaai@51.21.141.111:~/elai/elai-client/.next/
+
+rsync -avz --no-perms --no-owner --no-group --omit-dir-times \
+  public/ elaai@51.21.141.111:~/elai/elai-client/public/
+
+scp .env.production.local package.json package-lock.json next.config.ts \
+  elaai@51.21.141.111:~/elai/elai-client/
+```
+
+**3. On VPS** — restart only (no sudo):
+
+```bash
+ssh elaai@51.21.141.111
+cd ~/elai/elai-client
+# only if package.json deps changed: npm ci --omit=dev
+pm2 restart elai-client
+pm2 logs elai-client --lines 30
+```
+
+Verify: `https://elaai.co` and seller CTAs → `https://vendor.elaai.co/register`
+
+### API
+
+Only redeploy/restart when backend code changes: `pm2 restart mercur-api`. Onboarding UI changes do **not** need API redeploy.
+
+## Stuck/slow VPS (no sudo)
+
+- `pgrep -af 'bun|turbo|tsup|vite|tsc' | grep -v pm2` — if only `bun run start` / medusa cli, that is **mercur-api** (do not kill)
+- Kill builds: `pkill -9 -f 'turbo run build'` etc.
+- Slowness with high `%wa` + swap = RAM/disk pressure (php-fpm + low RAM), not necessarily an active build
+- **Recovery without sudo:** `pm2 restart mercur-api` then `pm2 restart elai-client`; or `pm2 stop elai-client` briefly to free RAM
+- If still very slow (curl health >> 1s): ask Ruban to **reboot VPS** or restart PHP-FPM

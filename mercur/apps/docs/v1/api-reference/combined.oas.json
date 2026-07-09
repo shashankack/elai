@@ -29081,7 +29081,7 @@
           {
             "lang": "Shell",
             "label": "cURL",
-            "source": "curl -X POST '{backend_url}/admin/fulfillments' \\\n-H 'Authorization: Bearer {jwt_token}' \\\n-H 'Content-Type: application/json' \\\n--data-raw '{\n  \"location_id\": \"{value}\",\n  \"provider_id\": \"{value}\",\n  \"delivery_address\": {\n    \"first_name\": \"{value}\",\n    \"last_name\": \"{value}\",\n    \"phone\": \"{value}\",\n    \"company\": \"{value}\",\n    \"address_1\": \"{value}\",\n    \"address_2\": \"{value}\",\n    \"city\": \"{value}\",\n    \"country_code\": \"{value}\",\n    \"province\": \"us-ca\",\n    \"postal_code\": \"{value}\",\n    \"metadata\": {}\n  },\n  \"items\": [\n    {\n      \"title\": \"{value}\",\n      \"sku\": \"{value}\",\n      \"quantity\": 1667318922870784,\n      \"barcode\": \"{value}\",\n      \"line_item_id\": \"{value}\",\n      \"inventory_item_id\": \"{value}\"\n    }\n  ],\n  \"labels\": [\n    {\n      \"tracking_number\": \"{value}\",\n      \"tracking_url\": \"{value}\",\n      \"label_url\": \"{value}\"\n    }\n  ],\n  \"order\": {},\n  \"order_id\": \"{value}\",\n  \"shipping_option_id\": \"{value}\",\n  \"data\": {},\n  \"packed_at\": \"2024-11-12T18:37:37.122Z\",\n  \"shipped_at\": \"2025-04-13T12:39:42.432Z\",\n  \"delivered_at\": \"2025-01-29T19:05:57.056Z\",\n  \"canceled_at\": \"2025-02-16T02:12:11.763Z\",\n  \"metadata\": {}\n}'"
+            "source": "curl -X POST '{backend_url}/admin/fulfillments' \\\n-H 'Authorization: Bearer {jwt_token}' \\\n-H 'Content-Type: application/json' \\\n--data-raw '{\n  \"location_id\": \"{value}\",\n  \"provider_id\": \"{value}\",\n  \"delivery_address\": {\n    \"first_name\": \"{value}\",\n    \"last_name\": \"{value}\",\n    \"phone\": \"{value}\",\n    \"company\": \"{value}\",\n    \"address_1\": \"{value}\",\n    \"address_2\": \"{value}\",\n    \"city\": \"{value}\",\n    \"country_code\": \"{value}\",\n    \"province\": \"us-ca\",\n    \"postal_code\": \"{value}\",\n    \"metadata\": {}\n  },\n  \"items\": [\n    {\n      \"title\": \"{value}\",\n      \"sku\": \"{value}\",\n      \"quantity\": 1667318922870784,\n      \"barcode\": \"{value}\",\n      \"line_item_id\": \"{value}\",\n      \"inventory_item_id\": \"{value}\"\n    }\n  ],\n  \"labels\": [\n    {\n      \"tracking_number\": \"{value}\",\n      \"tracking_url\": \"{value}\",\n      \"label_url\": \"{value}\"\n    }\n  ],\n  \"order\": {},\n  \"order_id\": \"{value}\",\n  \"shipping_option_id\": \"{value}\",\n  \"data\": {},\n  \"packed_at\": \"2024-11-12T18:37:37.122Z\",\n  \"shipped_at\": \"2026-04-13T12:39:42.432Z\",\n  \"delivered_at\": \"2026-01-29T19:05:57.056Z\",\n  \"canceled_at\": \"2026-02-16T02:12:11.763Z\",\n  \"metadata\": {}\n}'"
           }
         ],
         "tags": [
@@ -29882,7 +29882,7 @@
           {
             "lang": "Shell",
             "label": "cURL",
-            "source": "curl -X POST '{backend_url}/admin/gift-cards' \\\n-H 'Authorization: Bearer {jwt_token}' \\\n-H 'Content-Type: application/json' \\\n--data-raw '{\n  \"code\": \"{value}\",\n  \"value\": 19,\n  \"currency_code\": \"bwp\",\n  \"expires_at\": \"2025-07-20T15:47:23.951Z\",\n  \"reference_id\": \"{value}\",\n  \"reference\": \"{value}\",\n  \"line_item_id\": \"{value}\",\n  \"customer_id\": \"{value}\",\n  \"metadata\": {}\n}'"
+            "source": "curl -X POST '{backend_url}/admin/gift-cards' \\\n-H 'Authorization: Bearer {jwt_token}' \\\n-H 'Content-Type: application/json' \\\n--data-raw '{\n  \"code\": \"{value}\",\n  \"value\": 19,\n  \"currency_code\": \"bwp\",\n  \"expires_at\": \"2026-07-20T15:47:23.951Z\",\n  \"reference_id\": \"{value}\",\n  \"reference\": \"{value}\",\n  \"line_item_id\": \"{value}\",\n  \"customer_id\": \"{value}\",\n  \"metadata\": {}\n}'"
           }
         ],
         "tags": [
@@ -107012,8 +107012,8 @@
               "type": "string"
             },
             "required": false,
-            "description": "Filter promotions by created_at date. Must be a JSON object (URL-encoded) with comparison operators.\nSupported operators: `$gte`, `$lte`, `$gt`, `$lt`, `$eq`, `$ne`.\nExample: `{\"$gte\":\"2025-11-19T11:00:00.000Z\"}` (URL-encoded: `%7B%22%24gte%22%3A%222025-11-19T11%3A00%3A00.000Z%22%7D`)\n",
-            "example": "{\"$gte\":\"2025-11-19T11:00:00.000Z\"}"
+            "description": "Filter promotions by created_at date. Must be a JSON object (URL-encoded) with comparison operators.\nSupported operators: `$gte`, `$lte`, `$gt`, `$lt`, `$eq`, `$ne`.\nExample: `{\"$gte\":\"2026-11-19T11:00:00.000Z\"}` (URL-encoded: `%7B%22%24gte%22%3A%222026-11-19T11%3A00%3A00.000Z%22%7D`)\n",
+            "example": "{\"$gte\":\"2026-11-19T11:00:00.000Z\"}"
           },
           {
             "name": "updated_at",
@@ -107022,8 +107022,8 @@
               "type": "string"
             },
             "required": false,
-            "description": "Filter promotions by updated_at date. Must be a JSON object (URL-encoded) with comparison operators.\nSupported operators: `$gte`, `$lte`, `$gt`, `$lt`, `$eq`, `$ne`.\nExample: `{\"$gte\":\"2025-11-19T11:00:00.000Z\"}` (URL-encoded: `%7B%22%24gte%22%3A%222025-11-19T11%3A00%3A00.000Z%22%7D`)\n",
-            "example": "{\"$gte\":\"2025-11-19T11:00:00.000Z\"}"
+            "description": "Filter promotions by updated_at date. Must be a JSON object (URL-encoded) with comparison operators.\nSupported operators: `$gte`, `$lte`, `$gt`, `$lt`, `$eq`, `$ne`.\nExample: `{\"$gte\":\"2026-11-19T11:00:00.000Z\"}` (URL-encoded: `%7B%22%24gte%22%3A%222026-11-19T11%3A00%3A00.000Z%22%7D`)\n",
+            "example": "{\"$gte\":\"2026-11-19T11:00:00.000Z\"}"
           },
           {
             "name": "order",

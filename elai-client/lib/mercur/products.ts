@@ -1,4 +1,5 @@
 import { assertMercurConfigured } from './config'
+import { getStoreRegionId } from './regions'
 import { MercurStoreError, storeFetch } from './store-client'
 
 export type StoreProductVariant = {
@@ -35,9 +36,11 @@ export async function listProducts(options?: {
   q?: string
 }): Promise<ProductListResponse> {
   assertMercurConfigured()
+  const region_id = await getStoreRegionId()
 
   return storeFetch<ProductListResponse>('/store/products', {
     searchParams: {
+      region_id,
       fields: PRODUCT_FIELDS,
       limit: options?.limit ?? 24,
       offset: options?.offset ?? 0,
@@ -50,9 +53,11 @@ export async function getProductByHandle(
   handle: string,
 ): Promise<StoreProduct | null> {
   assertMercurConfigured()
+  const region_id = await getStoreRegionId()
 
   const data = await storeFetch<ProductListResponse>('/store/products', {
     searchParams: {
+      region_id,
       handle,
       fields: PRODUCT_FIELDS,
       limit: 1,

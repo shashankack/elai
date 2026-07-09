@@ -55,7 +55,7 @@ export default async function ShopPage() {
       <main className="elai-shell py-16">
         <ShopStatus
           title="Shop unavailable"
-          message={`${message} Ensure Mercur API is running on port 9000 and MERCUR_PUBLISHABLE_API_KEY is set in .env.`}
+          message={`${message} Ensure Mercur API is running, MERCUR_PUBLISHABLE_API_KEY is set, and at least one store region exists (run seed or set MERCUR_REGION_ID).`}
         />
       </main>
     );

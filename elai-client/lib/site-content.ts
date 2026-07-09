@@ -162,12 +162,12 @@ export const FAQS = [
   {
     question: "Where is ELAI based?",
     answer:
-      "ELAI is based in Bangalore, India. For enquiries, reach us at Blameus2025@gmail.com.",
+      "ELAI is based in Bangalore, India. For enquiries, reach us at Blameus2026@gmail.com.",
   },
 ] as const;
 
 export const CONTACT = {
-  email: "Blameus2025@gmail.com",
+  email: "Blameus2026@gmail.com",
   location: "Bangalore, India",
   tagline:
     "Reimagining the future of accessory shopping  smarter, faster, and beautifully curated.",
