@@ -6,7 +6,12 @@ import {
   MiddlewareRoute,
 } from "@medusajs/framework/http"
 import { validateAndTransformQuery } from "@medusajs/framework"
+import { FeatureFlag } from "@medusajs/framework/utils"
+import indexEngineFeatureFlag from "@medusajs/medusa/feature-flags/index-engine"
+import { listProductQueryConfig } from "@medusajs/medusa/api/admin/products/query-config"
+import { maybeApplyPriceListsFilter } from "@medusajs/medusa/api/admin/products/utils/maybe-apply-price-lists-filter"
 
+import { AdminGetProductsParams } from "./products/validators"
 import { adminOrderGroupsMiddlewares } from "./order-groups/middlewares"
 import { adminOrderGroupQueryConfig } from "./order-groups/query-config"
 import { AdminGetOrderGroupParams } from "./order-groups/validators"
@@ -75,6 +80,22 @@ export const adminMiddlewares: MiddlewareRoute[] = [
     method: ["GET"],
     matcher: "/admin/products",
     middlewares: [
+      validateAndTransformQuery(
+        AdminGetProductsParams,
+        listProductQueryConfig
+      ),
+      (req: AuthenticatedMedusaRequest, res: MedusaResponse, next: MedusaNextFunction) => {
+        if (FeatureFlag.isFeatureEnabled(indexEngineFeatureFlag.key)) {
+          return next()
+        }
+
+        return maybeApplyLinkFilter({
+          entryPoint: "product_sales_channel",
+          resourceId: "product_id",
+          filterableField: "sales_channel_id",
+        })(req, res, next)
+      },
+      maybeApplyPriceListsFilter(),
       maybeApplySellerProductFilter,
     ],
   },
