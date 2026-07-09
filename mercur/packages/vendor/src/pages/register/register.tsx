@@ -27,10 +27,15 @@ const RegisterHeader = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="mb-6 flex flex-col">
-      <Heading>{t("register.title", { name: config.name ?? "Mercur" })}</Heading>
-      <Text size="small" className="text-ui-fg-subtle">
-        {t("register.hint", { name: config.name ?? "Mercur" })}
+    <div className="mb-8 flex flex-col">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#34421E]/50">
+        {t("onboarding.wizard.elai.registerEyebrow")}
+      </p>
+      <Heading className="mt-2 font-serif text-3xl font-normal tracking-[0.02em] sm:text-4xl">
+        {t("onboarding.wizard.elai.registerTitle")}
+      </Heading>
+      <Text size="small" className="mt-3 max-w-lg leading-relaxed text-[#34421E]/65">
+        {t("onboarding.wizard.elai.registerDescription")}
       </Text>
     </div>
   )
@@ -187,11 +192,8 @@ const Root = ({ children }: { children?: ReactNode }) => {
         children
       ) : (
         <>
-          <RegisterLogo />
-          <div className="mt-6">
-            <RegisterHeader />
-            <RegisterForm />
-          </div>
+          <RegisterHeader />
+          <RegisterForm />
           <RegisterFooter />
         </>
       )}

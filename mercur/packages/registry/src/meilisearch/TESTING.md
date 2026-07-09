@@ -1,4 +1,4 @@
-# Meilisearch Block — Testing Guide
+# Meilisearch Block  Testing Guide
 
 ## Overview
 
@@ -14,10 +14,10 @@ Unit tests run in isolation with mocked dependencies. No Meilisearch instance or
 
 | File | Coverage |
 |------|----------|
-| `service.unit.spec.ts` | `MeilisearchModuleService` — constructor validation, `batchUpsert`, `batchDelete`, `search`, `getStatus`, `ensureSettings` |
-| `meilisearch-product.unit.spec.ts` | `filterProductsByStatus` — published/draft/deleted splitting; `findAndTransformMeilisearchProducts` — N+1 prevention (single `query.graph` call), seller field inclusion, Zod validation, options flattening |
-| `store-route.unit.spec.ts` | `POST /store/meilisearch/products/search` route handler — **FR-003** seller status filter enforcement, all filter types, response shape, pagination, relevance ordering |
-| `subscribers.unit.spec.ts` | All 5 subscribers — event routing, error handling (FR-012), seller suspension/unsuspension product re-indexing, chunking for >100 products |
+| `service.unit.spec.ts` | `MeilisearchModuleService`  constructor validation, `batchUpsert`, `batchDelete`, `search`, `getStatus`, `ensureSettings` |
+| `meilisearch-product.unit.spec.ts` | `filterProductsByStatus`  published/draft/deleted splitting; `findAndTransformMeilisearchProducts`  N+1 prevention (single `query.graph` call), seller field inclusion, Zod validation, options flattening |
+| `store-route.unit.spec.ts` | `POST /store/meilisearch/products/search` route handler  **FR-003** seller status filter enforcement, all filter types, response shape, pagination, relevance ordering |
+| `subscribers.unit.spec.ts` | All 5 subscribers  event routing, error handling (FR-012), seller suspension/unsuspension product re-indexing, chunking for >100 products |
 
 ### Integration Tests (`integration-tests/http/meilisearch/`)
 
@@ -25,8 +25,8 @@ Integration tests use `medusaIntegrationTestRunner` from `@medusajs/test-utils` 
 
 | File | Coverage |
 |------|----------|
-| `store/meilisearch.spec.ts` | End-to-end store search — product hydration from DB, seller status filtering, category/price/seller filters, validation errors, publishable API key requirement |
-| `admin/meilisearch.spec.ts` | Admin endpoints — `GET /admin/meilisearch` status, `POST /admin/meilisearch` sync trigger, authentication enforcement |
+| `store/meilisearch.spec.ts` | End-to-end store search  product hydration from DB, seller status filtering, category/price/seller filters, validation errors, publishable API key requirement |
+| `admin/meilisearch.spec.ts` | Admin endpoints  `GET /admin/meilisearch` status, `POST /admin/meilisearch` sync trigger, authentication enforcement |
 
 ## Prerequisites
 
@@ -103,8 +103,8 @@ These pass-through files import directly from `packages/registry/src/meilisearch
 The store search route **always** prepends `seller.status = "active"` to the Meilisearch filter string. This is the single enforcement point that prevents suspended-seller products from appearing in search results.
 
 Tested in:
-- `store-route.unit.spec.ts` — verifies the filter string construction directly
-- `store/meilisearch.spec.ts` — verifies via HTTP integration with real middleware
+- `store-route.unit.spec.ts`  verifies the filter string construction directly
+- `store/meilisearch.spec.ts`  verifies via HTTP integration with real middleware
 
 ### FR-012: Error Handling
 

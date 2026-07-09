@@ -19,21 +19,21 @@ Use this skill when:
 Before building new custom UI, first apply `medusa-ui-conformance`.
 
 Read next (as needed):
-- `references/list-page-patterns.md` — list page compound component structure
-- `references/detail-page-patterns.md` — detail page sections, Container cards, SectionRow
+- `references/list-page-patterns.md`  list page compound component structure
+- `references/detail-page-patterns.md`  detail page sections, Container cards, SectionRow
 
 ## Hard Rules (DO NOT)
 
-1. Do NOT use hardcoded strings — use `t("...")` from `useTranslation()`.
-2. Do NOT use `window.confirm` or `window.alert` — use `usePrompt()` for delete confirmations.
-3. Do NOT create context/provider for detail pages — Root fetches data, passes as props to sections.
-4. Do NOT create a separate `Layout` wrapper — inline `TwoColumnPage` directly in Root.
-5. Do NOT use render props (`header={<Custom />}`) — use nested compound components with `Children.count`.
-6. Do NOT use `Heading level="h1"` in sections — h1 is for page title only, h2 for sections.
+1. Do NOT use hardcoded strings  use `t("...")` from `useTranslation()`.
+2. Do NOT use `window.confirm` or `window.alert`  use `usePrompt()` for delete confirmations.
+3. Do NOT create context/provider for detail pages  Root fetches data, passes as props to sections.
+4. Do NOT create a separate `Layout` wrapper  inline `TwoColumnPage` directly in Root.
+5. Do NOT use render props (`header={<Custom />}`)  use nested compound components with `Children.count`.
+6. Do NOT use `Heading level="h1"` in sections  h1 is for page title only, h2 for sections.
 7. Do NOT skip `data-testid` on key elements.
-8. Do NOT build custom dropdown menus — use `ActionMenu` component.
-9. Do NOT build custom empty states — use `NoRecords` / `NoResults` components.
-10. Do NOT skip error boundaries — wrap data fetching pages with `isError` + `throw error`.
+8. Do NOT build custom dropdown menus  use `ActionMenu` component.
+9. Do NOT build custom empty states  use `NoRecords` / `NoResults` components.
+10. Do NOT skip error boundaries  wrap data fetching pages with `isError` + `throw error`.
 
 ## Page Types
 
@@ -220,8 +220,8 @@ const productStatusColor = (status: string): "green" | "orange" | "red" | "grey"
 | Page title | `<Heading>` | (default) | Page root / modal body |
 | Section title | `<Heading level="h2">` | h2 | Inside Container header |
 | Drawer title | `<Heading>` | (default) | RouteDrawer.Header |
-| Description | `<Text size="small">` | — | Below heading |
-| Subtle text | `<Text size="small" className="text-ui-fg-subtle">` | — | Hints, descriptions |
+| Description | `<Text size="small">` |  | Below heading |
+| Subtle text | `<Text size="small" className="text-ui-fg-subtle">` |  | Hints, descriptions |
 
 ## Data Loading Pattern
 

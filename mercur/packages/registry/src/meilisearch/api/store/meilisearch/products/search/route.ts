@@ -23,7 +23,7 @@ export const POST = async (
     customer_group_id,
   } = req.validatedBody
 
-  // Build filter string server-side — seller.status = "active" is always enforced (FR-003)
+  // Build filter string server-side  seller.status = "active" is always enforced (FR-003)
   const filterParts: string[] = ['seller.status = "active"']
 
   if (filters?.categories?.length) {

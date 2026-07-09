@@ -15,19 +15,19 @@ Use this skill when:
 Before introducing custom interactive UI inside a tab, first apply `medusa-ui-conformance`.
 
 Read next (as needed):
-- `references/tab-anatomy.md` — exact code structure for tabs with sections
+- `references/tab-anatomy.md`  exact code structure for tabs with sections
 
 ## Hard Rules (DO NOT)
 
-1. Do NOT use raw `_tabMeta = { ... }` — use `defineTabMeta<SchemaType>({...})` for type safety.
-2. Do NOT use `<Heading level="h1">` in tabs — use `<Heading level="h2">` (h1 is page-level only).
-3. Do NOT use hardcoded strings — use `t("...")` for all labels, headings, placeholders.
+1. Do NOT use raw `_tabMeta = { ... }`  use `defineTabMeta<SchemaType>({...})` for type safety.
+2. Do NOT use `<Heading level="h1">` in tabs  use `<Heading level="h2">` (h1 is page-level only).
+3. Do NOT use hardcoded strings  use `t("...")` for all labels, headings, placeholders.
 4. Do NOT skip `data-testid` on the tab root and major sections.
-5. Do NOT use raw `Controller` for form fields — use `Form.Field` pattern (see `admin-form-ui` skill).
-6. Do NOT put all fields in one flat list — group them into sections with clear headers.
-7. Do NOT forget `validationFields` in `defineTabMeta` — list fields validated on forward navigation.
-8. Do NOT use `<Container>` as the only top-level wrapper inside a tab — follow the section-based layout.
-9. Do NOT use `label` in tabMeta for display — use `labelKey` (i18n key) for translation support.
+5. Do NOT use raw `Controller` for form fields  use `Form.Field` pattern (see `admin-form-ui` skill).
+6. Do NOT put all fields in one flat list  group them into sections with clear headers.
+7. Do NOT forget `validationFields` in `defineTabMeta`  list fields validated on forward navigation.
+8. Do NOT use `<Container>` as the only top-level wrapper inside a tab  follow the section-based layout.
+9. Do NOT use `label` in tabMeta for display  use `labelKey` (i18n key) for translation support.
 
 ## Tab Layout Structure
 
@@ -82,15 +82,15 @@ import type { ProductCreateSchemaType } from "./schema"
 
 MyTab._tabMeta = defineTabMeta<ProductCreateSchemaType>({
   id: "seo",
-  labelKey: "products.create.tabs.seo",        // i18n key — NOT raw text
+  labelKey: "products.create.tabs.seo",        // i18n key  NOT raw text
   validationFields: ["seo_title", "seo_slug"],  // fields validated on forward nav
 })
 ```
 
 **Rules:**
-- `id` — unique tab identifier (lowercase, kebab-case)
-- `labelKey` — i18n translation key (the tab label shown in the progress bar)
-- `validationFields` — array of form field names validated when navigating forward from this tab
+- `id`  unique tab identifier (lowercase, kebab-case)
+- `labelKey`  i18n translation key (the tab label shown in the progress bar)
+- `validationFields`  array of form field names validated when navigating forward from this tab
 - Omit `validationFields` for full-form validation on this tab
 
 ## Section Structure
@@ -233,7 +233,7 @@ export { SEOTab }
 
 ### Tab Metadata
 ```tsx
-// WRONG — raw object, no type safety
+// WRONG  raw object, no type safety
 SEOTab._tabMeta = {
   id: "seo",
   label: "SEO",
@@ -241,7 +241,7 @@ SEOTab._tabMeta = {
   validationFields: ["seo_title"],
 }
 
-// RIGHT — defineTabMeta with generic type
+// RIGHT  defineTabMeta with generic type
 SEOTab._tabMeta = defineTabMeta<ExtendedProductCreateSchemaType>({
   id: "seo",
   labelKey: "products.create.tabs.seo",
@@ -251,16 +251,16 @@ SEOTab._tabMeta = defineTabMeta<ExtendedProductCreateSchemaType>({
 
 ### Tab Heading
 ```tsx
-// WRONG — h1 in a tab
+// WRONG  h1 in a tab
 <Heading level="h1">SEO Settings</Heading>
 
-// RIGHT — h2 with i18n
+// RIGHT  h2 with i18n
 <Heading level="h2">{t("products.create.tabs.seo.header")}</Heading>
 ```
 
 ### Tab Field
 ```tsx
-// WRONG — raw Controller, manual error, hardcoded string
+// WRONG  raw Controller, manual error, hardcoded string
 <Controller
   control={form.control}
   name="seo_title"
@@ -277,7 +277,7 @@ SEOTab._tabMeta = defineTabMeta<ExtendedProductCreateSchemaType>({
   )}
 />
 
-// RIGHT — Form.Field, Form.Label, Form.ErrorMessage, i18n
+// RIGHT  Form.Field, Form.Label, Form.ErrorMessage, i18n
 <Form.Field
   control={form.control}
   name="seo_title"

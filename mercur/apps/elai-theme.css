@@ -6,11 +6,11 @@
 :root,
 .light {
   --elai-bg: #fff7d4;
-  --elai-bg-subtle: #f5efcc;
-  --elai-bg-subtle-hover: #ebe4c4;
-  --elai-bg-field: #fffef8;
-  --elai-bg-field-hover: #faf3d0;
-  --elai-bg-component: #fffef8;
+  --elai-bg-subtle: #efe7c6;
+  --elai-bg-subtle-hover: #e6ddb9;
+  --elai-bg-field: #fff9e3;
+  --elai-bg-field-hover: #f8f0cf;
+  --elai-bg-component: #fcf5dc;
   --elai-fg: #34421e;
   --elai-fg-muted: rgba(52, 66, 30, 0.62);
   --elai-border: rgba(52, 66, 30, 0.16);
@@ -25,10 +25,11 @@
   --ui-bg-field-component: var(--elai-bg-component);
   --ui-bg-component: var(--elai-bg-component);
   --ui-bg-component-hover: var(--elai-bg-subtle-hover);
-  --ui-bg-highlight: #ede8c8;
-  --ui-bg-highlight-hover: #e3dcb8;
+  --ui-bg-component-pressed: #e0d4a8;
+  --ui-bg-highlight: #e8debb;
+  --ui-bg-highlight-hover: #dfd3ad;
   --ui-bg-interactive: rgba(52, 66, 30, 0.08);
-  --ui-bg-overlay: rgba(52, 66, 30, 0.35);
+  --ui-bg-overlay: rgba(32, 44, 18, 0.42);
   --ui-bg-switch-off: rgba(52, 66, 30, 0.12);
   --ui-bg-switch-off-hover: rgba(52, 66, 30, 0.18);
 
@@ -51,18 +52,18 @@
   --ui-border-menu-top: var(--elai-border);
   --ui-border-menu-bot: var(--elai-border);
 
-  --ui-button-inverted: var(--elai-accent);
-  --ui-button-inverted-hover: #263318;
-  --ui-button-inverted-pressed: #1c2612;
+  --ui-button-inverted: #4f6230;
+  --ui-button-inverted-hover: #445527;
+  --ui-button-inverted-pressed: #394921;
   --ui-button-neutral: rgba(52, 66, 30, 0.1);
   --ui-button-neutral-hover: rgba(52, 66, 30, 0.16);
   --ui-button-neutral-pressed: rgba(52, 66, 30, 0.22);
   --ui-button-transparent: transparent;
   --ui-button-transparent-hover: rgba(52, 66, 30, 0.06);
 
-  --ui-contrast-bg-base: var(--elai-accent);
-  --ui-contrast-bg-base-hover: #263318;
-  --ui-contrast-bg-subtle: rgba(52, 66, 30, 0.88);
+  --ui-contrast-bg-base: #4f6230;
+  --ui-contrast-bg-base-hover: #445527;
+  --ui-contrast-bg-subtle: rgba(79, 98, 48, 0.9);
   --ui-contrast-fg-primary: var(--elai-bg);
   --ui-contrast-fg-secondary: rgba(255, 247, 212, 0.82);
 
@@ -80,17 +81,21 @@
 }
 
 .dark {
-  --elai-bg: #1f2814;
-  --elai-bg-subtle: #28321a;
-  --elai-bg-subtle-hover: #313c20;
-  --elai-bg-field: #232d18;
-  --elai-bg-field-hover: #2c3720;
-  --elai-bg-component: #232d18;
-  --elai-fg: #fff7d4;
-  --elai-fg-muted: rgba(255, 247, 212, 0.65);
-  --elai-border: rgba(255, 247, 212, 0.12);
-  --elai-border-strong: rgba(255, 247, 212, 0.22);
-  --elai-accent: #d4e4a8;
+  /*
+   * Keep the ELAI dashboards on the same beige brand canvas
+   * even when the user/system theme is dark.
+   */
+  --elai-bg: #fff7d4;
+  --elai-bg-subtle: #efe7c6;
+  --elai-bg-subtle-hover: #e6ddb9;
+  --elai-bg-field: #fff9e3;
+  --elai-bg-field-hover: #f8f0cf;
+  --elai-bg-component: #fcf5dc;
+  --elai-fg: #34421e;
+  --elai-fg-muted: rgba(52, 66, 30, 0.62);
+  --elai-border: rgba(52, 66, 30, 0.16);
+  --elai-border-strong: rgba(52, 66, 30, 0.28);
+  --elai-accent: #34421e;
 
   --ui-bg-base: var(--elai-bg);
   --ui-bg-subtle: var(--elai-bg-subtle);
@@ -100,37 +105,38 @@
   --ui-bg-field-component: var(--elai-bg-component);
   --ui-bg-component: var(--elai-bg-component);
   --ui-bg-component-hover: var(--elai-bg-subtle-hover);
-  --ui-bg-highlight: #313c20;
-  --ui-bg-highlight-hover: #3a4626;
-  --ui-bg-interactive: rgba(255, 247, 212, 0.08);
-  --ui-bg-overlay: rgba(0, 0, 0, 0.55);
+  --ui-bg-component-pressed: #e0d4a8;
+  --ui-bg-highlight: #e8debb;
+  --ui-bg-highlight-hover: #dfd3ad;
+  --ui-bg-interactive: rgba(52, 66, 30, 0.08);
+  --ui-bg-overlay: rgba(32, 44, 18, 0.42);
 
   --ui-fg-base: var(--elai-fg);
-  --ui-fg-subtle: rgba(255, 247, 212, 0.88);
+  --ui-fg-subtle: rgba(52, 66, 30, 0.88);
   --ui-fg-muted: var(--elai-fg-muted);
-  --ui-fg-disabled: rgba(255, 247, 212, 0.38);
+  --ui-fg-disabled: rgba(52, 66, 30, 0.38);
   --ui-fg-interactive: var(--elai-accent);
-  --ui-fg-interactive-hover: #e8f2c8;
-  --ui-fg-on-color: #1f2814;
-  --ui-fg-on-inverted: #1f2814;
+  --ui-fg-interactive-hover: #263318;
+  --ui-fg-on-color: var(--elai-bg);
+  --ui-fg-on-inverted: var(--elai-bg);
 
   --ui-border-base: var(--elai-border);
   --ui-border-strong: var(--elai-border-strong);
   --ui-border-interactive: var(--elai-accent);
 
-  --ui-button-inverted: var(--elai-accent);
-  --ui-button-inverted-hover: #e8f2c8;
-  --ui-button-inverted-pressed: #f0f6dc;
-  --ui-button-neutral: rgba(255, 247, 212, 0.08);
-  --ui-button-neutral-hover: rgba(255, 247, 212, 0.12);
-  --ui-button-neutral-pressed: rgba(255, 247, 212, 0.16);
+  --ui-button-inverted: #4f6230;
+  --ui-button-inverted-hover: #445527;
+  --ui-button-inverted-pressed: #394921;
+  --ui-button-neutral: rgba(52, 66, 30, 0.1);
+  --ui-button-neutral-hover: rgba(52, 66, 30, 0.16);
+  --ui-button-neutral-pressed: rgba(52, 66, 30, 0.22);
 
-  --ui-contrast-bg-base: var(--elai-accent);
-  --ui-contrast-bg-base-hover: #e8f2c8;
-  --ui-contrast-fg-primary: #1f2814;
-  --ui-contrast-fg-secondary: rgba(31, 40, 20, 0.82);
+  --ui-contrast-bg-base: #4f6230;
+  --ui-contrast-bg-base-hover: #445527;
+  --ui-contrast-fg-primary: var(--elai-bg);
+  --ui-contrast-fg-secondary: rgba(255, 247, 212, 0.82);
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html,
@@ -141,10 +147,157 @@ body {
 
 body {
   font-family: Helvetica, Arial, sans-serif;
+  background-image: radial-gradient(
+      circle at 0% 0%,
+      rgba(79, 98, 48, 0.16),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(79, 98, 48, 0.11),
+      transparent 42%
+    );
 }
 
 /* Auth screens: cream canvas + card contrast */
 .bg-ui-bg-subtle.flex.min-h-dvh,
 .bg-ui-bg-base.flex.min-h-dvh {
   background-color: var(--elai-bg) !important;
+}
+
+.font-serif {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+@keyframes elai-onboarding-enter-forward {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes elai-onboarding-enter-back {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.elai-onboarding-step-header {
+  animation: elai-onboarding-enter-forward 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.elai-onboarding-panel {
+  animation: elai-onboarding-enter-forward 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+  border-radius: 12px;
+  overflow: visible;
+  position: relative;
+  z-index: 0;
+}
+
+.elai-onboarding-panel label,
+.elai-onboarding-panel [data-label] {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.elai-onboarding-panel input,
+.elai-onboarding-panel textarea,
+.elai-onboarding-panel button[role="combobox"],
+.elai-onboarding-panel [data-radix-select-trigger] {
+  border-radius: 6px !important;
+}
+
+.elai-onboarding-panel button[type="submit"] {
+  border-radius: 8px !important;
+  min-height: 2.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Select / dropdown menus — portaled; fix contrast, height, and stacking */
+[data-radix-popper-content-wrapper] {
+  z-index: 10050 !important;
+}
+
+[data-radix-select-content],
+[role="listbox"].bg-ui-bg-component,
+.shadow-elevation-flyout[role="listbox"] {
+  z-index: 10050 !important;
+  background-color: #ffffff !important;
+  color: #34421e !important;
+  border: 1px solid rgba(52, 66, 30, 0.28) !important;
+  box-shadow: 0 16px 48px rgba(52, 66, 30, 0.18) !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Medusa popper mode wrongly sizes viewport to trigger height */
+[data-radix-select-content] > [data-radix-select-viewport],
+[role="listbox"] > div {
+  height: auto !important;
+  max-height: 260px !important;
+  overflow-y: auto !important;
+}
+
+[data-radix-select-content] [data-radix-select-item],
+[role="listbox"] [role="option"] {
+  color: #34421e !important;
+  background-color: transparent !important;
+}
+
+[data-radix-select-content] [data-radix-select-item] span,
+[role="listbox"] [role="option"] span {
+  color: #34421e !important;
+}
+
+[data-radix-select-content] [data-radix-select-item][data-highlighted],
+[data-radix-select-content] [data-radix-select-item]:focus-visible,
+[role="listbox"] [role="option"][data-highlighted],
+[role="listbox"] [role="option"]:focus-visible {
+  background-color: #efe7c6 !important;
+  color: #34421e !important;
+}
+
+[data-radix-select-content] [data-radix-select-item][data-state="checked"],
+[role="listbox"] [role="option"][data-state="checked"],
+[role="listbox"] [role="option"][aria-selected="true"] {
+  background-color: #e6ddb9 !important;
+  color: #34421e !important;
+}
+
+[data-radix-select-content] [data-radix-select-item] svg,
+[role="listbox"] [role="option"] svg {
+  color: #34421e !important;
+}
+
+/* Select triggers */
+button[role="combobox"],
+[data-radix-select-trigger] {
+  background-color: #fff9e3 !important;
+  color: #34421e !important;
+  border: 1px solid rgba(52, 66, 30, 0.16) !important;
+}
+
+button[role="combobox"] [data-placeholder],
+[data-radix-select-trigger] [data-placeholder],
+button[role="combobox"] span,
+[data-radix-select-trigger] span {
+  color: #34421e !important;
+}
+
+button[role="combobox"] [data-placeholder],
+[data-radix-select-trigger] [data-placeholder] {
+  color: rgba(52, 66, 30, 0.62) !important;
 }

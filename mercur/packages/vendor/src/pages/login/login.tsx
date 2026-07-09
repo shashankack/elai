@@ -196,11 +196,8 @@ const Root = ({ children }: { children?: ReactNode }) => {
         children
       ) : (
         <>
-          <LoginLogo />
-          <div className="mt-6">
-            <LoginHeader />
-            <LoginForm />
-          </div>
+          <LoginHeader />
+          <LoginForm />
           <LoginFooter />
         </>
       )}

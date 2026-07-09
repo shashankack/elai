@@ -2,13 +2,13 @@
 
 ## What Is This?
 
-Mercur is an open-source, MIT-licensed **marketplace platform** built on top of the [Medusa](https://medusajs.com) commerce framework. Medusa supplies the core commerce engine — products, pricing, carts, orders, fulfillment, promotions, payments, events. Mercur adds the marketplace layer on top: sellers, onboarding, commissions, vendor payouts, order splitting, requests, reviews, and three role-specific surfaces (Admin, Vendor, Store).
+Mercur is an open-source, MIT-licensed **marketplace platform** built on top of the [Medusa](https://medusajs.com) commerce framework. Medusa supplies the core commerce engine  products, pricing, carts, orders, fulfillment, promotions, payments, events. Mercur adds the marketplace layer on top: sellers, onboarding, commissions, vendor payouts, order splitting, requests, reviews, and three role-specific surfaces (Admin, Vendor, Store).
 
 The product has three audiences:
 
-- **Marketplace operators** — run the platform via the Admin Panel and Admin API.
-- **Sellers / vendors** — run their store via the Vendor Portal and Vendor API.
-- **Developers / AI agents** — extend the platform via the Dashboard SDK, typed API client, and Medusa's standard module/workflow extension model.
+- **Marketplace operators**  run the platform via the Admin Panel and Admin API.
+- **Sellers / vendors**  run their store via the Vendor Portal and Vendor API.
+- **Developers / AI agents**  extend the platform via the Dashboard SDK, typed API client, and Medusa's standard module/workflow extension model.
 
 ## Core Features
 
@@ -96,7 +96,7 @@ The product has three audiences:
 
 ### Dashboard SDK (`@mercurjs/dashboard-sdk`)
 - Vite plugin shared by admin and vendor apps.
-- File-based routing — drop a file in `src/routes/` and the page is registered.
+- File-based routing  drop a file in `src/routes/` and the page is registered.
 - Automatic navigation generation with labels, icons, rank, nesting, i18n namespaces.
 - Component overrides for layout primitives (sidebars, topbar, store setup, onboarding fields).
 - Build-time configuration for backend/vendor URLs and i18n.
@@ -115,8 +115,8 @@ The product has three audiences:
 - Extended through Medusa's normal extension model: custom modules, module links, workflow hooks, subscribers, and additional API routes inside the consuming project.
 
 ### Templates
-- **basic** — full-stack marketplace monorepo (API, admin, vendor) with Turborepo, ready for production.
-- **plugin** — npm-publishable Mercur plugin scaffold for sharing modules, providers, workflows, and UI.
+- **basic**  full-stack marketplace monorepo (API, admin, vendor) with Turborepo, ready for production.
+- **plugin**  npm-publishable Mercur plugin scaffold for sharing modules, providers, workflows, and UI.
 
 ### AI Integration
 - `llms.txt` exposes the full documentation to any LLM.
@@ -156,12 +156,12 @@ The product has three audiences:
 
 ## Distribution Surface
 
-- `@mercurjs/core` — marketplace plugin for the Medusa server.
-- `@mercurjs/client` — typed API client.
-- `@mercurjs/types` — shared TypeScript contracts.
-- `@mercurjs/dashboard-sdk` — Vite plugin and types for admin/vendor extensibility.
-- `@mercurjs/dashboard-shared` — shared dashboard primitives.
-- `@mercurjs/admin` — admin panel UI package.
-- `@mercurjs/vendor` — vendor portal UI package.
-- `@mercurjs/payout-stripe-connect` — Stripe Connect payout provider.
-- Templates (`basic`, `plugin`) — starter scaffolds.
+- `@mercurjs/core`  marketplace plugin for the Medusa server.
+- `@mercurjs/client`  typed API client.
+- `@mercurjs/types`  shared TypeScript contracts.
+- `@mercurjs/dashboard-sdk`  Vite plugin and types for admin/vendor extensibility.
+- `@mercurjs/dashboard-shared`  shared dashboard primitives.
+- `@mercurjs/admin`  admin panel UI package.
+- `@mercurjs/vendor`  vendor portal UI package.
+- `@mercurjs/payout-stripe-connect`  Stripe Connect payout provider.
+- Templates (`basic`, `plugin`)  starter scaffolds.

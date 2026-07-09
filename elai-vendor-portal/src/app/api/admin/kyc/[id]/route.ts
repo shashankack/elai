@@ -142,7 +142,7 @@ export async function POST(
 
             return NextResponse.json(
               {
-                error: 'Mercur seller provisioning failed — application was not approved',
+                error: 'Mercur seller provisioning failed  application was not approved',
                 details: message,
               },
               { status: 502 }

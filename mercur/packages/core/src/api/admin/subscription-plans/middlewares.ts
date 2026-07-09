@@ -15,7 +15,7 @@ import {
 } from "./validators"
 
 export const adminSubscriptionPlanRoutesMiddlewares: MiddlewareRoute[] = [
-  // GET /admin/subscription-plans — list plans
+  // GET /admin/subscription-plans  list plans
   {
     method: ["GET"],
     matcher: "/admin/subscription-plans",
@@ -26,7 +26,7 @@ export const adminSubscriptionPlanRoutesMiddlewares: MiddlewareRoute[] = [
       ),
     ],
   },
-  // POST /admin/subscription-plans — create plan
+  // POST /admin/subscription-plans  create plan
   {
     method: ["POST"],
     matcher: "/admin/subscription-plans",
@@ -38,7 +38,7 @@ export const adminSubscriptionPlanRoutesMiddlewares: MiddlewareRoute[] = [
       ),
     ],
   },
-  // GET /admin/subscription-plans/:id — get plan
+  // GET /admin/subscription-plans/:id  get plan
   {
     method: ["GET"],
     matcher: "/admin/subscription-plans/:id",
@@ -49,7 +49,7 @@ export const adminSubscriptionPlanRoutesMiddlewares: MiddlewareRoute[] = [
       ),
     ],
   },
-  // POST /admin/subscription-plans/:id — update plan
+  // POST /admin/subscription-plans/:id  update plan
   {
     method: ["POST"],
     matcher: "/admin/subscription-plans/:id",
@@ -61,13 +61,13 @@ export const adminSubscriptionPlanRoutesMiddlewares: MiddlewareRoute[] = [
       ),
     ],
   },
-  // DELETE /admin/subscription-plans/:id — delete plan
+  // DELETE /admin/subscription-plans/:id  delete plan
   {
     method: ["DELETE"],
     matcher: "/admin/subscription-plans/:id",
     middlewares: [],
   },
-  // POST /admin/subscription-plans/:id/overrides — create override
+  // POST /admin/subscription-plans/:id/overrides  create override
   {
     method: ["POST"],
     matcher: "/admin/subscription-plans/:id/overrides",
@@ -79,7 +79,7 @@ export const adminSubscriptionPlanRoutesMiddlewares: MiddlewareRoute[] = [
       ),
     ],
   },
-  // GET /admin/subscription-plans/:id/overrides/:override_id — get override
+  // GET /admin/subscription-plans/:id/overrides/:override_id  get override
   {
     method: ["GET"],
     matcher: "/admin/subscription-plans/:id/overrides/:override_id",
@@ -90,7 +90,7 @@ export const adminSubscriptionPlanRoutesMiddlewares: MiddlewareRoute[] = [
       ),
     ],
   },
-  // POST /admin/subscription-plans/:id/overrides/:override_id — update override
+  // POST /admin/subscription-plans/:id/overrides/:override_id  update override
   {
     method: ["POST"],
     matcher: "/admin/subscription-plans/:id/overrides/:override_id",
@@ -102,7 +102,7 @@ export const adminSubscriptionPlanRoutesMiddlewares: MiddlewareRoute[] = [
       ),
     ],
   },
-  // DELETE /admin/subscription-plans/:id/overrides/:override_id — delete override
+  // DELETE /admin/subscription-plans/:id/overrides/:override_id  delete override
   {
     method: ["DELETE"],
     matcher: "/admin/subscription-plans/:id/overrides/:override_id",

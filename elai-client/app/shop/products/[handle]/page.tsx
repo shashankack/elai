@@ -93,7 +93,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               disabled
               className="w-full rounded-full bg-[var(--highlight)] px-8 py-4 font-subheading text-sm font-semibold text-white opacity-60"
             >
-              Add to cart — coming soon
+              Add to cart  coming soon
             </button>
           </div>
         </div>

@@ -292,7 +292,7 @@ export function generateRoutes({ srcDir, pluginExtensions }: BuiltMercurConfig):
         }
     }
 
-    // Plugin extensions — dynamic import to resolve .default
+    // Plugin extensions  dynamic import to resolve .default
     const pluginDeclarations = pluginExtensions.map((ext, i) =>
         `const __plugin${i} = (await import("${normalizePath(ext)}")).default`
     )

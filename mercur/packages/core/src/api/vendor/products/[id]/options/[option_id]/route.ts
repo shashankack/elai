@@ -51,7 +51,7 @@ export const POST = async (
         },
       })
     } else {
-      // No linked attribute — just delete the option
+      // No linked attribute  just delete the option
       await deleteProductOptionsWorkflow(req.scope).run({
         input: { ids: [req.params.option_id] },
       })

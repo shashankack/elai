@@ -24,7 +24,7 @@ export default async function meilisearchProductsChangedHandler({
     )
 
     logger.debug(
-      `Meilisearch sync: Processing ${event.data.ids.length} products — ${published.length} to upsert, ${other.length} to delete`
+      `Meilisearch sync: Processing ${event.data.ids.length} products  ${published.length} to upsert, ${other.length} to delete`
     )
 
     const [documentsToUpsert] = await Promise.all([

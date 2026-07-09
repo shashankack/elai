@@ -4,7 +4,7 @@
  * Prerequisites (handled by test:integration:meilisearch script):
  *   - MEILISEARCH_HOST env var must be set
  *   - MEILISEARCH_API_KEY env var must be set
- *   - The meilisearch npm package is mocked below — no real Meilisearch instance needed
+ *   - The meilisearch npm package is mocked below  no real Meilisearch instance needed
  */
 
 import { medusaIntegrationTestRunner } from "@medusajs/test-utils"
@@ -222,7 +222,7 @@ medusaIntegrationTestRunner({
           expect(response.status).toBe(400)
         })
 
-        it("requires x-publishable-api-key header — returns 401 without it", async () => {
+        it("requires x-publishable-api-key header  returns 401 without it", async () => {
           mockSearchFn.mockResolvedValueOnce({
             hits: [],
             totalHits: 0,

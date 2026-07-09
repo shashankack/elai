@@ -1,4 +1,4 @@
-# Mercur — Command Reference
+# Mercur  Command Reference
 
 Quick reference for developing the Mercur monorepo in this project.
 
@@ -16,8 +16,8 @@ Quick reference for developing the Mercur monorepo in this project.
 
 Configure the API environment in `mercur/apps/api/.env`:
 
-- `DATABASE_URL` — PostgreSQL connection string
-- `REDIS_URL` — e.g. `redis://localhost:6379`
+- `DATABASE_URL`  PostgreSQL connection string
+- `REDIS_URL`  e.g. `redis://localhost:6379`
 
 ---
 
@@ -331,7 +331,7 @@ Then set `DATABASE_URL` in `mercur/apps/api/.env` accordingly.
 
 ### `Pg connection failed` / `KnexTimeoutError` with Neon (or remote Postgres)
 
-Your `DATABASE_URL` may be correct — Medusa's default connection timeout is only **5 seconds**, which Neon often exceeds on cold start (especially while Turbo is building packages in parallel).
+Your `DATABASE_URL` may be correct  Medusa's default connection timeout is only **5 seconds**, which Neon often exceeds on cold start (especially while Turbo is building packages in parallel).
 
 `medusa-config.ts` sets `databaseDriverOptions.connection.connectionTimeoutMillis: 30000` to fix this. After changing it, restart dev:
 

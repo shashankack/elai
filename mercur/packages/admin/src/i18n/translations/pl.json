@@ -3166,7 +3166,7 @@
     }
   },
   "errors": {
-    "serverError": "Błąd serwera — spróbuj ponownie później.",
+    "serverError": "Błąd serwera  spróbuj ponownie później.",
     "invalidCredentials": "Zły adres e-mail lub hasło"
   },
   "statuses": {

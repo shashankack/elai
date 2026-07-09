@@ -16,12 +16,12 @@ Use this skill when:
 
 ## Command map
 
-- `create` — create a new Mercur project from a template
-- `init` — create `blocks.json` in an existing project
-- `search` — search block names and descriptions
-- `view` — inspect a block before adding it
-- `add` — install one or more blocks into a project
-- `diff` — compare installed block files with the registry version
+- `create`  create a new Mercur project from a template
+- `init`  create `blocks.json` in an existing project
+- `search`  search block names and descriptions
+- `view`  inspect a block before adding it
+- `add`  install one or more blocks into a project
+- `diff`  compare installed block files with the registry version
 
 ## Workdir rules
 

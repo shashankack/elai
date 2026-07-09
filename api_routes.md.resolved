@@ -109,7 +109,7 @@ All routes are served from `http://localhost:9000`. The API has **three access c
 
 ---
 
-### Requests (admin — vendor onboarding approvals)
+### Requests (admin  vendor onboarding approvals)
 
 | Method | Path | Description |
 |---|---|---|
@@ -370,7 +370,7 @@ All routes are served from `http://localhost:9000`. The API has **three access c
 
 ---
 
-### Requests (vendor — publishing workflow)
+### Requests (vendor  publishing workflow)
 
 | Method | Path | Description |
 |---|---|---|
@@ -455,7 +455,7 @@ All routes are served from `http://localhost:9000`. The API has **three access c
 
 ---
 
-### Requests (store — return requests)
+### Requests (store  return requests)
 
 | Method | Path | Description |
 |---|---|---|

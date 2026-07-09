@@ -2738,7 +2738,7 @@
     }
   },
   "errors": {
-    "serverError": "Ошибка сервера — попробуйте позже.",
+    "serverError": "Ошибка сервера  попробуйте позже.",
     "invalidCredentials": "Неверный email или пароль"
   },
   "statuses": {

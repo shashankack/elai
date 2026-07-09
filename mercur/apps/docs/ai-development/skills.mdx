@@ -5,7 +5,7 @@ description: "Pre-built AI workflows that ship with every Mercur project for saf
 
 # Skills
 
-Every Mercur project created with `@mercurjs/cli@latest create` includes a set of **skills** — reusable prompt modules that teach your AI coding tool how to work with Mercur correctly.
+Every Mercur project created with `@mercurjs/cli@latest create` includes a set of **skills**  reusable prompt modules that teach your AI coding tool how to work with Mercur correctly.
 
 Skills encode domain knowledge, enforce patterns, and catch common mistakes. Instead of prompting your AI with "please follow the Mercur conventions for forms", the skill handles it automatically.
 
@@ -15,8 +15,8 @@ Skills encode domain knowledge, enforce patterns, and catch common mistakes. Ins
 
 Skills are markdown files in your project's `.claude/skills/` directory. They're loaded by [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) (and compatible tools) in two ways:
 
-- **Slash command** — type `/skill-name` to invoke a skill explicitly
-- **Auto-trigger** — the AI detects that your task matches a skill's description and loads it automatically
+- **Slash command**  type `/skill-name` to invoke a skill explicitly
+- **Auto-trigger**  the AI detects that your task matches a skill's description and loads it automatically
 
 Each skill contains rules, checklists, and workflows tailored to a specific aspect of Mercur development.
 
@@ -137,7 +137,7 @@ Use this skill when:
 
 - **Directory name** must be `kebab-case` and match the `name` in frontmatter
 - **File** must be named `SKILL.md` (uppercase)
-- **Description** is the primary trigger — write it clearly so the AI knows when to activate
+- **Description** is the primary trigger  write it clearly so the AI knows when to activate
 - Keep skills focused on one domain; split broad skills into smaller ones
 
 ### Frontmatter options
@@ -145,7 +145,7 @@ Use this skill when:
 | Field | Required | Purpose |
 |-------|----------|---------|
 | `name` | Yes | Must match directory name |
-| `description` | Yes | Primary trigger — AI uses this to decide relevance |
+| `description` | Yes | Primary trigger  AI uses this to decide relevance |
 | `allowed-tools` | No | Restrict available tools (e.g., `Read, Grep, Glob` for review-only skills) |
 | `argument-hint` | No | Hint shown in slash command menu (e.g., `"[block-name]"`) |
 
@@ -157,7 +157,7 @@ Use this skill when:
 
 ## Using skills with other AI tools
 
-Skills ship in `.claude/skills/` — this is the canonical location, tracked in git. They're plain markdown files, so any AI coding tool that reads project-level prompts can use them.
+Skills ship in `.claude/skills/`  this is the canonical location, tracked in git. They're plain markdown files, so any AI coding tool that reads project-level prompts can use them.
 
 ### OpenAI Codex
 
@@ -180,8 +180,8 @@ mkdir -p .cursor/rules
 cp .claude/skills/mercur-blocks/SKILL.md .cursor/rules/mercur-blocks.md
 ```
 
-Cursor rules use a similar markdown format — the skill content works as-is, though Cursor-specific frontmatter fields (like `globs`) can be added for file-pattern triggering.
+Cursor rules use a similar markdown format  the skill content works as-is, though Cursor-specific frontmatter fields (like `globs`) can be added for file-pattern triggering.
 
 <Tip>
-  Skills are markdown — they work with any AI tool that supports project-level context. If your tool doesn't have a conventional directory, you can paste skill content into custom instructions or system prompts.
+  Skills are markdown  they work with any AI tool that supports project-level context. If your tool doesn't have a conventional directory, you can paste skill content into custom instructions or system prompts.
 </Tip>

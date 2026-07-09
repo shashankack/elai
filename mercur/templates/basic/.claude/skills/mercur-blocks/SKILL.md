@@ -26,7 +26,7 @@ Think about block impact by alias destination, not just by name.
 2. View the block before installation.
 3. Identify which aliases and workspaces it will touch.
 4. Add the block.
-5. When CLI asks to overwrite `middlewares.ts` — **always decline** and merge manually.
+5. When CLI asks to overwrite `middlewares.ts`  **always decline** and merge manually.
 6. Inspect the installed files and the block docs output.
 7. Apply all configuration from the block docs (middleware, medusa-config, env vars, migrations).
 8. Run `bun run dev` from `packages/api` and check for startup errors before moving on.
@@ -36,10 +36,10 @@ Think about block impact by alias destination, not just by name.
 - Did files land under `packages/api/src`, `apps/admin/src`, or `apps/vendor/src`?
 - Does `packages/api/medusa-config.ts` need module or provider registration?
 - Did the block docs specify middleware to add to `src/api/middlewares.ts`?
-  - Check the **actual export names and paths** in the installed middleware files — block docs may have wrong paths.
+  - Check the **actual export names and paths** in the installed middleware files  block docs may have wrong paths.
   - Verify the import path matches `./actual/folder/middlewares` not a generic path from docs.
 - Did the block add custom modules that need `db:generate <module>` and `db:migrate`?
-  - Even if docs don't mention migrations, check if the module has a `models/` directory — if it does, migrations are needed.
+  - Even if docs don't mention migrations, check if the module has a `models/` directory  if it does, migrations are needed.
 - Did the block add UI routes? They must be under `src/routes/` (not `src/pages/`) for the dashboard SDK to detect them.
 - Did the block add UI pages that need `export const config: RouteConfig` for sidebar visibility?
 - Did the block docs require env vars, plugin options, or config changes?
@@ -61,7 +61,7 @@ When adding a block's middleware to `src/api/middlewares.ts`:
 2. Add the import to the existing `middlewares.ts`.
 3. Spread it into the existing `routes` array.
 
-Do NOT accept CLI's middleware overwrite — it replaces the entire file.
+Do NOT accept CLI's middleware overwrite  it replaces the entire file.
 
 ## Useful commands
 
@@ -81,4 +81,4 @@ Run `medusa` commands (db:generate, db:migrate) from `packages/api`.
 - accepting middleware.ts overwrite from CLI
 - ignoring config or env follow-up after install
 - skipping `diff` when reviewing block updates
-- trusting docs blindly — verify import paths and dependencies against installed files
+- trusting docs blindly  verify import paths and dependencies against installed files

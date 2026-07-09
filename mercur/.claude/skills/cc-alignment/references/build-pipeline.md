@@ -1,11 +1,11 @@
-# Build Pipeline — tsup + DTS
+# Build Pipeline  tsup + DTS
 
 ## How admin package is built
 
 - **Tool**: `tsup` (config in `packages/admin/tsup.config.ts`)
 - **Entry points**: `src/index.ts`, `src/index.css`, `src/pages/index.ts`
 - **Format**: ESM only
-- **DTS**: Enabled — generates `.d.ts` files alongside `.js`
+- **DTS**: Enabled  generates `.d.ts` files alongside `.js`
 - **Output**: `dist/` directory
 
 ## Package exports (`package.json`)
@@ -47,7 +47,7 @@ Consumers import via `@mercurjs/admin/pages` which resolves to `dist/pages/index
 2. Use `Omit<>` when a hook internally adds fields the consumer shouldn't pass
 3. Use `HttpTypes.*` when old type imports are broken
 4. Use safe casts (`as unknown as { field: Type }`) only for runtime-only fields missing from types
-5. Fix at the source (hook definition, type definition) — not at the call site
+5. Fix at the source (hook definition, type definition)  not at the call site
 
 ## Build commands
 

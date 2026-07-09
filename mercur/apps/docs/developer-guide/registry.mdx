@@ -7,7 +7,7 @@ A registry is a collection of blocks that can be installed into any Mercur proje
 
 ## How it works
 
-A registry is a set of JSON files — one per block — served over HTTP. When you run `bunx @mercurjs/cli@latest add`, the CLI fetches the block's JSON, resolves its dependencies, and copies the source files into your project.
+A registry is a set of JSON files  one per block  served over HTTP. When you run `bunx @mercurjs/cli@latest add`, the CLI fetches the block's JSON, resolves its dependencies, and copies the source files into your project.
 
 ```
 registry/
@@ -101,11 +101,11 @@ This reads `registry.json`, resolves all imports for each block, embeds the file
 | `-o, --output <path>` | Output directory (default: `./r`) |
 | `-v, --verbose`       | Show detailed output              |
 
-The build step also automatically resolves NPM dependencies from your source imports — you don't need to list every transitive dependency manually.
+The build step also automatically resolves NPM dependencies from your source imports  you don't need to list every transitive dependency manually.
 
 ## Hosting
 
-Serve the built `r/` directory over HTTP. Any static hosting works — GitHub Pages, Vercel, Netlify, S3, or your own server. The only requirement is that `{name}.json` files are accessible at a public URL.
+Serve the built `r/` directory over HTTP. Any static hosting works  GitHub Pages, Vercel, Netlify, S3, or your own server. The only requirement is that `{name}.json` files are accessible at a public URL.
 
 ## Using custom registries
 

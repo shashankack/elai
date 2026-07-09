@@ -1,11 +1,11 @@
 # RouteDrawer & RouteFocusModal Form Patterns
 
-## RouteDrawer — Full Edit Form Example
+## RouteDrawer  Full Edit Form Example
 
 Based on: `pages/customers/customer-edit/`
 
 ```tsx
-// customer-edit.tsx — outer wrapper
+// customer-edit.tsx  outer wrapper
 export const CustomerEdit = () => {
   const { t } = useTranslation()
   const { id } = useParams()
@@ -27,7 +27,7 @@ export const CustomerEdit = () => {
 ```
 
 ```tsx
-// edit-customer-form.tsx — form component
+// edit-customer-form.tsx  form component
 type EditCustomerFormProps = {
   customer: HttpTypes.AdminCustomer
 }
@@ -142,12 +142,12 @@ export const EditCustomerForm = ({ customer }: EditCustomerFormProps) => {
 }
 ```
 
-## RouteFocusModal — Full Create Form Example
+## RouteFocusModal  Full Create Form Example
 
 Based on: `pages/customers/customer-create/`
 
 ```tsx
-// customer-create.tsx — outer wrapper
+// customer-create.tsx  outer wrapper
 export const CustomerCreate = () => {
   return (
     <RouteFocusModal>
@@ -158,7 +158,7 @@ export const CustomerCreate = () => {
 ```
 
 ```tsx
-// create-customer-form.tsx — form component
+// create-customer-form.tsx  form component
 export const CreateCustomerForm = () => {
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()

@@ -60,7 +60,7 @@ export const CountrySelect: ComponentType<CountrySelectProps> = forwardRef<
             placeholder={placeholder || t("fields.selectCountry")}
           />
         </Select.Trigger>
-        <Select.Content>
+        <Select.Content position="item-aligned">
           {localizedCountries.map((country) => (
             <Select.Item
               key={country.iso_2}

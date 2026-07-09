@@ -35,7 +35,7 @@ export const defineTabMeta = <T extends FieldValues = FieldValues>(
     }
     if (!meta.labelKey && !meta.label) {
       console.warn(
-        `[TabbedForm] Tab "${meta.id}" has neither 'labelKey' nor 'label' — the tab header will be empty`
+        `[TabbedForm] Tab "${meta.id}" has neither 'labelKey' nor 'label'  the tab header will be empty`
       )
     }
   }

@@ -3,6 +3,7 @@
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { VENDOR_PORTAL_URL } from "@/lib/vendor-portal-url";
+import { HERO_STATS } from "@/lib/site-content";
 import "../styles/hero.scss";
 
 const Hero = () => {
@@ -41,7 +42,7 @@ const Hero = () => {
           <div className="elai-shell">
             <div ref={heroTextRef}>
               <span className="hero-eyebrow">
-                India&apos;s First Accessories Marketplace
+                India&apos;s Accessory Destination · 2025
               </span>
               <h1 className="hero-text">
                 Every accessory.
@@ -49,10 +50,12 @@ const Hero = () => {
                 One platform.
               </h1>
               <p className="hero-text-des">
-                Elai is India&apos;s only dedicated accessories marketplace,
-                bringing every accessory category — across fashion, lifestyle,
-                tech, beauty, ethnic, luxury, and daily essentials — onto one
-                unified platform.
+                ELAI is India&apos;s only dedicated accessories marketplace,
+                designed to bring every possible accessory category  across
+                fashion, lifestyle, tech, beauty, ethnic, luxury, and daily
+                essentials  onto one unified platform. With a clean, premium
+                experience and deep category segmentation, we aim to become the
+                go-to app for every accessory a customer needs.
               </p>
               <div className="hero-ctas">
                 <a
@@ -73,7 +76,7 @@ const Hero = () => {
           className="scroll-indicator"
           onClick={() => {
             document
-              .getElementById("categories")
+              .getElementById("about")
               ?.scrollIntoView({ behavior: "smooth" });
           }}
         >
@@ -85,25 +88,15 @@ const Hero = () => {
       {/* Stats bar */}
       <div className="hero-stats">
         <div className="elai-shell hero-stats__inner">
-          <div className="hero-stat">
-            <span className="hero-stat__number">40+</span>
-            <span className="hero-stat__label">Categories</span>
-          </div>
-          <div className="hero-stat-divider" />
-          <div className="hero-stat">
-            <span className="hero-stat__number">₹45,000 Cr</span>
-            <span className="hero-stat__label">Market Opportunity</span>
-          </div>
-          <div className="hero-stat-divider" />
-          <div className="hero-stat">
-            <span className="hero-stat__number">12–15%</span>
-            <span className="hero-stat__label">Annual Growth</span>
-          </div>
-          <div className="hero-stat-divider" />
-          <div className="hero-stat">
-            <span className="hero-stat__number">#1</span>
-            <span className="hero-stat__label">First Mover in India</span>
-          </div>
+          {HERO_STATS.flatMap((stat, index) => [
+            index > 0 ? (
+              <div key={`divider-${index}`} className="hero-stat-divider" />
+            ) : null,
+            <div key={stat.label} className="hero-stat">
+              <span className="hero-stat__number">{stat.number}</span>
+              <span className="hero-stat__label">{stat.label}</span>
+            </div>,
+          ])}
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ title: "Extending Panels"
 description: "Add pages, customize navigation, branding, and replace components in the admin and vendor panels."
 ---
 
-Both the admin panel and vendor portal use the same SDK (`@mercurjs/dashboard-sdk`). Customization is file-based and convention-driven — you add pages by creating files, configure navigation through exports, and override components through config.
+Both the admin panel and vendor portal use the same SDK (`@mercurjs/dashboard-sdk`). Customization is file-based and convention-driven  you add pages by creating files, configure navigation through exports, and override components through config.
 
 ## Setup
 
@@ -71,7 +71,7 @@ The `config` export controls how the page appears in navigation:
 |----------|------|-------------|
 | `label` | `string` | **Required.** Text shown in the sidebar menu |
 | `icon` | `ComponentType` | Icon component (e.g. from `@medusajs/icons`) |
-| `rank` | `number` | Sort order — lower numbers appear first |
+| `rank` | `number` | Sort order  lower numbers appear first |
 | `nested` | `string` | Parent path for nested menu items |
 | `translationNs` | `string` | i18n namespace for the label |
 | `public` | `boolean` | If `true`, the route is accessible without authentication |

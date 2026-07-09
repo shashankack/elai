@@ -1,4 +1,4 @@
-# Mercur Marketplace — End-to-End Process Guide
+# Mercur Marketplace  End-to-End Process Guide
 
 This document covers every major lifecycle flow on the platform, from a vendor signing up to a customer completing checkout and everything in between.
 
@@ -21,9 +21,9 @@ This document covers every major lifecycle flow on the platform, from a vendor s
 
 ## 1. Vendor Onboarding & Approval
 
-### Step 1.1 — Register & Request to Become a Seller
+### Step 1.1  Register & Request to Become a Seller
 
-A user authenticates via standard Medusa auth (email/password), then submits a seller registration request. This does **not** create a seller account immediately — it creates a **pending Request** that the admin must review.
+A user authenticates via standard Medusa auth (email/password), then submits a seller registration request. This does **not** create a seller account immediately  it creates a **pending Request** that the admin must review.
 
 ```
 POST /vendor/sellers
@@ -44,7 +44,7 @@ POST /vendor/sellers
 
 ---
 
-### Step 1.2 — Admin Reviews the Request
+### Step 1.2  Admin Reviews the Request
 
 ```
 GET  /admin/requests             ← list all pending requests
@@ -61,7 +61,7 @@ POST /admin/requests/:id         { "status": "accepted" | "rejected" }
 | `createSellerStep` | Creates the [Seller](file:///c:/Projects/BAW/mercur/packages/modules/b2c-core/src/workflows/seller/workflows/create-seller.ts#18-23) record in DB |
 | `createMemberStep` | Creates the first team member (owner role) |
 | `createSellerOnboardingStep` | Initialises onboarding tracker, all 4 milestones = `false` |
-| `setAuthAppMetadataStep` | **Links the vendor's existing JWT to the seller** — unlocks `/vendor/*` routes |
+| `setAuthAppMetadataStep` | **Links the vendor's existing JWT to the seller**  unlocks `/vendor/*` routes |
 | `createSellerShippingProfileStep` | Auto-creates a default shipping profile |
 
 > After approval, the vendor logs in with the same credentials and now has full access to the Vendor Panel.
@@ -77,21 +77,21 @@ GET  /vendor/sellers/me/onboarding   ← returns current status of all 4 milesto
 POST /vendor/sellers/me/onboarding   ← triggers recalculation of milestone completion
 ```
 
-### Milestone 1 — Store Information
+### Milestone 1  Store Information
 ```
 POST /vendor/sellers/me
 { "name", "handle", "description", "address_line", "city", "postal_code", "country_code" }
 ```
 All required fields must be filled. `photo` and `tax_id` are optional.
 
-### Milestone 2 — Add a Product
+### Milestone 2  Add a Product
 ```
 POST /vendor/products
 { "title", "description", "variants": [...], "options": [...] }
 ```
 At least one product must be linked to the seller.
 
-### Milestone 3 — Add a Stock Location (Warehouse)
+### Milestone 3  Add a Stock Location (Warehouse)
 ```
 POST /vendor/stock-locations
 POST /vendor/stock-locations/:id/fulfillment-sets
@@ -99,7 +99,7 @@ POST /vendor/stock-locations/:id/sales-channels
 ```
 At least one physical stock/warehouse location must be configured, with fulfillment sets and sales channels assigned.
 
-### Milestone 4 — Connect Stripe (Payout Account)
+### Milestone 4  Connect Stripe (Payout Account)
 ```
 POST /vendor/payout-account               ← creates Stripe Connect Express account
 POST /vendor/payout-account/onboarding    ← returns Stripe-hosted onboarding URL
@@ -114,9 +114,9 @@ GET  /vendor/payout-account               ← polls Stripe; auto-updates status 
 
 ## 3. Product Publishing Workflow
 
-Mercur has an **approval-gated publishing system** — vendors submit change requests for admin to review before products go live.
+Mercur has an **approval-gated publishing system**  vendors submit change requests for admin to review before products go live.
 
-### Step 3.1 — Vendor Creates/Updates a Product
+### Step 3.1  Vendor Creates/Updates a Product
 ```
 POST /vendor/products                    ← create
 POST /vendor/products/:id                ← update
@@ -127,14 +127,14 @@ POST /vendor/products/import             ← CSV import
 
 Products are created with `status: "draft"` by default.
 
-### Step 3.2 — Vendor Submits a Publish Request
+### Step 3.2  Vendor Submits a Publish Request
 ```
 POST /vendor/requests
 { "type": "product", "data": { "product_id": "..." } }
 ```
 Creates a `request` record (`status: "pending"`) for admin review.
 
-### Step 3.3 — Admin Approves/Rejects
+### Step 3.3  Admin Approves/Rejects
 ```
 GET  /admin/requests         ← list all pending product requests
 POST /admin/requests/:id     { "status": "accepted" | "rejected" }
@@ -143,7 +143,7 @@ POST /admin/requests/:id     { "status": "accepted" | "rejected" }
 - **Accepted** → product status changes to `"published"`, Algolia index updated
 - **Rejected** → product stays in draft
 
-### Step 3.4 — Algolia Search Sync
+### Step 3.4  Algolia Search Sync
 When a seller's status changes or products are approved, the `seller-status-changed` subscriber fires:
 ```
 SellerEvents.STORE_STATUS_CHANGED → emit AlgoliaEvents.PRODUCTS_CHANGED
@@ -187,7 +187,7 @@ DELETE /store/wishlist/product/:reference_id        ← remove item
 
 This is the most complex flow. A single cart can contain products from **multiple vendors** and is split into separate per-vendor orders at checkout.
 
-### Step 5.1 — Build the Cart (Medusa Standard)
+### Step 5.1  Build the Cart (Medusa Standard)
 Standard Medusa cart flow applies:
 ```
 POST /store/carts                                  ← create cart (Medusa built-in)
@@ -196,7 +196,7 @@ DELETE /store/carts/:id/line-items/:line_id        ← remove item
 POST /store/carts/:id/promotions                   ← apply promo code
 ```
 
-### Step 5.2 — Select Shipping Per Vendor
+### Step 5.2  Select Shipping Per Vendor
 ```
 GET  /store/shipping-options          ← list available options (per region, per seller)
 POST /store/carts/:id/shipping-methods
@@ -204,25 +204,25 @@ POST /store/carts/:id/shipping-methods
 ```
 Each vendor's products may have different shipping options depending on their configured fulfillment sets and service zones.
 
-### Step 5.3 — Add Payment (Medusa Standard)
+### Step 5.3  Add Payment (Medusa Standard)
 ```
 POST /store/payment-collections/:id/payment-sessions   ← init Stripe payment (Medusa built-in)
 POST /store/payment-collections/:id/payment-sessions/:id   ← update (Medusa built-in)
 ```
 
-### Step 5.4 — Complete the Cart (THE KEY STEP)
+### Step 5.4  Complete the Cart (THE KEY STEP)
 ```
 POST /store/carts/:id/complete
 ```
 
-**Internal — `splitAndCompleteCartWorkflow` runs:**
+**Internal  `splitAndCompleteCartWorkflow` runs:**
 
 ```
 1. Validates the cart and payment
 2. Splits the cart by seller:
    - One sub-order per vendor in the cart
    - Each sub-order is linked to its seller
-3. Creates an OrderSet — a parent container grouping all sub-orders
+3. Creates an OrderSet  a parent container grouping all sub-orders
 4. Associates the single payment collection with the OrderSet
 5. Emits OrderSetWorkflowEvents.PLACED event
 ```
@@ -247,7 +247,7 @@ POST /store/carts/:id/complete
 
 ## 6. Payment Capture
 
-Payment capture is fully **automated** — no manual step needed.
+Payment capture is fully **automated**  no manual step needed.
 
 **Trigger:** `OrderSetWorkflowEvents.PLACED` (emitted at end of Step 5.4)
 
@@ -273,38 +273,38 @@ to the respective seller containing order ID and customer name
 
 After payment is captured, each vendor independently fulfills their portion of the order.
 
-### Step 7.1 — Vendor Views Their Orders
+### Step 7.1  Vendor Views Their Orders
 ```
 GET /vendor/orders               ← list (only their own orders)
 GET /vendor/orders/:id           ← detail view
 GET /vendor/orders/:id/changes   ← change history
 ```
 
-### Step 7.2 — Create a Fulfillment (Pack & Ship)
+### Step 7.2  Create a Fulfillment (Pack & Ship)
 ```
 POST /vendor/orders/:id/fulfillments
 { "items": [{ "id": "...", "quantity": 1 }], "location_id": "..." }
 ```
 Creates a fulfillment record. Integrates with the vendor's configured fulfillment provider.
 
-### Step 7.3 — Mark as Shipped
+### Step 7.3  Mark as Shipped
 ```
 POST /vendor/orders/:id/fulfillments/:fulfillment_id/shipments
 { "tracking_number": "1Z999...", "tracking_url": "..." }
 ```
 
-### Step 7.4 — Mark as Delivered
+### Step 7.4  Mark as Delivered
 ```
 POST /vendor/orders/:id/fulfillments/:fulfillment_id/mark-as-delivered
 ```
 
-### Step 7.5 — Complete the Order
+### Step 7.5  Complete the Order
 ```
 POST /vendor/orders/:id/complete
 ```
 Marks the order as fully complete. This **triggers the payout flow** (see Section 8).
 
-### Step 7.6 — Cancel (if needed)
+### Step 7.6  Cancel (if needed)
 ```
 POST /vendor/orders/:id/cancel
 POST /vendor/orders/:id/fulfillments/:fulfillment_id/cancel
@@ -369,7 +369,7 @@ GET /vendor/payouts/:id     ← single payout detail
 
 There are two distinct return flows: a simple return and a request-based return.
 
-### Flow A — Direct Return (Store-initiated)
+### Flow A  Direct Return (Store-initiated)
 
 ```
 POST /store/returns
@@ -391,7 +391,7 @@ POST /vendor/returns/:id/receive/confirm ← finalise return → triggers refund
 POST /vendor/returns/:id/dismiss-items  ← reject specific items (not accepted)
 ```
 
-### Flow B — Return Request (Customer Submits, Vendor Approves)
+### Flow B  Return Request (Customer Submits, Vendor Approves)
 
 Used when the vendor must explicitly approve before the customer ships the item back.
 

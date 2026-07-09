@@ -15,7 +15,7 @@ Read this guide when a task touches:
 - vendor page composition and request flow
 - Vite bootstrap configuration in `vite.config.ts`
 
-Dashboard mounting (which app, which path) is configured in `packages/api/medusa-config.ts` via the `vendor-ui` module — not in this app.
+Dashboard mounting (which app, which path) is configured in `packages/api/medusa-config.ts` via the `vendor-ui` module  not in this app.
 
 If `src/routes` does not exist yet, create it when adding the first custom page.
 

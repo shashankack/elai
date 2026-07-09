@@ -3,29 +3,33 @@ import { ThemeContext, ThemeOption, ThemeValue } from "./theme-context"
 
 const THEME_KEY = "medusa_admin_theme"
 
+function normalizeThemeOption(theme: ThemeOption): ThemeOption {
+  return theme === "dark" ? "light" : theme
+}
+
 function getDefaultValue(): ThemeOption {
   const persisted = localStorage?.getItem(THEME_KEY) as ThemeOption
 
   if (persisted) {
-    return persisted
+    return normalizeThemeOption(persisted)
   }
 
-  return "system"
+  return "light"
 }
 
 function getThemeValue(selected: ThemeOption): ThemeValue {
-  if (selected === "system") {
+  const normalized = normalizeThemeOption(selected)
+
+  if (normalized === "system") {
     if (window !== undefined) {
-      return window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light"
+      return "light"
     }
 
     // Default to light theme if we can't detect the system preference
     return "light"
   }
 
-  return selected
+  return normalized
 }
 
 export const ThemeProvider = ({ children }: PropsWithChildren) => {
@@ -33,11 +37,12 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
   const [value, setValue] = useState<ThemeValue>(getThemeValue(state))
 
   const setTheme = (theme: ThemeOption) => {
-    localStorage.setItem(THEME_KEY, theme)
+    const normalized = normalizeThemeOption(theme)
+    localStorage.setItem(THEME_KEY, normalized)
 
-    const themeValue = getThemeValue(theme)
+    const themeValue = getThemeValue(normalized)
 
-    setState(theme)
+    setState(normalized)
     setValue(themeValue)
   }
 

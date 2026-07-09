@@ -127,7 +127,7 @@ export async function reindexSellerProducts(
     }
 
     logger.debug(
-      `Meilisearch: Seller ${sellerId} ${action} — re-indexing ${productIds.length} products`
+      `Meilisearch: Seller ${sellerId} ${action}  re-indexing ${productIds.length} products`
     )
 
     const chunks = chunkArray(productIds, CHUNK_SIZE)

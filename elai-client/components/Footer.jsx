@@ -1,20 +1,22 @@
 "use client";
 
 import React from "react";
+import { CONTACT, SITE_CATEGORIES } from "@/lib/site-content";
 import "../styles/footer.scss";
 
 const Footer = () => {
-  const categories = [
-    { name: "Fashion Jewellery", url: "#categories" },
-    { name: "Men's Accessories", url: "#categories" },
-    { name: "Ethnic Pieces", url: "#categories" },
-    { name: "Tech Accessories", url: "#categories" },
-    { name: "Luxury Goods", url: "#categories" },
-    { name: "Bags & Travel", url: "#categories" },
-  ];
+  const categories = SITE_CATEGORIES.map((category) => ({
+    name: category.title,
+    url: "#categories",
+  }));
 
-  const company = [{ name: "About Elai", url: "#why-elai" }];
-  const support = [{ name: "Contact Us", url: "#contact" }];
+  const company = [
+    { name: "About ELAI", url: "#about" },
+    { name: "Why ELAI", url: "#why-elai" },
+  ];
+  const support = [
+    { name: CONTACT.email, url: `mailto:${CONTACT.email}` },
+  ];
 
   const socialLinks = [
     { name: "Instagram", icon: "instagram", url: "#" },
@@ -35,8 +37,7 @@ const Footer = () => {
           <div className="footer-brand-col">
             <div className="footer-logo">elai</div>
             <p className="footer-tagline">
-              India&apos;s All-in-One Accessories Marketplace. Every accessory.
-              One platform.
+              India&apos;s All-in-One Accessories Marketplace. {CONTACT.tagline}
             </p>
             <div className="footer-social">
               {socialLinks.map((social, index) => (
@@ -151,7 +152,7 @@ const Footer = () => {
 
           <div className="footer-bottom">
             <div className="footer-copyright">
-              © 2026 Elai. All rights reserved.
+              © 2025 ELAI. All rights reserved.
             </div>
             <div className="footer-credit">
               Built by{" "}

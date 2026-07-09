@@ -18,9 +18,9 @@ Start with a working 2.0 project (see [Installation](/getting-started/installati
 | `@mercurjs/b2c-core` | `@mercurjs/core` |
 | `@mercurjs/commission` | Built into core |
 | `@mercurjs/algolia` | Block: `mercurjs add algolia` |
-| `@mercurjs/resend` | No 2.0 equivalent — port manually |
-| `@mercurjs/payment-stripe-connect` | No 2.0 equivalent — port manually |
-| `@mercurjs/stripe-tax-provider` | No 2.0 equivalent — port manually |
+| `@mercurjs/resend` | No 2.0 equivalent  port manually |
+| `@mercurjs/payment-stripe-connect` | No 2.0 equivalent  port manually |
+| `@mercurjs/stripe-tax-provider` | No 2.0 equivalent  port manually |
 | `@medusajs/admin-vite-plugin` | `@mercurjs/dashboard-sdk` |
 | `@medusajs/js-sdk` | `@mercurjs/client` |
 
@@ -57,9 +57,9 @@ Install these blocks instead of porting their 1.x package code.
 
 These areas do not currently have full 1.x parity and should be treated as manual migration work:
 
-- **`TaxCode`** — no 2.0 equivalent today. Port the old logic manually if your project depends on it.
-- **`SecondaryCategory`** — no full 1.x parity today. Port manually for now if your project depends on it. Fuller support is planned for a future 2.x release.
-- **Product attributes** — the 1.x attribute module is not carried over 1:1. Port manually for now if your project depends on it. Fuller support is planned for a future 2.x release.
+- **`TaxCode`**  no 2.0 equivalent today. Port the old logic manually if your project depends on it.
+- **`SecondaryCategory`**  no full 1.x parity today. Port manually for now if your project depends on it. Fuller support is planned for a future 2.x release.
+- **Product attributes**  the 1.x attribute module is not carried over 1:1. Port manually for now if your project depends on it. Fuller support is planned for a future 2.x release.
 
 ## Order Set to Order Group
 
@@ -80,15 +80,15 @@ The 1.x `OrderSet` entity has been renamed to **`OrderGroup`** in 2.0. This is a
 
 Two fields that existed on `OrderSet` in 1.x have been **removed** from `OrderGroup`:
 
-- **`payment_collection_id`** — Payment collections are now linked at the individual **order** level, not at the group level. Each per-seller order gets its own link to the cart's payment collection during checkout. To get the payment collection, query the linked orders instead of the group.
-- **`sales_channel_id`** — Sales channel information is stored on each individual order, not on the group.
+- **`payment_collection_id`**  Payment collections are now linked at the individual **order** level, not at the group level. Each per-seller order gets its own link to the cart's payment collection during checkout. To get the payment collection, query the linked orders instead of the group.
+- **`sales_channel_id`**  Sales channel information is stored on each individual order, not on the group.
 
 ### New computed fields
 
 Two fields are now **computed at query time** (not stored as columns):
 
-- **`seller_count`** — Count of distinct sellers across all linked orders
-- **`total`** — Sum of order totals from linked order summaries
+- **`seller_count`**  Count of distinct sellers across all linked orders
+- **`total`**  Sum of order totals from linked order summaries
 
 ### Migration steps
 
@@ -108,11 +108,11 @@ Copy to `packages/api/src/modules/`, register in `medusa-config.ts`. Update impo
 
 ### Workflows
 
-Copy to `packages/api/src/workflows/<entity>/`. Don't create barrel `index.ts` files — conflicts with block installation.
+Copy to `packages/api/src/workflows/<entity>/`. Don't create barrel `index.ts` files  conflicts with block installation.
 
 ### API Routes
 
-Copy to `packages/api/src/api/`. Type both generics — codegen reads these:
+Copy to `packages/api/src/api/`. Type both generics  codegen reads these:
 
 ```typescript
 export const GET = async (
@@ -132,10 +132,10 @@ Copy to `packages/api/src/links/` and `src/subscribers/`. Don't duplicate links 
 Copy to `packages/api/src/providers/`. Two required changes:
 
 ```typescript
-// medusa-config.ts — must use ./src/ prefix
+// medusa-config.ts  must use ./src/ prefix
 resolve: './src/providers/my-provider'
 
-// provider index.ts — must import from framework/utils
+// provider index.ts  must import from framework/utils
 import { Modules, ModuleProvider } from "@medusajs/framework/utils"
 ```
 

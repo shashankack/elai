@@ -12,7 +12,7 @@ Use this skill when:
 - asked to review code quality, contract compliance, or regression risk
 - `admin-ui-review` is too narrow (backend, registry, cross-package changes)
 
-For admin UI-specific review, prefer `admin-ui-review` — it has deeper UI pattern coverage.
+For admin UI-specific review, prefer `admin-ui-review`  it has deeper UI pattern coverage.
 
 ## Review Process
 
@@ -42,12 +42,12 @@ For admin UI-specific review, prefer `admin-ui-review` — it has deeper UI patt
 
 Prioritize checks by blast radius:
 
-1. **Contract changes** — API paths, response shapes, generated types, CLI commands
-2. **Type safety** — `any` on boundaries, missing generics, type widening
-3. **Registry integrity** — import paths, barrel files, file layout, docs field
-4. **Behavioral regression** — submit guards, loading states, error handling
-5. **Cross-package impact** — changes that touch multiple package boundaries
-6. **Pattern consistency** — last, after safety is confirmed
+1. **Contract changes**  API paths, response shapes, generated types, CLI commands
+2. **Type safety**  `any` on boundaries, missing generics, type widening
+3. **Registry integrity**  import paths, barrel files, file layout, docs field
+4. **Behavioral regression**  submit guards, loading states, error handling
+5. **Cross-package impact**  changes that touch multiple package boundaries
+6. **Pattern consistency**  last, after safety is confirmed
 
 ## Output Format
 
@@ -57,14 +57,14 @@ Prioritize checks by blast radius:
 ## Code Review: [scope description]
 
 ### P1 (Blocker)
-1. **[Issue]** in `file:line` — [description]
+1. **[Issue]** in `file:line`  [description]
    Fix: [concrete suggestion]
 
 ### P2 (Should fix)
-1. **[Issue]** in `file:line` — [description]
+1. **[Issue]** in `file:line`  [description]
 
 ### P3 (Suggestion)
-1. **[Issue]** in `file:line` — [description]
+1. **[Issue]** in `file:line`  [description]
 
 ### Verified
 - [what was checked]

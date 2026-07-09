@@ -4,7 +4,7 @@ $fg: #2e3e20;
 $highlight: #748956;
 $white: #ffffff;
 
-// Outer wrapper — positions the pill in the viewport
+// Outer wrapper  positions the pill in the viewport
 .nav-outer {
   position: fixed;
   top: 20px;
@@ -26,7 +26,7 @@ $white: #ffffff;
   font-family: var(--font-subheading), serif;
   overflow: hidden;
 
-  // floating glass — always visible
+  // floating glass  always visible
   background: rgba(46, 62, 32, 0.25);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -229,7 +229,7 @@ $white: #ffffff;
     opacity 0.28s ease,
     padding 0.38s cubic-bezier(0.4, 0, 0.2, 1);
 
-  // Open state — driven by header--open
+  // Open state  driven by header--open
   .header--open & {
     max-height: 320px;
     opacity: 1;

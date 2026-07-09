@@ -1,6 +1,6 @@
 # Mercur Skills
 
-This directory contains skills for Mercur development — reusable prompt modules that encode domain knowledge, checklists, and workflows.
+This directory contains skills for Mercur development  reusable prompt modules that encode domain knowledge, checklists, and workflows.
 
 `.claude/skills/` is the canonical location. It is tracked in git.
 
@@ -13,7 +13,7 @@ An agent loads a skill when:
 
 ## Discovering skills
 
-1. Browse this directory — each subdirectory is a skill
+1. Browse this directory  each subdirectory is a skill
 2. Use slash command autocomplete in Claude Code (type `/` and search)
 3. Read the `description` field in each skill's `SKILL.md` frontmatter
 
@@ -21,7 +21,7 @@ An agent loads a skill when:
 
 - **Directory name**: `kebab-case`, must match the `name` field in frontmatter
 - **Skill file**: always `SKILL.md` (uppercase)
-- **Description**: one sentence starting with a verb — this is the primary trigger mechanism
+- **Description**: one sentence starting with a verb  this is the primary trigger mechanism
 - **References**: additional files go in a `references/` subdirectory
 
 ## Skill file anatomy
@@ -52,10 +52,10 @@ Use this skill when:
 | Field | Required | Purpose |
 |-------|----------|---------|
 | `name` | Yes | Must match directory name |
-| `description` | Yes | Primary trigger — agents use this to decide relevance |
+| `description` | Yes | Primary trigger  agents use this to decide relevance |
 | `allowed-tools` | No | Restrict tools (e.g., `Read, Grep, Glob` for review-only skills) |
 | `argument-hint` | No | Hint for slash command args (e.g., `"[block-name]"`) |
-| `disable-model-invocation` | No | Prevent auto-trigger — manual `/slash-command` only |
+| `disable-model-invocation` | No | Prevent auto-trigger  manual `/slash-command` only |
 
 ## Using with other AI tools
 
@@ -83,4 +83,4 @@ Do not create speculative skills.
 
 ## Relationship to spec-kit
 
-Skills encode **domain knowledge** (how to build forms, how to review code, how blocks work). Spec-kit commands (`/speckit.*`) encode **workflow** (specify → plan → tasks → implement). They complement each other — spec-kit plans may reference skills for implementation guidance, but skills do not depend on spec-kit.
+Skills encode **domain knowledge** (how to build forms, how to review code, how blocks work). Spec-kit commands (`/speckit.*`) encode **workflow** (specify → plan → tasks → implement). They complement each other  spec-kit plans may reference skills for implementation guidance, but skills do not depend on spec-kit.

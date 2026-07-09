@@ -5,6 +5,10 @@ import { toast } from "@medusajs/ui";
 import { useCreateSellerAccount, useLogout } from "@hooks/api";
 import { queryClient } from "@lib/query-client";
 import { TOTAL_STEPS } from "../constants";
+import {
+  ELAI_ONBOARDING_DEFAULTS,
+  slugifyStoreHandle,
+} from "../elai-onboarding-config";
 
 type StoreData = {
   name: string;
@@ -34,8 +38,7 @@ type CompanyData = {
 type PaymentData = {
   country_code: string;
   holder_name: string;
-  iban?: string;
-  bic?: string;
+  bank_name?: string;
   routing_number?: string;
   account_number?: string;
 };
@@ -63,15 +66,22 @@ export const useOnboarding = (memberEmail: string) => {
 
   const isPending = isCreating || isSubmitting;
 
-  // Step 1: Store — save locally
+  // Step 1: Store  save locally
   const submitStoreStep = useCallback(async (data: StoreData) => {
-    storeDataRef.current = data;
+    storeDataRef.current = {
+      ...data,
+      currency_code: data.currency_code || ELAI_ONBOARDING_DEFAULTS.currency_code,
+      handle: data.handle || slugifyStoreHandle(data.name) || undefined,
+    };
     setCurrentStep(1);
   }, []);
 
-  // Step 2: Address — save locally
+  // Step 2: Address  save locally
   const submitAddressStep = useCallback(async (data: AddressData) => {
-    addressDataRef.current = data;
+    addressDataRef.current = {
+      ...data,
+      country_code: data.country_code || ELAI_ONBOARDING_DEFAULTS.country_code,
+    };
     setCurrentStep(2);
   }, []);
 
@@ -80,7 +90,7 @@ export const useOnboarding = (memberEmail: string) => {
     setCurrentStep(2);
   }, []);
 
-  // Step 3: Company — save locally
+  // Step 3: Company  save locally
   const submitCompanyStep = useCallback(async (data: CompanyData) => {
     companyDataRef.current = data;
     setCurrentStep(3);
@@ -113,8 +123,6 @@ export const useOnboarding = (memberEmail: string) => {
         companyData?.corporate_name ||
         companyData?.registration_number ||
         companyData?.tax_id;
-
-      const isUS = paymentData?.country_code === "us";
 
       let registerDraft: { first_name?: string; last_name?: string } = {};
       try {
@@ -164,13 +172,14 @@ export const useOnboarding = (memberEmail: string) => {
             : undefined,
           payment_details: paymentData
             ? {
-                country_code: paymentData.country_code,
+                country_code:
+                  paymentData.country_code ||
+                  ELAI_ONBOARDING_DEFAULTS.country_code,
                 holder_name: paymentData.holder_name,
-                iban: isUS ? null : paymentData.iban || null,
-                bic: isUS ? null : paymentData.bic || null,
-                routing_number: isUS
-                  ? paymentData.routing_number || null
-                  : null,
+                bank_name: paymentData.bank_name || null,
+                iban: null,
+                bic: null,
+                routing_number: paymentData.routing_number || null,
                 account_number: paymentData.account_number || null,
               }
             : undefined,
@@ -183,7 +192,7 @@ export const useOnboarding = (memberEmail: string) => {
         try {
           await logout();
         } catch {
-          // If logout fails we still redirect to /login — user will re-auth there.
+          // If logout fails we still redirect to /login  user will re-auth there.
         }
         queryClient.clear();
         sessionStorage.removeItem("mercur_onboarding_email");
@@ -199,7 +208,7 @@ export const useOnboarding = (memberEmail: string) => {
     [createSeller, logout, memberEmail, navigate],
   );
 
-  // Step 4: Payment — create seller with everything and finish
+  // Step 4: Payment  create seller with everything and finish
   const submitPaymentStep = useCallback(
     async (data: PaymentData) => {
       await createSellerWithAllData(data);
@@ -207,7 +216,7 @@ export const useOnboarding = (memberEmail: string) => {
     [createSellerWithAllData],
   );
 
-  // Skip payment — create seller without payment details
+  // Skip payment  create seller without payment details
   const skipPaymentStep = useCallback(async () => {
     await createSellerWithAllData();
   }, [createSellerWithAllData]);

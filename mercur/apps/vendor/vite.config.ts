@@ -1,11 +1,26 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig, loadEnv, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import { mercurDashboardPlugin } from '@mercurjs/dashboard-sdk'
 
 const appDir = path.dirname(fileURLToPath(import.meta.url))
 const monorepoRoot = path.resolve(appDir, '../..')
+const vendorDist = path.resolve(monorepoRoot, 'packages/vendor/dist')
+
+function reloadOnVendorPackageRebuild(): Plugin {
+  return {
+    name: 'reload-on-vendor-package-rebuild',
+    configureServer(server) {
+      server.watcher.add(vendorDist)
+      server.watcher.on('change', (file) => {
+        if (file.includes(`${path.sep}packages${path.sep}vendor${path.sep}dist${path.sep}`)) {
+          server.ws.send({ type: 'full-reload', path: '*' })
+        }
+      })
+    },
+  }
+}
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -16,6 +31,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react(),
+      reloadOnVendorPackageRebuild(),
       mercurDashboardPlugin({
         medusaConfigPath: '../api/medusa-config.ts',
         name: 'ELAI',
@@ -33,7 +49,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     optimizeDeps: {
-      exclude: ['@medusajs/dashboard'],
+      exclude: ['@medusajs/dashboard', '@mercurjs/vendor'],
     },
     server: {
       fs: {

@@ -1,10 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Heading, Input } from "@medusajs/ui";
+import { Button, Input } from "@medusajs/ui";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as z from "zod";
 
 import { Form } from "@components/common/form";
+import { isOnboardingFieldVisible } from "../elai-onboarding-config";
 
 const CompanyStepSchema = z.object({
   corporate_name: z.string().optional(),
@@ -38,10 +39,6 @@ export const CompanyStep = ({ onSubmit, onSkip, isPending }: CompanyStepProps) =
 
   return (
     <div className="flex flex-col gap-y-8">
-      <Heading level="h2" className="text-ui-fg-base text-lg">
-        {t("onboarding.wizard.company.title")}
-      </Heading>
-
       <Form {...form}>
         <form onSubmit={handleSubmit} className="flex flex-col gap-y-6">
           <div className="flex flex-col gap-y-4">
@@ -60,21 +57,23 @@ export const CompanyStep = ({ onSubmit, onSkip, isPending }: CompanyStepProps) =
                 </Form.Item>
               )}
             />
-            <Form.Field
-              control={form.control}
-              name="registration_number"
-              render={({ field }) => (
-                <Form.Item>
-                  <Form.Label optional>
-                    {t("onboarding.wizard.company.registrationNumber")}
-                  </Form.Label>
-                  <Form.Control>
-                    <Input {...field} />
-                  </Form.Control>
-                  <Form.ErrorMessage />
-                </Form.Item>
-              )}
-            />
+            {isOnboardingFieldVisible("company", "registration_number") && (
+              <Form.Field
+                control={form.control}
+                name="registration_number"
+                render={({ field }) => (
+                  <Form.Item>
+                    <Form.Label optional>
+                      {t("onboarding.wizard.company.registrationNumber")}
+                    </Form.Label>
+                    <Form.Control>
+                      <Input {...field} />
+                    </Form.Control>
+                    <Form.ErrorMessage />
+                  </Form.Item>
+                )}
+              />
+            )}
             <Form.Field
               control={form.control}
               name="tax_id"

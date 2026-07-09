@@ -1,16 +1,14 @@
 import { AnimatePresence } from "motion/react";
 import { useNavigate } from "react-router-dom";
 
-import { useLogout, useSellers } from "@hooks/api";
-import { queryClient } from "@lib/query-client";
-import { WizardSidebar } from "./wizard-sidebar";
-import { WizardPreview } from "./wizard-preview";
-import { WizardStep } from "./wizard-step";
+import { usePerformLogout, useSellers } from "@hooks/api";
+import { ElaiOnboardingShell } from "./elai-onboarding-shell";
 import { useOnboarding } from "./hooks/use-onboarding";
-import { StoreStep } from "./steps/store-step";
 import { AddressStep } from "./steps/address-step";
 import { CompanyStep } from "./steps/company-step";
 import { PaymentStep } from "./steps/payment-step";
+import { StoreStep } from "./steps/store-step";
+import { WizardStep } from "./wizard-step";
 
 type OnboardingWizardProps = {
   memberEmail: string;
@@ -18,7 +16,7 @@ type OnboardingWizardProps = {
 
 export const OnboardingWizard = ({ memberEmail }: OnboardingWizardProps) => {
   const navigate = useNavigate();
-  const { mutateAsync: logoutMutation } = useLogout();
+  const performLogout = usePerformLogout();
   const { seller_members } = useSellers();
   const hasStores = (seller_members?.length ?? 0) > 0;
 
@@ -41,10 +39,7 @@ export const OnboardingWizard = ({ memberEmail }: OnboardingWizardProps) => {
       if (hasStores) {
         navigate("/store-select", { replace: true });
       } else {
-        await logoutMutation(undefined, {
-          onSuccess: () => queryClient.clear(),
-          onSettled: () => navigate("/login"),
-        });
+        await performLogout();
       }
     } else {
       goBack();
@@ -96,15 +91,13 @@ export const OnboardingWizard = ({ memberEmail }: OnboardingWizardProps) => {
   };
 
   return (
-    <div className="flex h-dvh w-dvw overflow-hidden">
-      <WizardSidebar
-        currentStep={currentStep}
-        onBack={handleBack}
-        showBack
-      >
-        <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
-      </WizardSidebar>
-      <WizardPreview currentStep={currentStep} />
-    </div>
+    <ElaiOnboardingShell
+      currentStep={currentStep}
+      showSteps
+      showBack
+      onBack={handleBack}
+    >
+      <AnimatePresence mode="wait">{renderStep()}</AnimatePresence>
+    </ElaiOnboardingShell>
   );
 };

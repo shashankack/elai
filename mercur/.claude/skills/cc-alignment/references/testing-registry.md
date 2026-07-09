@@ -1,4 +1,4 @@
-# Testing Registry — Consumer Page Patterns
+# Testing Registry  Consumer Page Patterns
 
 ## Location
 
@@ -24,7 +24,7 @@ import { useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import { client } from "../../../lib/client"
 
-// Consumer's own hook — fetches product data
+// Consumer's own hook  fetches product data
 function useProduct(id: string) {
   const { data, ...rest } = useQuery({
     queryKey: ["products", id],
@@ -61,7 +61,7 @@ export default Page
 ```
 
 Key points:
-- Consumer fetches data with own hook (NOT `useLoaderData` — loader is lost during dashboard-sdk route merge)
+- Consumer fetches data with own hook (NOT `useLoaderData`  loader is lost during dashboard-sdk route merge)
 - Sections accept data as props (no context/provider)
 - Import compound root directly (no `* as AdminPages` + cast)
 - Slots accessed as `ProductDetailPage.MainGeneralSection`
@@ -109,7 +109,7 @@ const ProductDetailPage = (AdminPages as any).ProductDetailPage
 // BAD: fallback aliases for backward compat
 const MainGeneralSection = ProductDetailPage.MainGeneralSection ?? ProductDetailPage.GeneralSection
 
-// BAD: useLoaderData — loader is lost during dashboard-sdk route merge
+// BAD: useLoaderData  loader is lost during dashboard-sdk route merge
 const data = useLoaderData() as { product: HttpTypes.AdminProduct }  // undefined!
 
 // BAD: trying to use context (doesn't exist)

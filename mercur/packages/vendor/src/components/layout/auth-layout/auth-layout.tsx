@@ -1,33 +1,24 @@
-import { ReactNode } from "react";
+import { ReactNode } from "react"
 
-import { assetUrl } from "../../../utils/asset-url";
+import { ElaiBotanicalDecoration } from "../../onboarding-wizard/elai-botanical-decoration"
+import { ElaiOnboardingBrand } from "../../onboarding-wizard/elai-onboarding-brand"
 
 type AuthLayoutProps = {
-  children: ReactNode;
-};
+  children: ReactNode
+}
 
 export const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
-    <div className="flex h-dvh w-dvw overflow-hidden">
-      <div className="bg-ui-bg-base border-ui-border-base flex h-full w-full flex-col overflow-y-auto border-r lg:w-[584px] lg:shrink-0">
-        <div className="flex flex-1 flex-col p-8 lg:px-14 lg:py-12">
+    <div className="elai-onboarding-shell relative min-h-dvh bg-[#FFF7D4] text-[#34421E]">
+      <ElaiBotanicalDecoration className="pointer-events-none absolute right-0 top-0 hidden h-[420px] w-[180px] opacity-50 md:block" />
+
+      <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col px-5 py-10 sm:px-8 sm:py-14">
+        <ElaiOnboardingBrand />
+
+        <div className="elai-onboarding-panel flex flex-1 flex-col border border-[#34421E]/10 bg-white/80 p-6 shadow-[0_16px_48px_rgba(52,66,30,0.07)] sm:p-8">
           {children}
         </div>
       </div>
-      <div
-        className="relative hidden flex-1 items-center justify-center overflow-hidden lg:flex"
-        style={{
-          backgroundImage: `url(${assetUrl("/onboarding/bg.svg")})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <img
-          src={assetUrl("/onboarding/0.png")}
-          alt=""
-          className="max-h-[75%] w-[75%] object-contain"
-        />
-      </div>
     </div>
-  );
-};
+  )
+}

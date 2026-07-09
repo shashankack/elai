@@ -99,22 +99,22 @@ to implement, along with its status, verification steps, and evidence.
 
 1. Lives at the project root.
 2. Each feature entry has the following fields:
-   - `id` — short unique identifier
-   - `priority` — integer, lower = higher priority
-   - `area` — which part of the app (e.g. `"chat"`, `"import"`, `"search"`)
-   - `title` — short description
-   - `user_visible_behavior` — what the user should see when it works
-   - `status` — one of `not_started`, `in_progress`, `blocked`, `passing`
-   - `verification` — step-by-step instructions to confirm it works
-   - `evidence` — recorded proof that verification passed (filled in by the agent)
-   - `notes` — any extra context
+   - `id`  short unique identifier
+   - `priority`  integer, lower = higher priority
+   - `area`  which part of the app (e.g. `"chat"`, `"import"`, `"search"`)
+   - `title`  short description
+   - `user_visible_behavior`  what the user should see when it works
+   - `status`  one of `not_started`, `in_progress`, `blocked`, `passing`
+   - `verification`  step-by-step instructions to confirm it works
+   - `evidence`  recorded proof that verification passed (filled in by the agent)
+   - `notes`  any extra context
 
 **Status rules:**
 
-- `not_started` — hasn't been touched
-- `in_progress` — the one feature currently being worked on (only one at a time)
-- `blocked` — can't proceed due to a documented issue
-- `passing` — verification passed and evidence is recorded
+- `not_started`  hasn't been touched
+- `in_progress`  the one feature currently being worked on (only one at a time)
+- `blocked`  can't proceed due to a documented issue
+- `passing`  verification passed and evidence is recorded
 
 The agent must only have one feature `in_progress` at a time.
 

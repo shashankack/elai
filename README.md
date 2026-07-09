@@ -6,6 +6,5 @@ Monorepo for the ELAI marketplace platform.
 |------|-------------|
 | `mercur/` | Mercur backend (API, admin, vendor) |
 | `elai-mobile/` | Expo mobile app |
-| `elai-client/` | Next.js storefront |
-| `elai-vendor-portal/` | Vendor onboarding portal (Supabase) |
+| `elai-client/` | Next.js storefront (links sellers to Mercur vendor onboarding) |
 | `docs/` | Project docs |

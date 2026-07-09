@@ -3314,10 +3314,40 @@
     "wizard": {
       "stepOf": "Step {{current}} of {{total}}",
       "steps": {
-        "store": "Store Details",
-        "address": "Address",
-        "company": "Company Details",
-        "payment": "Payment Details"
+        "store": "Storefront",
+        "address": "Business",
+        "company": "Legal & tax",
+        "payment": "Payouts"
+      },
+      "elai": {
+        "eyebrow": "Vendor application",
+        "title": "Join the ELAI marketplace",
+        "description": "Curated essentials, trusted vendors. Complete four quick steps — we review and approve within a few business days.",
+        "progress": "Progress",
+        "contact": "Questions? Blameus2025@gmail.com",
+        "alreadyApproved": "Already approved?",
+        "signIn": "Sign in to vendor dashboard",
+        "registerEyebrow": "Account",
+        "registerTitle": "Create your login",
+        "registerDescription": "This email and password unlock your vendor dashboard after ELAI approves your store.",
+        "stepHints": {
+          "store": "Tell us about your brand",
+          "address": "Business address",
+          "company": "GST and company identity",
+          "payment": "Settlement details"
+        },
+        "stepTitles": {
+          "store": "Tell us about your brand",
+          "address": "Business address",
+          "company": "Legal & tax details",
+          "payment": "Bank & payouts"
+        },
+        "stepDescriptions": {
+          "store": "Your store name and story appear across the ELAI marketplace.",
+          "address": "Where your business is registered or operates from.",
+          "company": "We verify GST and business identity before your listing goes live.",
+          "payment": "Settlement details for when ELAI pays you for orders."
+        }
       },
       "store": {
         "title": "Enter your store details",
@@ -3337,7 +3367,7 @@
         "namePlaceholder": "Headquarters",
         "address": "Address",
         "address2": "Apartment, suite, etc.",
-        "postalCode": "Postal Code",
+        "postalCode": "PIN code",
         "city": "City",
         "country": "Country",
         "state": "State"
@@ -3345,15 +3375,17 @@
       "company": {
         "title": "Enter your company details",
         "subtitle": "Professional seller information",
-        "corporateName": "Company",
+        "corporateName": "Legal business name",
         "registrationNumber": "Registration number",
-        "taxId": "Tax ID"
+        "taxId": "GSTIN"
       },
       "payment": {
         "title": "Enter your payment details",
-        "subtitle": "How you'd like to receive payouts",
-        "accountName": "Account name",
+        "subtitle": "Indian bank account for ELAI payouts",
+        "accountName": "Account holder name",
+        "bankName": "Bank name",
         "accountNumber": "Account number",
+        "ifsc": "IFSC code",
         "achRoutingNumber": "ACH routing number",
         "iban": "IBAN",
         "swiftBic": "SWIFT / BIC"

@@ -1,6 +1,6 @@
 ---
 title: "Order Groups"
-description: "How multi-seller checkout creates order groups — the container that ties a single cart to multiple seller orders."
+description: "How multi-seller checkout creates order groups  the container that ties a single cart to multiple seller orders."
 ---
 
 An order group is a container created during checkout when a customer buys from multiple sellers. It groups the individual per-seller orders that originate from a single cart, giving customers and admins a unified view of what was purchased.
@@ -17,7 +17,7 @@ An order group is a container created during checkout when a customer buys from 
 | `total` | `bigNumber` | Sum of all order totals in the group (computed) |
 
 <Info>
-  `seller_count` and `total` are **computed fields** — they are calculated from linked orders at query time, not stored as columns. `seller_count` is the count of distinct sellers across all orders in the group, and `total` is the sum of each order's `current_order_total` from the order summary.
+  `seller_count` and `total` are **computed fields**  they are calculated from linked orders at query time, not stored as columns. `seller_count` is the count of distinct sellers across all orders in the group, and `total` is the sum of each order's `current_order_total` from the order summary.
 </Info>
 
 ## Relationships
@@ -26,7 +26,7 @@ Order groups connect to other entities through two links:
 
 ### Cart (read-only)
 
-Links the order group back to its originating cart via the `cart_id` field. This is a read-only link — carts are immutable after checkout.
+Links the order group back to its originating cart via the `cart_id` field. This is a read-only link  carts are immutable after checkout.
 
 ```
 order_group.cart_id → cart.id
@@ -44,19 +44,19 @@ order_group ←→ order (via order_group_order)
 
 Order groups are created automatically during checkout by the `completeCartWithSplitOrdersWorkflow`. This is what happens when a customer completes a cart containing products from multiple sellers:
 
-1. **Lock** — The workflow acquires a lock on the cart to prevent double-processing
-2. **Group by seller** — Cart items are grouped by seller (via the product-seller link)
-3. **Create orders** — A separate Medusa order is created for each seller, containing only that seller's items and shipping
-4. **Create order group** — An order group is created with the customer and cart references
-5. **Link everything** — The workflow creates links between:
+1. **Lock**  The workflow acquires a lock on the cart to prevent double-processing
+2. **Group by seller**  Cart items are grouped by seller (via the product-seller link)
+3. **Create orders**  A separate Medusa order is created for each seller, containing only that seller's items and shipping
+4. **Create order group**  An order group is created with the customer and cart references
+5. **Link everything**  The workflow creates links between:
    - Each order and the order group
    - Each order and its seller
    - Each order and the cart's payment collection
    - Each seller and the customer (if new relationship)
-6. **Finalize** — Inventory is reserved, payment is authorized, and the `order_group.created` event is emitted
+6. **Finalize**  Inventory is reserved, payment is authorized, and the `order_group.created` event is emitted
 
 <Info>
-  Payment collections are linked at the **individual order level**, not on the order group. This is a deliberate design decision — each per-seller order gets its own link to the payment collection, which enables per-order capture and refund flows.
+  Payment collections are linked at the **individual order level**, not on the order group. This is a deliberate design decision  each per-seller order gets its own link to the payment collection, which enables per-order capture and refund flows.
 </Info>
 
 ## Events
@@ -109,6 +109,6 @@ Returns a single order group. Throws `404` if the order group doesn't belong to 
 |----------|---------|
 | `getOrderGroupsListWorkflow` | Retrieves a paginated list of order groups with aggregated payment and fulfillment statuses for each |
 | `getOrderGroupDetailWorkflow` | Retrieves a single order group with full order details and aggregated statuses |
-| `createOrderGroupStep` | Internal step used by `completeCartWithSplitOrdersWorkflow` — not called directly |
+| `createOrderGroupStep` | Internal step used by `completeCartWithSplitOrdersWorkflow`  not called directly |
 
 The list and detail workflows automatically inject order-related fields (items, payment collections, fulfillments) and compute an overall `payment_status` and `fulfillment_status` for each order group by aggregating across all linked orders.

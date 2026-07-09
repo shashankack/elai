@@ -4,9 +4,9 @@ Step-by-step workflow for aligning an existing CC page to vendor standard.
 
 ## Pre-flight
 
-- [ ] Read current component file — identify export name, slot names, missing slots
-- [ ] Read current `index.ts` — identify `as Component` export
-- [ ] Read `pages/index.ts` — identify current barrel export
+- [ ] Read current component file  identify export name, slot names, missing slots
+- [ ] Read current `index.ts`  identify `as Component` export
+- [ ] Read `pages/index.ts`  identify current barrel export
 - [ ] Check if testing registry has consumer pages for this component
 
 ## Detail Page Alignment
@@ -18,8 +18,8 @@ Step-by-step workflow for aligning an existing CC page to vendor standard.
 - [ ] Prefix sidebar slots: `SalesChannelSection` → `SidebarSalesChannelSection`, etc.
 - [ ] Add missing slots (e.g., `SidebarSellerSection` if seller section exists in default composition)
 - [ ] Remove dead slots (e.g., references to non-existent components)
-- [ ] Verify: NO context/provider — Root fetches data and passes as props to sections
-- [ ] Verify: NO `Layout` wrapper — `TwoColumnPage` inlined directly in Root's default composition (with `data`, `hasOutlet`, `showJSON`, `showMetadata`)
+- [ ] Verify: NO context/provider  Root fetches data and passes as props to sections
+- [ ] Verify: NO `Layout` wrapper  `TwoColumnPage` inlined directly in Root's default composition (with `data`, `hasOutlet`, `showJSON`, `showMetadata`)
 - [ ] Verify: `Main`, `Sidebar` slots remain on compound (NO `useContext`, NO `Layout`)
 - [ ] Verify: default composition JSX unchanged (only Object.assign keys change)
 - [ ] If detail page can receive nested route/extension children, use explicit compound composition guard (not generic `Children.count(children) > 0`)
@@ -69,7 +69,7 @@ Step-by-step workflow for aligning an existing CC page to vendor standard.
 - [ ] Rename export: `XxxList` → `XxxListPage`
 - [ ] `Object.assign` exposes: `Table`, `Header`, `HeaderTitle`, `HeaderActions`, `HeaderCreateButton`, `HeaderExportButton`, `HeaderImportButton`, `DataTable`
 
-### 4. Route index, barrel, testing registry — same as detail page
+### 4. Route index, barrel, testing registry  same as detail page
 
 ## Post-flight
 

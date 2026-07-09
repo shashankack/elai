@@ -3,52 +3,19 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { VENDOR_PORTAL_URL } from "@/lib/vendor-portal-url";
+import {
+  PLATFORM_FEATURES,
+  SELLER_BENEFITS,
+  SITE_CATEGORIES,
+} from "@/lib/site-content";
 import "../styles/section6.scss";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Section6 = () => {
-  const features = [
-    {
-      title: "Smart Categories",
-      desc: "40+ intelligently segmented accessory categories for effortless discovery.",
-      icon: "",
-    },
-    {
-      title: "Trend-First Homepage",
-      desc: "Always updated with micro and macro fashion trends from across India.",
-      icon: "",
-    },
-    {
-      title: "Style Quiz & Recs",
-      desc: "Personalised picks based on your style profile and browsing behaviour.",
-      icon: "",
-    },
-    {
-      title: "One-Day Metro Delivery",
-      desc: "Lightning-fast delivery in major metros with real-time tracking.",
-      icon: "",
-    },
-    {
-      title: "Seller Dashboard",
-      desc: "Inventory, analytics, brand store pages and easy onboarding for sellers.",
-      icon: "",
-    },
-    {
-      title: "Elai Prime",
-      desc: "Free delivery, early access to drops, loyalty points and exclusive deals.",
-      icon: "",
-    },
-  ];
-
-  const revenueStreams = [
-    "Marketplace Commission (8–25%)",
-    "Seller Subscription Plans",
-    "Ad Placements & Sponsored Listings",
-    "Brand Collaborations & Exclusive Drops",
-    "Elai Prime Membership",
-    "Logistics Partnerships",
-  ];
+  const features = [...PLATFORM_FEATURES];
+  const revenueStreams = [...SELLER_BENEFITS];
 
   const sectionRef = useRef(null);
   const featCardsRef = useRef([]);
@@ -98,11 +65,11 @@ const Section6 = () => {
       <div className="section6-content">
         <div className="elai-shell">
           <div className="section6-header">
-            <p className="section6-subtitle">PLATFORM FEATURES</p>
+            <p className="section6-subtitle">OVERVIEW OF SERVICES</p>
             <h2 className="section6-title">
-              Built for the modern
+              Accessorising made
               <br />
-              accessory shopper
+              effortless & expressive
             </h2>
           </div>
 
@@ -132,10 +99,12 @@ const Section6 = () => {
                 that works for you
               </h2>
               <p className="revenue-desc">
-                Join India&apos;s first accessories-dedicated platform and reach
-                a highly targeted audience of accessory-first shoppers.
+                ELAI supports emerging designers, artisans, and accessory brands
+                with a premium digital space to showcase their craft, reach a
+                nationwide audience, and stand out beyond overcrowded
+                marketplaces.
               </p>
-              <a href="#contact" className="revenue-cta">
+              <a href={VENDOR_PORTAL_URL} className="revenue-cta">
                 Apply as a Seller →
               </a>
             </div>
@@ -160,26 +129,10 @@ const Section6 = () => {
 
       <div className="clients-carousel">
         <div className="clients-track">
-          {[
-            "Fashion Jewellery",
-            "Men's Accessories",
-            "Ethnic Pieces",
-            "Tech Accessories",
-            "Luxury Goods",
-            "Bags & Travel",
-            "Beauty Add-Ons",
-            "Seasonal Gifting",
-            "Foot Accessories",
-            "Fashion Jewellery",
-            "Men's Accessories",
-            "Ethnic Pieces",
-            "Tech Accessories",
-            "Luxury Goods",
-            "Bags & Travel",
-          ].map((name, i) => (
-            <div key={i} className="client-logo">
+          {[...SITE_CATEGORIES, ...SITE_CATEGORIES].map((category, i) => (
+            <div key={`${category.title}-${i}`} className="client-logo">
               <div className="logo-frame">
-                <span className="logo-text">{name}</span>
+                <span className="logo-text">{category.title}</span>
               </div>
             </div>
           ))}

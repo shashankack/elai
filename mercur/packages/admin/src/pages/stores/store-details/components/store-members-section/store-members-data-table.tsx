@@ -122,7 +122,7 @@ export const StoreMembersDataTable = ({
 
     // If no accepted owner member exists yet and there's only one pending
     // invite, that invite is the future owner. With multiple pending invites
-    // ownership is ambiguous (whoever accepts first wins) — skip the badge.
+    // ownership is ambiguous (whoever accepts first wins)  skip the badge.
     const inviteIsFutureOwner =
       !hasOwnerMember && pendingInvites.length === 1;
 

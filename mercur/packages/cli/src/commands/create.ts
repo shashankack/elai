@@ -29,7 +29,7 @@ const MIN_SUPPORTED_NODE_VERSION = 20;
 const CREATE_TEMPLATES = {
   basic: {
     path: "basic",
-    description: "Full marketplace starter — sellers, products, orders, admin & vendor panels",
+    description: "Full marketplace starter  sellers, products, orders, admin & vendor panels",
   },
   // todo: uncomment registry template
   // registry: {
@@ -38,7 +38,7 @@ const CREATE_TEMPLATES = {
   // },
   plugin: {
     path: "plugin",
-    description: "MedusaJS plugin template — for building reusable marketplace extensions",
+    description: "MedusaJS plugin template  for building reusable marketplace extensions",
   },
 } as const;
 

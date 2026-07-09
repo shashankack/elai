@@ -14,7 +14,7 @@ Use this skill when:
 ## Read first
 
 Before any action, read:
-1. `docs/migrations/mercur-1.x-to-2.0/README.md` — entry point, version check, package/directory mapping, approach
+1. `docs/migrations/mercur-1.x-to-2.0/README.md`  entry point, version check, package/directory mapping, approach
 
 ## Workflow
 
@@ -23,8 +23,8 @@ Before any action, read:
 Read `references/decision-tree.md` in this skill directory, then:
 
 1. Inventory the source project:
-   - Read `package.json` — note `@mercurjs/b2c-core` version to determine 1.x version
-   - If version < 1.4.0: custom admin code is inside the backend repo (not `apps/admin/`) — search there when scanning for custom dashboard pages
+   - Read `package.json`  note `@mercurjs/b2c-core` version to determine 1.x version
+   - If version < 1.4.0: custom admin code is inside the backend repo (not `apps/admin/`)  search there when scanning for custom dashboard pages
    - Count custom modules, workflows, API routes, subscribers, links
    - Identify third-party integrations
    - Note custom admin/vendor pages

@@ -78,7 +78,7 @@ async function syncCustomFields(
         })),
       );
     } catch {
-      // Tables don't exist yet — empty schema will generate CREATE TABLE
+      // Tables don't exist yet  empty schema will generate CREATE TABLE
     }
 
     const rawSql = normalizeMigrationSQL(

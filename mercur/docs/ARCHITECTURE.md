@@ -1,4 +1,4 @@
-# Architecture — Mercur.js Marketplace Platform
+# Architecture  Mercur.js Marketplace Platform
 
 ## System Overview
 
@@ -55,7 +55,7 @@ Dashboards (separate Vite apps that talk to the API above):
 
 ## Packages
 
-### `packages/core` — marketplace plugin
+### `packages/core`  marketplace plugin
 The Medusa plugin that holds all marketplace business logic. Wired into the API via `withMercur()` in `apps/api/medusa-config.ts`.
 
 - **Modules** (`src/modules/`): `seller`, `commission`, `payout`, `subscription`, `attribute`, `product-attribute`, `vendor-product-attribute`, `order-group`, `custom-fields`, `inventory-item`, `stock-location`, `shipping-profile`, `shipping-option`, `price-list`, `promotion`, `campaign`.
@@ -63,21 +63,21 @@ The Medusa plugin that holds all marketplace business logic. Wired into the API 
 - **API routes** (`src/api/`): `admin/*` (marketplace operator), `vendor/*` (seller-scoped), plus hooks, middlewares, query configs, and validators.
 - **Auth/RBAC**: `withMercur()` auto-registers a roles module so vendor scoping works out of the box.
 
-### `packages/cli` — `mercurjs` command
+### `packages/cli`  `mercurjs` command
 Scaffolds and operates projects. Key commands:
 
-- `create`, `init` — bootstrap a new project from `templates/basic` (or `plugin` / `registry`).
-- `add`, `search`, `view`, `diff` — discover and install **blocks** declared in `blocks.json`.
-- `develop`, `start`, `build` — run the API + dashboards.
-- `codegen`, `registry-codegen`, `plugin-build`, `registry-build` — generate the typed route map consumed by `@mercurjs/client` and build registry/plugin artefacts.
+- `create`, `init`  bootstrap a new project from `templates/basic` (or `plugin` / `registry`).
+- `add`, `search`, `view`, `diff`  discover and install **blocks** declared in `blocks.json`.
+- `develop`, `start`, `build`  run the API + dashboards.
+- `codegen`, `registry-codegen`, `plugin-build`, `registry-build`  generate the typed route map consumed by `@mercurjs/client` and build registry/plugin artefacts.
 
-### `packages/client` — typed fetch wrapper
+### `packages/client`  typed fetch wrapper
 `createClient(...)` returns a recursive `Proxy`. Accessing `sdk.admin.products.$id.query({ $id })` resolves to a `GET /admin/products/:id`; `.mutate(...)` is POST, `.delete(...)` is DELETE. Types come from the generated route map. This is the only HTTP layer used by the dashboards.
 
 ### `packages/types`
 Shared TypeScript types: re-exports Medusa framework types and adds Mercur entities (seller, member, commission, payout, order-group, etc.). Every other package depends on this.
 
-### `packages/dashboard-sdk` — extension Vite plugin
+### `packages/dashboard-sdk`  extension Vite plugin
 The mechanism that lets users add their own pages and blocks into Admin/Vendor without forking. It:
 
 - Scans `src/routes/**/page.tsx` to build a file-based route tree.
@@ -88,13 +88,13 @@ The mechanism that lets users add their own pages and blocks into Admin/Vendor w
 ### `packages/dashboard-shared`
 React primitives shared by Admin and Vendor: `TabbedForm`, `DataTable`, `Form`, `SwitchBox`, `FileUpload`, `ChipInput`, `ActionMenu`, layout shells. Built on `@medusajs/ui`, Ariakit, React Hook Form, TanStack Query/Table, i18next.
 
-### `packages/admin` — operator dashboard UI library
+### `packages/admin`  operator dashboard UI library
 ~39 page folders covering the operator surface: sellers, products, categories, orders, customers, inventory, locations, commissions, attributes, payouts, campaigns, collections, order-groups, subscription-plans, commission-rates, etc. Each folder typically owns `page.tsx`, query configs, validators, and forms.
 
-### `packages/vendor` — seller dashboard UI library
+### `packages/vendor`  seller dashboard UI library
 ~24 page folders for the vendor surface: products, orders, payouts, categories, inventory, price-lists, campaigns, collections, customers, product-variants, promotions, onboarding, store settings. Same primitives as Admin, scoped to a single seller's data.
 
-### `packages/registry` — blocks registry
+### `packages/registry`  blocks registry
 Private workspace holding the canonical block catalogue (team management, reviews, notifications, search integrations, chat, etc.). Backs `mercurjs search` / `mercurjs view` / `mercurjs add`.
 
 ### `packages/providers/payout-stripe-connect`
@@ -102,27 +102,27 @@ Stripe Connect implementation for the `payout` module: creates connected account
 
 ## Apps (starters wired to the packages)
 
-- **`apps/api`** — Medusa 2.x server. `medusa-config.ts` calls `withMercur()` to mount the core plugin and RBAC module. Exposes `/admin`, `/vendor`, and `/store` routes. Scripts: `dev`, `start`, `test:integration:http`, `test:integration:modules`, `test:unit`.
-- **`apps/admin-test`** — Vite app on **port 7000**. Mounts `@mercurjs/admin`, runs `mercurDashboardPlugin` from `@mercurjs/dashboard-sdk`, and points at the API. Drop a `page.tsx` under `src/routes` to add an admin page.
-- **`apps/vendor`** — Vite app on **port 7001**. Same setup as admin but mounts `@mercurjs/vendor`. Used by sellers.
-- **`apps/docs`** — Mintlify documentation site.
+- **`apps/api`**  Medusa 2.x server. `medusa-config.ts` calls `withMercur()` to mount the core plugin and RBAC module. Exposes `/admin`, `/vendor`, and `/store` routes. Scripts: `dev`, `start`, `test:integration:http`, `test:integration:modules`, `test:unit`.
+- **`apps/admin-test`**  Vite app on **port 7000**. Mounts `@mercurjs/admin`, runs `mercurDashboardPlugin` from `@mercurjs/dashboard-sdk`, and points at the API. Drop a `page.tsx` under `src/routes` to add an admin page.
+- **`apps/vendor`**  Vite app on **port 7001**. Same setup as admin but mounts `@mercurjs/vendor`. Used by sellers.
+- **`apps/docs`**  Mintlify documentation site.
 
 ## Templates (consumed by the CLI)
 
-- **`templates/basic`** — full marketplace starter (API + Admin + Vendor + workspace tooling). What `mercurjs create` produces. Ships with `.claude/skills/` for `dashboard-page-ui`, `dashboard-form-ui`, `dashboard-tab-ui`, `mercur-cli`, `mercur-blocks`.
-- **`templates/plugin`** — scaffold for building a reusable Medusa/Mercur plugin that can be installed as a block into projects.
-- **`templates/registry`** — scaffold for hosting a custom block registry (alternative to the default `@mercurjs/registry`).
+- **`templates/basic`**  full marketplace starter (API + Admin + Vendor + workspace tooling). What `mercurjs create` produces. Ships with `.claude/skills/` for `dashboard-page-ui`, `dashboard-form-ui`, `dashboard-tab-ui`, `mercur-cli`, `mercur-blocks`.
+- **`templates/plugin`**  scaffold for building a reusable Medusa/Mercur plugin that can be installed as a block into projects.
+- **`templates/registry`**  scaffold for hosting a custom block registry (alternative to the default `@mercurjs/registry`).
 
 ## Core Domain Concepts
 
-- **Seller** — the marketplace vendor entity. Has handle, contact, address, payment details, status (`pending` / `approved` / `rejected` / `suspended`).
-- **Member** — a user belonging to a seller, with roles. Invited via member-invite workflows.
-- **Order-Group** — wrapper that lets a single customer cart contain items from multiple sellers. On placement, the cart is split into per-seller orders linked to a parent group.
-- **Commission** — per-seller or per-category fee structure applied during order placement, deducted from payouts.
-- **Payout** — settlement to a seller's connected account (default provider: Stripe Connect). States: `pending` / `completed` / `cancelled`.
-- **Subscription** — recurring seller plans (e.g. tiered marketplace access).
-- **Attributes / Product-Attributes** — extended product schema editable by vendors.
-- **Blocks** — installable feature packages (UI + workflows + routes) discovered via `blocks.json` and added with `mercurjs add`.
+- **Seller**  the marketplace vendor entity. Has handle, contact, address, payment details, status (`pending` / `approved` / `rejected` / `suspended`).
+- **Member**  a user belonging to a seller, with roles. Invited via member-invite workflows.
+- **Order-Group**  wrapper that lets a single customer cart contain items from multiple sellers. On placement, the cart is split into per-seller orders linked to a parent group.
+- **Commission**  per-seller or per-category fee structure applied during order placement, deducted from payouts.
+- **Payout**  settlement to a seller's connected account (default provider: Stripe Connect). States: `pending` / `completed` / `cancelled`.
+- **Subscription**  recurring seller plans (e.g. tiered marketplace access).
+- **Attributes / Product-Attributes**  extended product schema editable by vendors.
+- **Blocks**  installable feature packages (UI + workflows + routes) discovered via `blocks.json` and added with `mercurjs add`.
 
 ## Request Flow Examples
 
@@ -160,11 +160,11 @@ Storefront cart contains items from sellers A and B
 
 ## Extension Points
 
-1. **Custom pages** — drop `page.tsx` files under `apps/admin-test/src/routes` or `apps/vendor/src/routes`; `@mercurjs/dashboard-sdk` picks them up at build time.
-2. **Blocks** — install with `mercurjs add <block>`; declared in `blocks.json`. Blocks can ship API routes, modules, workflows, and dashboard pages.
-3. **Workflows** — Medusa's workflow system lets you wrap or re-compose Mercur workflows in your own API routes.
-4. **Modules** — add new Medusa modules in `apps/api` alongside the core plugin.
-5. **Providers** — swap or add new providers (e.g. an alternative payout provider) by following the Stripe Connect package as a reference.
+1. **Custom pages**  drop `page.tsx` files under `apps/admin-test/src/routes` or `apps/vendor/src/routes`; `@mercurjs/dashboard-sdk` picks them up at build time.
+2. **Blocks**  install with `mercurjs add <block>`; declared in `blocks.json`. Blocks can ship API routes, modules, workflows, and dashboard pages.
+3. **Workflows**  Medusa's workflow system lets you wrap or re-compose Mercur workflows in your own API routes.
+4. **Modules**  add new Medusa modules in `apps/api` alongside the core plugin.
+5. **Providers**  swap or add new providers (e.g. an alternative payout provider) by following the Stripe Connect package as a reference.
 
 ## Dependency Graph (simplified)
 

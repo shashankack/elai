@@ -274,7 +274,7 @@ export function generateMenuItems({ srcDir, pluginExtensions }: BuiltMercurConfi
         }
     }
 
-    // Plugin extensions — dynamic import to resolve .default
+    // Plugin extensions  dynamic import to resolve .default
     const pluginDeclarations = pluginExtensions.map((ext, i) =>
         `const __plugin${i} = (await import("${normalizePath(ext)}")).default`
     )

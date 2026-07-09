@@ -1,6 +1,6 @@
 # elai-mobile
 
-Elai B2C mobile storefront — React Native (Expo) app connected to the Mercur Store API.
+Elai B2C mobile storefront  React Native (Expo) app connected to the Mercur Store API.
 
 ## New to React Native? Start here
 
@@ -11,8 +11,8 @@ Elai B2C mobile storefront — React Native (Expo) app connected to the Mercur S
 | **React Native** | Build phone UIs with React instead of HTML |
 | **Expo** | Tooling that runs your app on a phone without Xcode/Android Studio at first |
 | **Expo Go** | Free app on your phone that loads your project while you develop |
-| **Screen** | One full page (e.g. product list, cart) — files live in `app/` |
-| **Component** | Reusable UI piece (button, product card) — files in `components/` |
+| **Screen** | One full page (e.g. product list, cart)  files live in `app/` |
+| **Component** | Reusable UI piece (button, product card)  files in `components/` |
 
 **Fastest way to see the app (recommended):**
 
@@ -104,5 +104,5 @@ Then press `i` (iOS simulator), `a` (Android emulator), or scan the QR code with
 
 ## Related projects
 
-- `mercur/` — marketplace backend (API, admin, vendor)
-- `elai-client/` — web storefront (Next.js)
+- `mercur/`  marketplace backend (API, admin, vendor)
+- `elai-client/`  web storefront (Next.js)

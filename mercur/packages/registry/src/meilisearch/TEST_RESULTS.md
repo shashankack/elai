@@ -1,4 +1,4 @@
-# Meilisearch Block — Test Results
+# Meilisearch Block  Test Results
 
 **Date:** 2026-03-25
 **Environment:** macOS, Meilisearch v1.12, Medusa v2.13.4, bun 1.3.11
@@ -95,7 +95,7 @@
 **Meilisearch:** `http://localhost:7700` (Docker, 31 indexed products, 13 active sellers)
 **All 30 tests passed.**
 
-### Search — Basic
+### Search  Basic
 
 | # | Test | Input | Result | Status |
 |---|------|-------|--------|--------|

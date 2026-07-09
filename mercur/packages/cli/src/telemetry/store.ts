@@ -49,7 +49,7 @@ class ConfigStore {
         mode: 0o600,
       });
     } catch {
-      // Silently fail — telemetry config is non-critical
+      // Silently fail  telemetry config is non-critical
     }
   }
 }

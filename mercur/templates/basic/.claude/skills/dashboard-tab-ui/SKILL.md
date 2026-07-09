@@ -16,7 +16,7 @@ Before introducing custom interactive UI inside a tab, apply `medusa-ui-conforma
 
 ## Required component
 
-Always use `TabbedForm` from `@mercurjs/dashboard-shared` — do NOT build custom tab navigation with `ProgressTabs` from `@medusajs/ui` directly.
+Always use `TabbedForm` from `@mercurjs/dashboard-shared`  do NOT build custom tab navigation with `ProgressTabs` from `@medusajs/ui` directly.
 
 ## TabbedForm API
 
@@ -24,17 +24,17 @@ Always use `TabbedForm` from `@mercurjs/dashboard-shared` — do NOT build custo
 
 ### Props
 
-- `form` — `UseFormReturn` from `react-hook-form`
-- `onSubmit` — submit handler from `form.handleSubmit()`
-- `isLoading` (optional) — disables submit button
-- `footer` (optional) — custom footer render prop; omit to use the default
+- `form`  `UseFormReturn` from `react-hook-form`
+- `onSubmit`  submit handler from `form.handleSubmit()`
+- `isLoading` (optional)  disables submit button
+- `footer` (optional)  custom footer render prop; omit to use the default
 
 ### TabbedForm.Tab props
 
-- `id` (string, required) — unique tab identifier
-- `label` (string, required) — display label in the tab bar
-- `validationFields` (FieldPath[], optional) — fields to validate on this tab
-- `isVisible` ((form) => boolean, optional) — dynamic tab visibility
+- `id` (string, required)  unique tab identifier
+- `label` (string, required)  display label in the tab bar
+- `validationFields` (FieldPath[], optional)  fields to validate on this tab
+- `isVisible` ((form) => boolean, optional)  dynamic tab visibility
 
 ## Page structure
 
@@ -49,7 +49,7 @@ const CreatePage = () => (
 export default CreatePage;
 ```
 
-The form component renders `TabbedForm` directly — do NOT nest it inside another `RouteFocusModal.Form`:
+The form component renders `TabbedForm` directly  do NOT nest it inside another `RouteFocusModal.Form`:
 
 ```tsx
 const CreateForm = () => {
@@ -73,7 +73,7 @@ const CreateForm = () => {
 
 ## Known issue: validation blocks Continue
 
-`TabbedForm`'s internal `onNext` calls `form.trigger()` without arguments, which validates the **entire** form — not just the active tab's fields. Required fields on later tabs will prevent Continue from working.
+`TabbedForm`'s internal `onNext` calls `form.trigger()` without arguments, which validates the **entire** form  not just the active tab's fields. Required fields on later tabs will prevent Continue from working.
 
 **Workaround:** Only mark fields as required (`.min(1)`) if they are on the first tab. Use `.optional()` for fields on later tabs and validate at submit time if needed.
 
@@ -81,9 +81,9 @@ const CreateForm = () => {
 
 1. Do not hardcode tab labels; use i18n-aware metadata.
 2. Do not put all fields into one flat tab without section structure.
-3. Do not build custom tab UI with `ProgressTabs` directly — use `TabbedForm`.
-4. Do not wrap `TabbedForm` in `RouteFocusModal.Form` — it does this internally.
-5. Do not provide a custom `footer` unless you need to change button labels — the default footer handles Cancel/Continue/Save correctly.
+3. Do not build custom tab UI with `ProgressTabs` directly  use `TabbedForm`.
+4. Do not wrap `TabbedForm` in `RouteFocusModal.Form`  it does this internally.
+5. Do not provide a custom `footer` unless you need to change button labels  the default footer handles Cancel/Continue/Save correctly.
 6. Do not add required zod validation to fields on tabs beyond the first (see known issue above).
 7. Do not break keyboard or submit behavior when adding a tab.
 8. Do not assume tabs are static if visibility depends on form state.

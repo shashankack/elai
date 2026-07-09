@@ -8,7 +8,7 @@
 
 ### ⚠️ First time OR after a cold restart (node killed)
 
-You must build the framework package first — **always do this after `taskkill` or a fresh clone:**
+You must build the framework package first  **always do this after `taskkill` or a fresh clone:**
 
 ```powershell
 yarn workspace @mercurjs/framework build

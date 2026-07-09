@@ -1,6 +1,6 @@
 ---
 name: admin-ui-review
-description: Review admin UI code for consistency with established patterns. Use after writing any UI code in packages/admin to catch anti-patterns — wrong form components, hardcoded strings, missing i18n, incorrect heading levels, manual error rendering, missing data-testid, raw Controller usage.
+description: Review admin UI code for consistency with established patterns. Use after writing any UI code in packages/admin to catch anti-patterns  wrong form components, hardcoded strings, missing i18n, incorrect heading levels, manual error rendering, missing data-testid, raw Controller usage.
 allowed-tools: Read, Grep, Glob
 ---
 
@@ -12,9 +12,9 @@ Use this skill when:
 - the user asks to check UI code quality
 
 This skill checks ALL admin UI patterns. For implementation guidance, see:
-- `admin-form-ui` — form field patterns
-- `admin-page-ui` — page and section patterns
-- `admin-tab-ui` — tab patterns in TabbedForm wizards
+- `admin-form-ui`  form field patterns
+- `admin-page-ui`  page and section patterns
+- `admin-tab-ui`  tab patterns in TabbedForm wizards
 
 ## Review Process
 
@@ -32,7 +32,7 @@ This skill checks ALL admin UI patterns. For implementation guidance, see:
 - [ ] Uses `Form.Label` (not `<Label>` from `@medusajs/ui`)
 - [ ] Uses `Form.Control` around input elements
 - [ ] Uses `Form.ErrorMessage` (not manual `fieldState.error && <span>`)
-- [ ] Required fields: no `*` in label text — just omit `optional` prop
+- [ ] Required fields: no `*` in label text  just omit `optional` prop
 - [ ] Optional fields: `<Form.Label optional>` is present
 - [ ] Hints use `Form.Hint` component (not custom divs)
 
@@ -54,7 +54,7 @@ This skill checks ALL admin UI patterns. For implementation guidance, see:
 - [ ] Tab heading: `<Heading level="h2">` (NEVER h1 in tabs)
 - [ ] Drawer title: `<Heading>` inside `RouteDrawer.Header`
 - [ ] Description text: `<Text size="small">` or `<Text size="small" className="text-ui-fg-subtle">`
-- [ ] No raw `<h1>`, `<h2>`, `<p>` tags — use Heading/Text components
+- [ ] No raw `<h1>`, `<h2>`, `<p>` tags  use Heading/Text components
 
 ### Tab Metadata (P1 if in TabbedForm)
 
@@ -77,7 +77,7 @@ This skill checks ALL admin UI patterns. For implementation guidance, see:
 - [ ] Row card: `<li>` with `bg-ui-bg-component shadow-elevation-card-rest rounded-xl p-1.5`
 - [ ] Outer grid: `grid grid-cols-[1fr_28px]` (content + delete button)
 - [ ] Inner grid: `grid grid-cols-[min-content,1fr]` (label + input pairs horizontally)
-- [ ] Row labels: `<Label size="xsmall" weight="plus" className="text-ui-fg-subtle">` (compact inline labels — NOT Form.Label)
+- [ ] Row labels: `<Label size="xsmall" weight="plus" className="text-ui-fg-subtle">` (compact inline labels  NOT Form.Label)
 - [ ] Row inputs: `className="bg-ui-bg-field-component"` for contrast background
 - [ ] Delete button: `<IconButton size="small" variant="transparent">` with `<XMarkMini />`
 - [ ] Dynamic rows: `useFieldArray` with append/remove
@@ -127,7 +127,7 @@ This skill checks ALL admin UI patterns. For implementation guidance, see:
 2. **Hardcoded string** at line {N}: `"SEO Title *"` should be `t("products.fields.seo_title.label")`
 
 ### P2 (Inconsistency)
-1. **Wrong heading level** at line {N}: `<Heading level="h1">` in tab — should be `level="h2"`
+1. **Wrong heading level** at line {N}: `<Heading level="h1">` in tab  should be `level="h2"`
 
 ### P3 (Style)
 1. **Missing data-testid** at line {N}: Tab root div missing `data-testid`

@@ -51,7 +51,7 @@ function makeRequest(body: Record<string, any> = {}, products: any[] = []) {
 
 // ─── FR-003: seller.status = "active" is always enforced ─────────────────────
 
-describe('POST /store/meilisearch/products/search — filter enforcement', () => {
+describe('POST /store/meilisearch/products/search  filter enforcement', () => {
   it('always sends seller.status = "active" in the filter string (FR-003)', async () => {
     const { req, res, mockSearch } = makeRequest({ query: 'shoes' })
 
@@ -135,7 +135,7 @@ describe('POST /store/meilisearch/products/search — filter enforcement', () =>
 
 // ─── Response shape ───────────────────────────────────────────────────────────
 
-describe('POST /store/meilisearch/products/search — response', () => {
+describe('POST /store/meilisearch/products/search  response', () => {
   it('returns empty products array when meilisearch returns no hits', async () => {
     const { req, res } = makeRequest({ query: 'xyz_notfound' }, [])
 

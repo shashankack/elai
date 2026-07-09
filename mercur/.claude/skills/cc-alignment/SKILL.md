@@ -16,13 +16,13 @@ Use this skill when:
 **Not for**: initial CC migration from scratch (use `compound-components-migration` skill instead).
 
 Read next (as needed):
-- `references/alignment-checklist.md` — step-by-step alignment workflow
-- `references/build-pipeline.md` — tsup, DTS, dist verification
-- `references/testing-registry.md` — consumer page patterns
+- `references/alignment-checklist.md`  step-by-step alignment workflow
+- `references/build-pipeline.md`  tsup, DTS, dist verification
+- `references/testing-registry.md`  consumer page patterns
 
 ## Workflow
 
-1. **Identify what needs alignment** — compare current exports against vendor standard:
+1. **Identify what needs alignment**  compare current exports against vendor standard:
    - Root name has `Page` suffix?
    - Slots have `Main`/`Sidebar` prefix?
    - List header uses nested compounds (not render props)?
@@ -30,29 +30,29 @@ Read next (as needed):
    - No Layout wrapper? (TwoColumnPage inlined in Root)
 
 2. **Rename + restructure** in this order:
-   1. Component file — rename export, prefix slots, add missing slots (e.g., `SidebarSellerSection`), remove context/provider if present, pass data as props
-   2. Route `index.ts` — update `as Component` export
-   3. `pages/index.ts` barrel — new names
-   4. Testing registry consumers — update to use new slot names
+   1. Component file  rename export, prefix slots, add missing slots (e.g., `SidebarSellerSection`), remove context/provider if present, pass data as props
+   2. Route `index.ts`  update `as Component` export
+   3. `pages/index.ts` barrel  new names
+   4. Testing registry consumers  update to use new slot names
 
 3. **Build + verify**:
-   - `npx tsup` — must pass both ESM and DTS
+   - `npx tsup`  must pass both ESM and DTS
    - If DTS fails on pre-existing errors in OTHER files, fix them (they block the whole DTS emit)
-   - Grep for old export names — must return zero hits in `pages/index.ts`
+   - Grep for old export names  must return zero hits in `pages/index.ts`
    - Verify `dist/pages/index.js` contains new exports
 
 4. **Test in testing registry**:
-   - Consumer pages import from `@mercurjs/admin/pages` — must resolve without errors
+   - Consumer pages import from `@mercurjs/admin/pages`  must resolve without errors
    - No `implicit any` warnings on import
 
 ## Hard Rules
 
 1. Do NOT create backward-compat aliases (`ProductDetail` re-export alongside `ProductDetailPage`). Clean rename only.
-2. Do NOT change component behavior during alignment — only rename/restructure exports.
-3. Do NOT skip DTS build — consumers need type declarations.
-4. Do NOT fix pre-existing TS errors with `any` casts — use proper types (`HttpTypes.*`, `Omit<>`, etc.).
+2. Do NOT change component behavior during alignment  only rename/restructure exports.
+3. Do NOT skip DTS build  consumers need type declarations.
+4. Do NOT fix pre-existing TS errors with `any` casts  use proper types (`HttpTypes.*`, `Omit<>`, etc.).
 5. Do NOT forget to update ALL consumers (barrel, route index, testing registry).
-6. Do NOT use `header?: ReactNode` prop pattern for list headers — use nested compound components.
+6. Do NOT use `header?: ReactNode` prop pattern for list headers  use nested compound components.
 7. DO preserve all existing `data-testid` attributes.
 8. DO preserve `hasOutlet` on `TwoColumnPage` in Root's default composition.
 9. DO preserve `location.search` on export/import links.
@@ -66,20 +66,20 @@ Read next (as needed):
 ### Detail pages
 ```
 Root:  XxxDetailPage (e.g., ProductDetailPage)
-Slots: Main{Section}    — MainGeneralSection, MainMediaSection
-       Sidebar{Section} — SidebarOrganizationSection, SidebarSellerSection
+Slots: Main{Section}     MainGeneralSection, MainMediaSection
+       Sidebar{Section}  SidebarOrganizationSection, SidebarSellerSection
 Fixed: Main, Sidebar
 ```
 
 ### List pages
 ```
 Root:  XxxListPage (e.g., ProductListPage)
-Slots: Table            — Container (Header + DataTable + Outlet)
-       Header           — title + actions (Children.count override)
-       HeaderTitle      — Heading component
-       HeaderActions    — button container (Children.count override)
-       Header{Action}Button — individual buttons (Create, Export, Import)
-       DataTable        — raw data grid (self-contained fetch)
+Slots: Table             Container (Header + DataTable + Outlet)
+       Header            title + actions (Children.count override)
+       HeaderTitle       Heading component
+       HeaderActions     button container (Children.count override)
+       Header{Action}Button  individual buttons (Create, Export, Import)
+       DataTable         raw data grid (self-contained fetch)
 ```
 
 ### Barrel (`pages/index.ts`)

@@ -61,7 +61,7 @@ export const validateAttributeDeleteStep = createStep(
       if (err.type === MedusaError.Types.NOT_ALLOWED) {
         throw err
       }
-      // Table doesn't exist yet — no vendor usage, allow deletion
+      // Table doesn't exist yet  no vendor usage, allow deletion
     }
   }
 )

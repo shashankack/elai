@@ -73,27 +73,27 @@ const CreateForm = () => {
 
 ## Two form containers
 
-### RouteFocusModal — for create flows
+### RouteFocusModal  for create flows
 Full-screen modal overlay. Used for creating new entities.
 - Page wraps `RouteFocusModal` (provides context), form uses `.Form`, `.Header`, `.Body`, `.Footer`, `.Close`
 - `useRouteModal()` must be called inside the provider
-- If using `TabbedForm`, do NOT use `RouteFocusModal.Form` — `TabbedForm` renders it internally. See `dashboard-tab-ui`.
+- If using `TabbedForm`, do NOT use `RouteFocusModal.Form`  `TabbedForm` renders it internally. See `dashboard-tab-ui`.
 
-### RouteDrawer — for edit flows
+### RouteDrawer  for edit flows
 Side panel from the right. Used for editing existing entities.
 - Same pattern: page wraps `RouteDrawer`, form uses `.Form`, `.Header`, `.Title`, `.Description`, `.Body`, `.Footer`, `.Close`
 - **Critical:** Edit drawer route must use `@` prefix directory (e.g. `[id]/@edit/page.tsx`) to create a parallel route. Without `@`, the detail page unmounts. See `dashboard-page-ui` for full pattern.
 
 ## Key components
 
-- `RouteFocusModal` / `RouteDrawer` — wraps the page, provides modal provider context
-- `.Form` — wraps the form, connects react-hook-form
-- `.Header` — modal/drawer header (RouteFocusModal has close button built in; RouteDrawer uses `.Title` and `.Description`)
-- `.Body` — scrollable content area
-- `.Footer` — sticky footer with actions
-- `.Close` — closes the modal/drawer (use with `asChild` on Cancel button)
-- `Form.Field` / `Form.Item` / `Form.Label` / `Form.Control` / `Form.ErrorMessage` — form field composition
-- `Form.Label optional` — marks a field as optional in the UI
+- `RouteFocusModal` / `RouteDrawer`  wraps the page, provides modal provider context
+- `.Form`  wraps the form, connects react-hook-form
+- `.Header`  modal/drawer header (RouteFocusModal has close button built in; RouteDrawer uses `.Title` and `.Description`)
+- `.Body`  scrollable content area
+- `.Footer`  sticky footer with actions
+- `.Close`  closes the modal/drawer (use with `asChild` on Cancel button)
+- `Form.Field` / `Form.Item` / `Form.Label` / `Form.Control` / `Form.ErrorMessage`  form field composition
+- `Form.Label optional`  marks a field as optional in the UI
 
 ## Hard rules
 

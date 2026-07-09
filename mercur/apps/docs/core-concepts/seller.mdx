@@ -1,6 +1,6 @@
 ---
 title: "Seller"
-description: "The central marketplace actor — seller profile, lifecycle, registration flows, and business rules."
+description: "The central marketplace actor  seller profile, lifecycle, registration flows, and business rules."
 ---
 
 A **seller** is the central actor in a Mercur marketplace. Every product listing, order, payout, and storefront presence traces back to a seller account. This page covers the seller data model, lifecycle, and the business rules that govern how sellers operate on the platform.
@@ -30,7 +30,7 @@ Each seller account holds the following core fields:
 
 Every seller account is locked to **one currency**. Prices, payouts, and subscription billing all use this currency. This constraint keeps financial reporting simple and eliminates exchange-rate ambiguity in payouts.
 
-If a seller needs to trade in multiple currencies, the recommended pattern is to create **separate seller accounts** — one per currency. Each account operates independently with its own products, orders, and payouts.
+If a seller needs to trade in multiple currencies, the recommended pattern is to create **separate seller accounts**  one per currency. Each account operates independently with its own products, orders, and payouts.
 
 ### Professional Sellers
 
@@ -62,10 +62,10 @@ A seller account moves through **four statuses** over its lifetime:
 
 ### Status Definitions
 
-- `**pending_approval**` — The seller has registered but has not yet been reviewed by the platform operator.
-- `**open**` — The seller is active and may list products, receive orders, and collect payouts.
-- `**suspended**` — The seller's operations are temporarily frozen. Products remain in the catalog but cannot be purchased.
-- `**terminated**` — The seller account is permanently closed. This status is irreversible.
+- `**pending_approval**`  The seller has registered but has not yet been reviewed by the platform operator.
+- `**open**`  The seller is active and may list products, receive orders, and collect payouts.
+- `**suspended**`  The seller's operations are temporarily frozen. Products remain in the catalog but cannot be purchased.
+- `**terminated**`  The seller account is permanently closed. This status is irreversible.
 
 ### Status Transition Rules
 
@@ -83,12 +83,12 @@ A seller account moves through **four statuses** over its lifetime:
 
 Sellers can schedule **temporary closures** without changing their account status. Two date fields control this:
 
-- `closed_from` — The date the closure begins
-- `closed_to` — The date the closure ends
+- `closed_from`  The date the closure begins
+- `closed_to`  The date the closure ends
 
 During a scheduled closure the seller's storefront shows as unavailable and new orders cannot be placed, but the account remains in `open` status. This is designed for holidays, seasonal breaks, or planned downtime. Once `closed_to` passes, the seller automatically resumes normal operation.
 
-Scheduled closures are **not a status** — they overlay on top of the current status and do not affect status transition rules.
+Scheduled closures are **not a status**  they overlay on top of the current status and do not affect status transition rules.
 
 ## Premium Sellers
 
@@ -104,8 +104,8 @@ The specific storefront behavior tied to premium status is determined by the fro
 
 There are **two methods** for creating a seller account:
 
-1. **Operator-created** — The platform operator creates the seller account directly via the admin dashboard. The account can be set to `open` immediately, bypassing `pending_approval`.
-2. **Self-registration** — The seller registers through the public-facing registration flow. The account enters `pending_approval` status and waits for operator review.
+1. **Operator-created**  The platform operator creates the seller account directly via the admin dashboard. The account can be set to `open` immediately, bypassing `pending_approval`.
+2. **Self-registration**  The seller registers through the public-facing registration flow. The account enters `pending_approval` status and waits for operator review.
 
 ## Business Rules Summary
 

@@ -55,9 +55,9 @@ const fontBody = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Elai | India's All-in-One Accessories Marketplace",
+  title: "ELAI | India's All-in-One Accessories Marketplace",
   description:
-    "Elai is India's first dedicated accessories marketplace. Shop 40+ categories — fashion, ethnic, tech, luxury, beauty, and more. Elai style. Elai you.",
+    "ELAI is India's only dedicated accessories marketplace with 50+ curated categories  jewellery, fashion, hair, bags, beauty, tech, and lifestyle accessories. Where every look finds its flavour.",
 };
 
 export default function RootLayout({

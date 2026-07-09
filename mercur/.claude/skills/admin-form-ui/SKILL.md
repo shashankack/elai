@@ -17,8 +17,8 @@ Use this skill when:
 Before introducing new custom field wrappers, overlays, selectors, or interactive form primitives, first apply `medusa-ui-conformance`.
 
 Read next (as needed):
-- `references/form-field-patterns.md` — exact code examples for every field type
-- `references/drawer-modal-patterns.md` — RouteDrawer and RouteFocusModal form structure
+- `references/form-field-patterns.md`  exact code examples for every field type
+- `references/drawer-modal-patterns.md`  RouteDrawer and RouteFocusModal form structure
 
 ## Core Rule
 
@@ -46,24 +46,24 @@ Every form field MUST follow this structure:
 
 ## Hard Rules (DO NOT)
 
-1. Do NOT use raw `Controller` — always use `Form.Field` (wraps Controller with context).
-2. Do NOT use `<Label>` from `@medusajs/ui` — use `<Form.Label>` (supports `optional`, `tooltip`, accessibility).
-3. Do NOT manually render errors (`fieldState.error && <span>`) — use `<Form.ErrorMessage />` (auto-reads form state).
-4. Do NOT mark required fields with `*` in text — omit `optional` prop (absence = required). Use `<Form.Label optional>` for optional fields.
-5. Do NOT use hardcoded strings — use `t("...")` from `useTranslation()` for all user-visible text.
-6. Do NOT use custom `<div className="flex flex-col gap-y-2">` wrappers around fields — use `<Form.Item>` (renders `flex flex-col space-y-2`).
+1. Do NOT use raw `Controller`  always use `Form.Field` (wraps Controller with context).
+2. Do NOT use `<Label>` from `@medusajs/ui`  use `<Form.Label>` (supports `optional`, `tooltip`, accessibility).
+3. Do NOT manually render errors (`fieldState.error && <span>`)  use `<Form.ErrorMessage />` (auto-reads form state).
+4. Do NOT mark required fields with `*` in text  omit `optional` prop (absence = required). Use `<Form.Label optional>` for optional fields.
+5. Do NOT use hardcoded strings  use `t("...")` from `useTranslation()` for all user-visible text.
+6. Do NOT use custom `<div className="flex flex-col gap-y-2">` wrappers around fields  use `<Form.Item>` (renders `flex flex-col space-y-2`).
 7. Do NOT skip `data-testid` on form fields and buttons.
-8. Do NOT skip `<Form.ErrorMessage />` — include it even if you think validation won't fail.
-9. Do NOT use `window.confirm` — use `usePrompt()` for confirmations.
-10. Do NOT use raw `<form>` — use `<KeyboundForm>` for Ctrl/Cmd+Enter support.
-11. Do NOT skip `isPending` guard on submit — both button `isLoading` AND keyboard submit must check it.
-12. Do NOT hand-roll custom input components — ALWAYS check `packages/admin/src/components/inputs/` and the Field Types Reference table below FIRST. If a component exists (HandleInput, ChipInput, SwitchBox, etc.), use it. Never create a custom wrapper for something that already has a reusable component.
-13. Do NOT call `useRouteModal()` outside of `RouteDrawer` or `RouteFocusModal` — it requires the provider. Split into outer shell (RouteDrawer + data fetch) and inner form component (useRouteModal + form logic). See RouteDrawer Form Structure below.
+8. Do NOT skip `<Form.ErrorMessage />`  include it even if you think validation won't fail.
+9. Do NOT use `window.confirm`  use `usePrompt()` for confirmations.
+10. Do NOT use raw `<form>`  use `<KeyboundForm>` for Ctrl/Cmd+Enter support.
+11. Do NOT skip `isPending` guard on submit  both button `isLoading` AND keyboard submit must check it.
+12. Do NOT hand-roll custom input components  ALWAYS check `packages/admin/src/components/inputs/` and the Field Types Reference table below FIRST. If a component exists (HandleInput, ChipInput, SwitchBox, etc.), use it. Never create a custom wrapper for something that already has a reusable component.
+13. Do NOT call `useRouteModal()` outside of `RouteDrawer` or `RouteFocusModal`  it requires the provider. Split into outer shell (RouteDrawer + data fetch) and inner form component (useRouteModal + form logic). See RouteDrawer Form Structure below.
 
 ## Form.Label Features
 
 ```tsx
-// Required field (default — no special markup needed)
+// Required field (default  no special markup needed)
 <Form.Label>{t("fields.title")}</Form.Label>
 
 // Optional field
@@ -222,16 +222,16 @@ return (
 ## Imports Checklist
 
 ```tsx
-// Form components — from local form module
+// Form components  from local form module
 import { Form } from "@components/common/form"        // Form.Field, Form.Item, Form.Label, etc.
 import { KeyboundForm } from "@components/utilities/keybound-form"
 import { SwitchBox } from "@components/common/switch-box"
 import { HandleInput } from "@components/inputs/handle-input"
 
-// UI primitives — from @medusajs/ui
+// UI primitives  from @medusajs/ui
 import { Input, Textarea, Heading, Text, Button } from "@medusajs/ui"
 
-// Modal/drawer — from local route components
+// Modal/drawer  from local route components
 import { RouteDrawer, useRouteModal } from "@components/modals"
 import { RouteFocusModal } from "@components/modals"
 

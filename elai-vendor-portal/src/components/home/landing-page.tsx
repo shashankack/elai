@@ -107,7 +107,7 @@ export default function LandingPage() {
             Elevated everyday essentials
           </p>
           <p className="mt-3 max-w-sm font-serif text-2xl leading-snug">
-            Products chosen with taste — made to stay in your life, not your
+            Products chosen with taste  made to stay in your life, not your
             cart.
           </p>
         </div>

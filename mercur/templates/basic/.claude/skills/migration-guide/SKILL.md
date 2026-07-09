@@ -1,6 +1,6 @@
 ---
 name: migration-guide
-description: Analyze a Mercur 1.x project and guide migration to 2.0. Self-contained — works without access to the mercur monorepo.
+description: Analyze a Mercur 1.x project and guide migration to 2.0. Self-contained  works without access to the mercur monorepo.
 argument-hint: "[path-to-old-project]"
 ---
 
@@ -15,12 +15,12 @@ Use this skill when:
 
 | 1.x | 2.0 |
 |-------|--------|
-| `@mercurjs/b2c-core` | `@mercurjs/core` — all core modules built in |
+| `@mercurjs/b2c-core` | `@mercurjs/core`  all core modules built in |
 | `@mercurjs/commission` | Built into core |
 | `@mercurjs/algolia` | Registry block: `mercurjs add algolia` |
-| `@mercurjs/resend` | No 2.0 equivalent — port manually |
-| `@mercurjs/payment-stripe-connect` | No 2.0 equivalent — port manually |
-| `@mercurjs/stripe-tax-provider` | No 2.0 equivalent — port manually |
+| `@mercurjs/resend` | No 2.0 equivalent  port manually |
+| `@mercurjs/payment-stripe-connect` | No 2.0 equivalent  port manually |
+| `@mercurjs/stripe-tax-provider` | No 2.0 equivalent  port manually |
 | `@medusajs/admin-vite-plugin` | `@mercurjs/dashboard-sdk` |
 | `@medusajs/js-sdk` | `@mercurjs/client` (generated typed client) |
 
@@ -85,14 +85,14 @@ plugins: [{ resolve: "@mercurjs/core", options: {} }]
 ### Step 1: Analyze the old project
 
 Scan the 1.x project the user provides:
-- Read `package.json` — list all `@mercurjs/*` and `@medusajs/*` dependencies. Note the `@mercurjs/b2c-core` version to determine project version.
-- If version < 1.4.0: custom admin code is inside the backend repo (not `apps/admin/`) — search `apps/backend/` when scanning for custom dashboard pages
-- Read `medusa-config.ts` — list plugins, modules, providers
-- Scan `src/modules/` — count and list custom modules
-- Scan `src/workflows/` — count custom workflows
-- Scan `src/api/` — count custom API routes
-- Scan `src/subscribers/` — count subscribers
-- Scan `src/links/` — count custom links
+- Read `package.json`  list all `@mercurjs/*` and `@medusajs/*` dependencies. Note the `@mercurjs/b2c-core` version to determine project version.
+- If version < 1.4.0: custom admin code is inside the backend repo (not `apps/admin/`)  search `apps/backend/` when scanning for custom dashboard pages
+- Read `medusa-config.ts`  list plugins, modules, providers
+- Scan `src/modules/`  count and list custom modules
+- Scan `src/workflows/`  count custom workflows
+- Scan `src/api/`  count custom API routes
+- Scan `src/subscribers/`  count subscribers
+- Scan `src/links/`  count custom links
 - Check `apps/admin/src/` and `apps/vendor/src/` for custom pages
 
 ### Step 2: Classify
@@ -115,15 +115,15 @@ For every custom element found, determine:
 ### Step 4: Execute migration
 
 Port in this order:
-1. **Config** — update `medusa-config.ts` (plugins, modules, providers)
-2. **Providers** — copy to `packages/api/src/providers/`, fix imports
-3. **Modules** — copy to `packages/api/src/modules/`, register in config
-4. **Workflows** — copy to `packages/api/src/workflows/<entity>/`
-5. **Links** — copy to `packages/api/src/links/` (skip core duplicates)
-6. **Subscribers** — copy to `packages/api/src/subscribers/`
-7. **API routes** — copy to `packages/api/src/api/`, type both generics
-8. **Middleware** — merge into `packages/api/src/api/middlewares.ts`
-9. **Dashboard pages** — move to `src/routes/` (NOT `src/pages/` — dashboard SDK scans `src/routes/`), update imports
+1. **Config**  update `medusa-config.ts` (plugins, modules, providers)
+2. **Providers**  copy to `packages/api/src/providers/`, fix imports
+3. **Modules**  copy to `packages/api/src/modules/`, register in config
+4. **Workflows**  copy to `packages/api/src/workflows/<entity>/`
+5. **Links**  copy to `packages/api/src/links/` (skip core duplicates)
+6. **Subscribers**  copy to `packages/api/src/subscribers/`
+7. **API routes**  copy to `packages/api/src/api/`, type both generics
+8. **Middleware**  merge into `packages/api/src/api/middlewares.ts`
+9. **Dashboard pages**  move to `src/routes/` (NOT `src/pages/`  dashboard SDK scans `src/routes/`), update imports
 
 After each group: run `bun medusa develop` and verify server starts.
 

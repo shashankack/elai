@@ -7,7 +7,7 @@ description: What changed in Mercur 2.1 and how to upgrade an existing 2.0.x pro
 
 Mercur `2.1.1` is the first stable release of the 2.x line after `2.0.2`. The only required change is a package rename. Everything else is handled by `bun run medusa db:migrate`.
 
-If you are starting fresh, follow [Installation](/getting-started/installation) instead — new projects already use the 2.1 names.
+If you are starting fresh, follow [Installation](/getting-started/installation) instead  new projects already use the 2.1 names.
 
 ## Breaking change: `@mercurjs/core-plugin` → `@mercurjs/core`
 
@@ -15,11 +15,11 @@ The Medusa plugin previously published as `@mercurjs/core-plugin` is now publish
 
 This affects:
 
-- `package.json` — installed package name
-- `medusa-config.ts` — every `resolve: "@mercurjs/core-plugin/..."` value
+- `package.json`  installed package name
+- `medusa-config.ts`  every `resolve: "@mercurjs/core-plugin/..."` value
 - Any source imports in `packages/api/src/**`
 
-### Step 1 — swap the dependency
+### Step 1  swap the dependency
 
 ```bash
 bun remove @mercurjs/core-plugin
@@ -28,7 +28,7 @@ bun add @mercurjs/core@2.1.1
 
 If you use npm/yarn/pnpm, use the equivalent commands for your package manager.
 
-Or edit `packages/api/package.json` by hand — replace the `@mercurjs/core-plugin` entry under `dependencies` with `@mercurjs/core` at the matching version, then run your installer:
+Or edit `packages/api/package.json` by hand  replace the `@mercurjs/core-plugin` entry under `dependencies` with `@mercurjs/core` at the matching version, then run your installer:
 
 ```jsonc
 // before
@@ -46,9 +46,9 @@ Or edit `packages/api/package.json` by hand — replace the `@mercurjs/core-plug
 bun install
 ```
 
-### Step 2 — replace strings in config and source
+### Step 2  replace strings in config and source
 
-In `packages/api/medusa-config.ts` and anywhere under `packages/api/src/**`, replace every occurrence of `@mercurjs/core-plugin` with `@mercurjs/core`. A repo-wide find-and-replace is safe — there are no other valid uses of the old name.
+In `packages/api/medusa-config.ts` and anywhere under `packages/api/src/**`, replace every occurrence of `@mercurjs/core-plugin` with `@mercurjs/core`. A repo-wide find-and-replace is safe  there are no other valid uses of the old name.
 
 ```ts
 // before
@@ -77,7 +77,7 @@ The same applies to:
 - `@mercurjs/core-plugin/links`
 - `@mercurjs/core-plugin/api`
 
-### Step 3 — reinstall and rebuild
+### Step 3  reinstall and rebuild
 
 ```bash
 bun install
@@ -86,7 +86,7 @@ bun run build
 
 If TypeScript still complains about `@mercurjs/core-plugin`, you missed an import. Re-run the find-and-replace.
 
-### Step 4 — refresh installed blocks
+### Step 4  refresh installed blocks
 
 If your project installed registry blocks (`mercurjs add reviews`, `mercurjs add requests`, etc.) on a 2.0.x version, the local copies still reference `@mercurjs/core-plugin`. Either:
 

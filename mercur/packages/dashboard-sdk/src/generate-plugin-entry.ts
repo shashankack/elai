@@ -19,7 +19,7 @@ function findI18nIndex(srcDir: string): string | null {
 
 /**
  * Generates a plugin entry module for a given source directory (e.g. src/vendor).
- * Scans routes, menu items, and i18n — outputs a single module string
+ * Scans routes, menu items, and i18n  outputs a single module string
  * that exports default `{ routeModule, menuItemModule, i18nModule }`.
  */
 export function generatePluginEntryModule(srcDir: string): string {

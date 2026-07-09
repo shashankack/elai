@@ -176,7 +176,7 @@ async function getDbClient({
       }),
     };
   } catch {
-    // Default connection failed — ask the user for credentials
+    // Default connection failed  ask the user for credentials
   }
 
   spinnerRef?.stop();

@@ -13,12 +13,12 @@ Use this skill when:
 
 ## Command map
 
-- `create` — create a new Mercur project
-- `init` — create `blocks.json` in an existing project
-- `search` — search the registry
-- `view` — inspect a block before installation
-- `add` — install a block
-- `diff` — compare local installed block files against the registry
+- `create`  create a new Mercur project
+- `init`  create `blocks.json` in an existing project
+- `search`  search the registry
+- `view`  inspect a block before installation
+- `add`  install a block
+- `diff`  compare local installed block files against the registry
 
 ## Where commands run
 
@@ -62,8 +62,8 @@ Follow the block docs output, but verify everything against the actual installed
 
 ## Known CLI behaviors
 
-- CLI may prompt "You need to create a blocks.json" even when it exists — this happens when running from the wrong directory.
-- CLI's `add` outputs the block docs after installation — read them carefully but verify against installed files.
+- CLI may prompt "You need to create a blocks.json" even when it exists  this happens when running from the wrong directory.
+- CLI's `add` outputs the block docs after installation  read them carefully but verify against installed files.
 - CLI may install files from one block that overlap with another block (shared files). Declining overwrites preserves existing work.
 - The `search` command with `--query ""` returns all available blocks.
 

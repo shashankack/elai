@@ -3,8 +3,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-import { useLogout } from "../../hooks/api/auth";
-import { queryClient } from "../../lib/query-client";
+import { usePerformLogout } from "../../hooks/api/auth";
 import { KeybindContext } from "./keybind-context";
 import { Shortcut } from "./types";
 import { findShortcut } from "./utils";
@@ -98,16 +97,7 @@ export const useGlobalShortcuts = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const { mutateAsync } = useLogout();
-
-  const handleLogout = async () => {
-    await mutateAsync(undefined, {
-      onSuccess: () => {
-        queryClient.clear();
-        navigate("/login");
-      },
-    });
-  };
+  const performLogout = usePerformLogout();
 
   const globalShortcuts: Shortcut[] = [
     // Pages
@@ -223,7 +213,7 @@ export const useGlobalShortcuts = () => {
       },
       label: t("actions.logout"),
       type: "commandShortcut",
-      callback: () => handleLogout(),
+      callback: () => void performLogout(),
     },
   ];
 

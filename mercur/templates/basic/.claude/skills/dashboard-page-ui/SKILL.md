@@ -10,11 +10,11 @@ Use this skill when:
 - extending a list or detail page in either dashboard
 - adding page-level actions, sections, or empty states
 
-Applies equally to **admin** and **vendor** dashboards — they share the same component library and routing conventions.
+Applies equally to **admin** and **vendor** dashboards  they share the same component library and routing conventions.
 
 ## First checks
 
-- Route files belong under `src/routes` (NOT `src/pages` — the `mercurDashboardPlugin` scans `src/routes` only).
+- Route files belong under `src/routes` (NOT `src/pages`  the `mercurDashboardPlugin` scans `src/routes` only).
 - Decide whether the task is page-level, form-level, or tab-level.
 - Before inventing custom UI, apply `medusa-ui-conformance`.
 - If it is form-only, use `dashboard-form-ui`.
@@ -27,7 +27,7 @@ Applies equally to **admin** and **vendor** dashboards — they share the same c
 3. Do not ship a page without explicit loading, empty, error, and success-state thinking.
 4. Do not invent a brand-new page anatomy when an existing dashboard page pattern already fits.
 5. Do not scatter action buttons and page actions without a clear header structure.
-6. Do not place route files in `src/pages` — the `mercurDashboardPlugin` scans `src/routes` only.
+6. Do not place route files in `src/pages`  the `mercurDashboardPlugin` scans `src/routes` only.
 
 ## Sidebar navigation
 
@@ -82,9 +82,9 @@ Detail pages use `TwoColumnPage` with `.Main` and `.Sidebar` from `@mercurjs/das
 
 ### Detail page conventions
 
-- Use `SectionRow` for key-value pairs — `title` is the label, `value` is string or ReactNode.
-- Use `StatusBadge` only for statuses (published, draft, active, etc.) — never `Badge`.
-- Use plain text for categories, types, and other descriptive values — never wrap in `Badge`.
+- Use `SectionRow` for key-value pairs  `title` is the label, `value` is string or ReactNode.
+- Use `StatusBadge` only for statuses (published, draft, active, etc.)  never `Badge`.
+- Use plain text for categories, types, and other descriptive values  never wrap in `Badge`.
 - Use `ActionMenu` with `groups` for contextual actions (Edit, Delete). Put destructive actions in a separate group.
 - Main column: primary content, descriptions, key details.
 - Sidebar: secondary info, organization, metadata.
@@ -106,13 +106,13 @@ The form component inside uses `useRouteModal()` for `handleSuccess`. See `dashb
 
 ## Edit drawer pattern
 
-Edit pages use `RouteDrawer` — a side panel that slides in from the right over the detail page.
+Edit pages use `RouteDrawer`  a side panel that slides in from the right over the detail page.
 
 **Critical:** The edit directory must use the `@` prefix to create a parallel route:
 - Correct: `src/routes/<entity>/[id]/@edit/page.tsx`
 - Wrong: `src/routes/<entity>/[id]/edit/page.tsx`
 
-Without `@`, the SDK creates a flat route that **replaces** the detail page — the background disappears. With `@`, it creates a child route that renders inside the parent's `Outlet`.
+Without `@`, the SDK creates a flat route that **replaces** the detail page  the background disappears. With `@`, it creates a child route that renders inside the parent's `Outlet`.
 
 The detail page must set `hasOutlet` to render the child route:
 ```tsx

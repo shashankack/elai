@@ -1,6 +1,6 @@
-# ELAI Vendor Dashboard — Complete Guide for Sellers
+# ELAI Vendor Dashboard  Complete Guide for Sellers
 
-Welcome to ELAI. This guide explains how to use the **Vendor Dashboard** — the website where you manage your shop, products, and orders on ELAI.
+Welcome to ELAI. This guide explains how to use the **Vendor Dashboard**  the website where you manage your shop, products, and orders on ELAI.
 
 You do **not** need technical knowledge to follow this guide. Take it one section at a time.
 
@@ -17,7 +17,7 @@ You do **not** need technical knowledge to follow this guide. Take it one sectio
 7. [Setting up your shop (first-time checklist)](#7-setting-up-your-shop-first-time-checklist)
 8. [Shipping and delivery setup](#8-shipping-and-delivery-setup)
 9. [Adding products](#9-adding-products)
-10. [Product statuses — what they mean](#10-product-statuses--what-they-mean)
+10. [Product statuses  what they mean](#10-product-statuses--what-they-mean)
 11. [Managing your product list](#11-managing-your-product-list)
 12. [Categories and collections](#12-categories-and-collections)
 13. [Stock and inventory](#13-stock-and-inventory)
@@ -29,7 +29,7 @@ You do **not** need technical knowledge to follow this guide. Take it one sectio
 19. [When can shoppers see my products?](#19-when-can-shoppers-see-my-products)
 20. [Day-to-day routine](#20-day-to-day-routine)
 21. [Common problems and fixes](#21-common-problems-and-fixes)
-22. [Glossary — simple meanings](#22-glossary--simple-meanings)
+22. [Glossary  simple meanings](#22-glossary--simple-meanings)
 23. [Quick reference card](#23-quick-reference-card)
 24. [Need help?](#24-need-help)
 
@@ -120,7 +120,7 @@ Keep these ready:
 ### After login
 
 - If you belong to **one shop**, you go straight to your dashboard.
-- If you belong to **more than one shop**, you will see **Select a store** — pick the shop you want to work on.
+- If you belong to **more than one shop**, you will see **Select a store**  pick the shop you want to work on.
 
 ---
 
@@ -146,7 +146,7 @@ To create an additional shop (if allowed), use **Add new store** and follow the 
 
 After you select a store, you land on **Orders**. Here is how the screen is organized.
 
-### Left sidebar — main menu
+### Left sidebar  main menu
 
 | Menu item | What you use it for |
 |-----------|---------------------|
@@ -158,14 +158,14 @@ After you select a store, you land on **Orders**. Here is how the screen is orga
 | **Customers** | See people who bought from you |
 | **Promotions** | Create discount codes or offers |
 | **Campaigns** | Run time-limited sales |
-| **Price Lists** | Special prices (advanced — optional for small sellers) |
+| **Price Lists** | Special prices (advanced  optional for small sellers) |
 | **Payouts** | See payment history from ELAI |
 | **Settings** (gear icon) | Your profile, shop details, team, shipping locations |
 
 ### Top of the page
 
-- **Store switcher** — change to another shop if you have several.
-- **Search** — press **Ctrl+K** (Windows) or **Cmd+K** (Mac) to search quickly.
+- **Store switcher**  change to another shop if you have several.
+- **Search**  press **Ctrl+K** (Windows) or **Cmd+K** (Mac) to search quickly.
 
 ### Settings area
 
@@ -183,21 +183,21 @@ Click **Settings** in the sidebar for:
 
 When you open **Settings → Store**, you may see a box called **Complete store profile**. Finish all steps so ELAI and customers have correct information.
 
-### Step 1 — Store details
+### Step 1  Store details
 
 **Go to:** Settings → Store → Edit (or **Add store details**)
 
 Fill in:
 
-- **Store name** — how customers know you (e.g. “Priya’s Accessories”)
-- **Email** — shop contact email
-- **Phone** — number customers or ELAI can reach you on
-- **Description** — a short story about your shop (who you are, what you make/sell)
-- **Logo / banner** — upload a clear logo if you have one
+- **Store name**  how customers know you (e.g. “Priya’s Accessories”)
+- **Email**  shop contact email
+- **Phone**  number customers or ELAI can reach you on
+- **Description**  a short story about your shop (who you are, what you make/sell)
+- **Logo / banner**  upload a clear logo if you have one
 
 **Tip for local sellers:** Even a small home business benefits from a friendly description and one good logo or photo.
 
-### Step 2 — Address
+### Step 2  Address
 
 **Go to:** Settings → Store → Address
 
@@ -205,7 +205,7 @@ Add where your business operates from (studio, shop, or dispatch address). This 
 
 Fill in street, city, state, and country at minimum.
 
-### Step 3 — Company details
+### Step 3  Company details
 
 **Go to:** Settings → Store → Professional details
 
@@ -217,7 +217,7 @@ If you have them, add:
 
 If you are a very small local seller without formal registration, add what you have and contact ELAI support if unsure.
 
-### Step 4 — Payment details
+### Step 4  Payment details
 
 **Go to:** Settings → Store → Payment details
 
@@ -242,7 +242,7 @@ If you sell **physical items** that need to be posted or couriered, you must set
 ### Simple path for small sellers
 
 1. **Create a location**  
-   Example name: “Main dispatch — Mumbai” or “Home studio”.  
+   Example name: “Main dispatch  Mumbai” or “Home studio”.  
    This is where you pack orders from.
 
 2. **Shipping profiles**  
@@ -251,8 +251,8 @@ If you sell **physical items** that need to be posted or couriered, you must set
 
 3. **Shipping options**  
    Add at least one option customers can choose, for example:
-   - **Standard delivery** — ₹X, 5–7 days  
-   - **Express** — ₹Y, 2–3 days (optional)
+   - **Standard delivery**  ₹X, 5–7 days  
+   - **Express**  ₹Y, 2–3 days (optional)
 
 4. **Service zones**  
    Define **where you ship** (e.g. all India, or specific states).
@@ -279,12 +279,12 @@ Products are what customers buy. Each product needs at least a **name**, **price
 
 ### Step-by-step wizard
 
-#### Step 1 — Details
+#### Step 1  Details
 
-- **Title** — clear name (e.g. “Handmade terracotta jhumka earrings”)
-- **Description** — materials, size, care instructions, story
-- **Images** — upload several good photos (front, side, on model if possible)
-- **Subtitle / handle** — often auto-filled; handle is used in the web link
+- **Title**  clear name (e.g. “Handmade terracotta jhumka earrings”)
+- **Description**  materials, size, care instructions, story
+- **Images**  upload several good photos (front, side, on model if possible)
+- **Subtitle / handle**  often auto-filled; handle is used in the web link
 
 **Photo tips:**
 
@@ -292,17 +292,17 @@ Products are what customers buy. Each product needs at least a **name**, **price
 - Plain background helps
 - Show scale (on hand or with a coin/ruler) for small accessories
 
-#### Step 2 — Organize
+#### Step 2  Organize
 
-- **Categories** — pick the best ELAI category (e.g. Earrings → Jhumkas)
-- **Collections** — optional groups you create (e.g. “Diwali 2026”)
-- **Type & tags** — optional; helps search and filters
+- **Categories**  pick the best ELAI category (e.g. Earrings → Jhumkas)
+- **Collections**  optional groups you create (e.g. “Diwali 2026”)
+- **Type & tags**  optional; helps search and filters
 
-#### Step 3 — Attributes
+#### Step 3  Attributes
 
 Extra fields ELAI may ask for (material, color family, occasion, etc.). Fill what applies.
 
-#### Step 4 — Variants
+#### Step 4  Variants
 
 A **variant** is a sellable version of the product.
 
@@ -315,10 +315,10 @@ Examples:
 For each variant set:
 
 - **Price** (selling price)
-- **SKU** (your internal code — optional but useful for stock)
+- **SKU** (your internal code  optional but useful for stock)
 - **Stock** (how many you have), if tracked
 
-#### Step 5 — Inventory
+#### Step 5  Inventory
 
 Link stock to your **location** (from Section 8).  
 Enter quantities so the system knows how many you can sell.
@@ -336,7 +336,7 @@ At the end you have two important buttons:
 
 ---
 
-## 10. Product statuses — what they mean
+## 10. Product statuses  what they mean
 
 Every product has a **status**. Look for a colored label on the product page or list.
 
@@ -363,21 +363,21 @@ You will see a table of all your products.
 
 ### Useful actions
 
-- **Search** — find by name
-- **Filter** — by status (draft, proposed, published, rejected)
-- **Open a product** — click a row to edit details, photos, prices, stock
-- **Bulk edit** — change several products at once (use carefully)
+- **Search**  find by name
+- **Filter**  by status (draft, proposed, published, rejected)
+- **Open a product**  click a row to edit details, photos, prices, stock
+- **Bulk edit**  change several products at once (use carefully)
 
 ### Inside a product page
 
 Typical sections:
 
-- **General** — title, description, status
-- **Media** — add or reorder photos
-- **Variants** — prices, SKUs, options
-- **Stock** — quantities per location
-- **Shipping profile** — how this item ships
-- **Sales channels** — where it is sold (ELAI will configure)
+- **General**  title, description, status
+- **Media**  add or reorder photos
+- **Variants**  prices, SKUs, options
+- **Stock**  quantities per location
+- **Shipping profile**  how this item ships
+- **Sales channels**  where it is sold (ELAI will configure)
 
 Save changes after edits. Major updates may need ELAI to review again depending on ELAI policy.
 
@@ -389,7 +389,7 @@ Save changes after edits. Major updates may need ELAI to review again depending 
 
 **Go to:** **Categories**
 
-Categories are the **ELAI marketplace structure** — like aisles in a department store.  
+Categories are the **ELAI marketplace structure**  like aisles in a department store.  
 Assign each product to the most accurate category so customers can browse and find you.
 
 You can **organize** the tree if ELAI allows sellers to manage certain categories; otherwise pick from what ELAI provides.
@@ -417,7 +417,7 @@ Here you see stock levels across your products and locations.
 ### Good habits
 
 - Update stock when you sell offline or at a local market
-- Set stock to **0** when out of stock — avoids selling items you cannot ship
+- Set stock to **0** when out of stock  avoids selling items you cannot ship
 - After a busy period, do a quick count and adjust numbers
 
 When an order comes in, the system may **reserve** stock. You might need to **allocate** stock during fulfillment (see Section 14).
@@ -432,7 +432,7 @@ This is one of the most important areas. Check it **daily** when you are activel
 
 ### Order list
 
-You see orders that include **your** items. In a marketplace, one customer checkout might split into several sellers — you only fulfill **your** part.
+You see orders that include **your** items. In a marketplace, one customer checkout might split into several sellers  you only fulfill **your** part.
 
 ### Open an order
 
@@ -490,7 +490,7 @@ If you cannot fulfill, contact ELAI support **before** delaying too long. Do not
 
 See people who have ordered from your shop. Useful for repeat buyers and support.
 
-You generally **cannot** see full payment card details — ELAI handles payment security.
+You generally **cannot** see full payment card details  ELAI handles payment security.
 
 ---
 
@@ -512,7 +512,7 @@ Create rules like:
 
 Schedule promotions between start and end dates (e.g. Diwali sale week).
 
-Start simple — one clear offer is easier to manage than many overlapping rules.
+Start simple  one clear offer is easier to manage than many overlapping rules.
 
 ---
 
@@ -536,11 +536,11 @@ Exact timing (weekly, bi-weekly, after delivery, etc.) depends on ELAI’s selle
 
 ### Your profile
 
-**Settings → Profile** — your name, email, language preference.
+**Settings → Profile**  your name, email, language preference.
 
 ### Store closure / time off
 
-**Settings → Store → Store closure** — if you are on holiday or cannot ship for a period, set dates here so ELAI can hide or pause your shop as configured.
+**Settings → Store → Store closure**  if you are on holiday or cannot ship for a period, set dates here so ELAI can hide or pause your shop as configured.
 
 ### Inviting team members
 
@@ -595,19 +595,19 @@ Customers see items on ELAI shop
 ### Quiet days (few orders)
 
 1. Log in once
-2. Check **Orders** — anything new?
+2. Check **Orders**  anything new?
 3. Glance at **Inventory** for low stock
 
 ### Busy days
 
-1. **Orders** — fulfill new sales first
+1. **Orders**  fulfill new sales first
 2. Print or write packing slips if you use them
 3. Update **tracking numbers** same day you hand to courier
 4. Reply to ELAI or customer issues if any
 
 ### Weekly
 
-1. Review **Proposed** products — still waiting on ELAI?
+1. Review **Proposed** products  still waiting on ELAI?
 2. Add **new products** or refresh photos
 3. Check **Payouts**
 4. Update stock after local sales or markets
@@ -620,11 +620,11 @@ Customers see items on ELAI shop
 |---------|-------------|
 | **Cannot log in** | Check email/password; use Reset password; confirm ELAI approved your account |
 | **“Session expired”** | Log in again; do not share your password |
-| **Published but not on ELAI shop** | Product is probably still **Proposed** — wait for ELAI approval; confirm seller is **Active** |
+| **Published but not on ELAI shop** | Product is probably still **Proposed**  wait for ELAI approval; confirm seller is **Active** |
 | **Order button greyed out** | Complete shipping setup in Settings → Locations |
 | **Wrong stock after sale** | Open order → complete fulfillment and allocation steps |
 | **Page blank or errors** | Refresh browser; try another browser; check internet |
-| **Invite link does not work** | Link may be expired — ask shop admin to send a new invite |
+| **Invite link does not work** | Link may be expired  ask shop admin to send a new invite |
 | **Forgot which store to pick** | Use the store name you registered; contact ELAI if unsure |
 
 When contacting support, include:
@@ -636,7 +636,7 @@ When contacting support, include:
 
 ---
 
-## 22. Glossary — simple meanings
+## 22. Glossary  simple meanings
 
 | Term | Simple meaning |
 |------|----------------|
@@ -681,13 +681,13 @@ When contacting support, include:
 
 This guide covers the Vendor Dashboard itself. For things outside the dashboard:
 
-- **Application status** — contact ELAI seller support
-- **Product rejection reasons** — email or dashboard message from ELAI
-- **Payment timing and fees** — refer to your seller agreement or ELAI support
-- **Technical emergencies** (site down) — ELAI technical support
+- **Application status**  contact ELAI seller support
+- **Product rejection reasons**  email or dashboard message from ELAI
+- **Payment timing and fees**  refer to your seller agreement or ELAI support
+- **Technical emergencies** (site down)  ELAI technical support
 
 Keep this document saved. You can return to any section using the [table of contents](#table-of-contents) at the top.
 
 ---
 
-*ELAI Vendor Dashboard Guide — for sellers including small-scale and local businesses. Update this document when your live dashboard URL or policies change.*
+*ELAI Vendor Dashboard Guide  for sellers including small-scale and local businesses. Update this document when your live dashboard URL or policies change.*

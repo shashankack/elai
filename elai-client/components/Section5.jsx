@@ -4,38 +4,13 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { VENDOR_PORTAL_URL } from "@/lib/vendor-portal-url";
+import { TARGET_AUDIENCES } from "@/lib/site-content";
 import "../styles/section5.scss";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Section5 = () => {
-  const audiences = [
-    {
-      group: "Gen Z & Young Millennials",
-      desc: "16–35 year olds who live and breathe trends",
-      img: "16.jpeg",
-    },
-    {
-      group: "Fashion-Conscious Shoppers",
-      desc: "Men & women who accessorise intentionally",
-      img: "22.jpeg",
-    },
-    {
-      group: "Wedding & Ethnic Buyers",
-      desc: "Shoppers looking for curated festive & bridal pieces",
-      img: "33.jpeg",
-    },
-    {
-      group: "Gift Buyers",
-      desc: "Finding the perfect personalised accessory gift",
-      img: "44.jpeg",
-    },
-    {
-      group: "Tech Enthusiasts",
-      desc: "Smartwatch straps, covers, cables & wearables",
-      img: "55.jpeg",
-    },
-  ];
+  const audiences = [...TARGET_AUDIENCES];
 
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
@@ -52,7 +27,7 @@ const Section5 = () => {
         scrollTrigger: { trigger: headerRef.current, start: "top 85%" },
       });
 
-      // Cards — use fromTo so cards stay in final layout position.
+      // Cards  use fromTo so cards stay in final layout position.
       // Only animate opacity + scale, NO y movement, so all cards
       // remain on the same baseline throughout the animation.
       gsap.fromTo(
@@ -80,15 +55,17 @@ const Section5 = () => {
       <div className="elai-shell">
         <div className="section5-content">
           <div className="section5-header" ref={headerRef}>
-            <p className="section5-subtitle">WHO IS ELAI FOR?</p>
+            <p className="section5-subtitle">TARGET AUDIENCE</p>
             <h2 className="section5-title">
               Built for every kind
               <br />
               of accessory lover.
             </h2>
             <p className="section5-description">
-              Whether you&apos;re chasing the latest drop or hunting for the
-              perfect ethnic piece, Elai has something for you.
+              From Gen Z and millennials to wedding shoppers, gift buyers, tech
+              accessory enthusiasts, ethnic & festival shoppers, and fitness
+              lovers  ELAI is designed for expressive, trend-focused shoppers
+              across India.
             </p>
           </div>
 

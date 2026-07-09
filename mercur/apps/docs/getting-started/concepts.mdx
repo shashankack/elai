@@ -1,13 +1,13 @@
 ---
 title: "Concepts"
-description: "Core concepts behind Mercur — from the Medusa foundation to blocks, panels, and the registry."
+description: "Core concepts behind Mercur  from the Medusa foundation to blocks, panels, and the registry."
 ---
 
 Mercur is built on a small set of concepts. Familiarity with these establishes a common language when working with the platform.
 
 ## Medusa
 
-[MedusaJS](https://medusajs.com) is the open-source commerce framework that powers Mercur's foundation. It handles products, pricing, carts, orders, payments, fulfillment, and promotions. Mercur does not replace any of this — it extends Medusa with marketplace-specific logic using Medusa's own extension model.
+[MedusaJS](https://medusajs.com) is the open-source commerce framework that powers Mercur's foundation. It handles products, pricing, carts, orders, payments, fulfillment, and promotions. Mercur does not replace any of this  it extends Medusa with marketplace-specific logic using Medusa's own extension model.
 
 ## Admin Panel
 
@@ -19,21 +19,21 @@ The vendor portal is a React application for **sellers**. Sellers use it to mana
 
 ## Storefront
 
-The storefront is the **customer-facing** application. It can be built with any frontend technology that consumes the Store API — Next.js, Remix, or any other framework. Mercur provides a ready-made storefront template to start from.
+The storefront is the **customer-facing** application. It can be built with any frontend technology that consumes the Store API  Next.js, Remix, or any other framework. Mercur provides a ready-made storefront template to start from.
 
 ## API Routes
 
 Mercur exposes three sets of HTTP endpoints:
 
-- **Admin API** (`/admin/*`) — Platform administration
-- **Vendor API** (`/vendor/*`) — Seller operations
-- **Store API** (`/store/*`) — Customer-facing storefront
+- **Admin API** (`/admin/*`)  Platform administration
+- **Vendor API** (`/vendor/*`)  Seller operations
+- **Store API** (`/store/*`)  Customer-facing storefront
 
 Each route is composed of a handler, middleware, query configuration, and validators.
 
 ## Core Plugin
 
-The core plugin (`@mercurjs/core`) is the main package that contains all of Mercur's marketplace logic — modules, links, workflows, API routes, subscribers, and providers. It is installed as a standard MedusaJS plugin and serves as the foundation that blocks extend.
+The core plugin (`@mercurjs/core`) is the main package that contains all of Mercur's marketplace logic  modules, links, workflows, API routes, subscribers, and providers. It is installed as a standard MedusaJS plugin and serves as the foundation that blocks extend.
 
 ## Modules
 
@@ -41,15 +41,15 @@ Modules encapsulate data models and business logic for a specific domain. Each m
 
 ## Links
 
-Links define relationships between Mercur modules and Medusa core entities without modifying either side. For example, a link connects a Medusa Product to a Mercur Seller — this is how the system knows which seller owns which product.
+Links define relationships between Mercur modules and Medusa core entities without modifying either side. For example, a link connects a Medusa Product to a Mercur Seller  this is how the system knows which seller owns which product.
 
 ## Workflows
 
-Workflows coordinate multi-step operations across modules. They support compensation (automatic rollback on failure) and hooks (extension points for custom logic). For example, the checkout workflow splits a cart by seller, creates separate orders, allocates payments, and calculates commissions — all as a single atomic operation.
+Workflows coordinate multi-step operations across modules. They support compensation (automatic rollback on failure) and hooks (extension points for custom logic). For example, the checkout workflow splits a cart by seller, creates separate orders, allocates payments, and calculates commissions  all as a single atomic operation.
 
 ## Blocks
 
-Blocks are the unit of distribution in Mercur. Each block is a self-contained piece of functionality — a module, a workflow, an API route, a link, or a UI extension. When you install a block, the CLI copies its source code directly into your project. You own every line and can modify anything.
+Blocks are the unit of distribution in Mercur. Each block is a self-contained piece of functionality  a module, a workflow, an API route, a link, or a UI extension. When you install a block, the CLI copies its source code directly into your project. You own every line and can modify anything.
 
 ## Registry
 
@@ -57,7 +57,7 @@ A registry is a collection of blocks available for installation. The official Me
 
 ## CLI
 
-The [Mercur CLI](/developer-guide/cli) (`@mercurjs/cli@latest`) manages your project — scaffolding from templates, installing blocks, searching registries, generating types, and diffing local changes against upstream versions.
+The [Mercur CLI](/developer-guide/cli) (`@mercurjs/cli@latest`) manages your project  scaffolding from templates, installing blocks, searching registries, generating types, and diffing local changes against upstream versions.
 
 ## Dashboard SDK
 

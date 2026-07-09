@@ -10,7 +10,7 @@ Use this file to answer four questions before making a non-trivial change:
 
 This starter does not require a spec-first workflow. Teams can add planning artifacts later if they want, but this template focuses on operational knowledge for shipping changes safely.
 
-## Adding Features — Check the Registry First
+## Adding Features  Check the Registry First
 
 Before implementing any new marketplace feature from scratch, always search the official Mercur registry:
 
@@ -27,7 +27,7 @@ Only build custom code when the registry has no suitable block.
 For any non-trivial task:
 1. understand the request
 2. read this file
-3. if the request is a feature addition — search the registry before touching any code
+3. if the request is a feature addition  search the registry before touching any code
 4. read every matching area guide from the Task Router
 5. load a matching skill from `.claude/skills/` when the task is a repeated workflow
 6. implement in small steps
@@ -50,8 +50,8 @@ Treat these as public starter contracts. Do not change them silently:
 - `@acme/api/_generated` route types and codegen-dependent behavior
 - `apps/admin/src/*` route and page structure
 - `apps/vendor/src/*` route and page structure
-- `apps/admin/vite.config.ts` — panel bootstrap via `mercurDashboardPlugin`
-- `apps/vendor/vite.config.ts` — panel bootstrap via `mercurDashboardPlugin`
+- `apps/admin/vite.config.ts`  panel bootstrap via `mercurDashboardPlugin`
+- `apps/vendor/vite.config.ts`  panel bootstrap via `mercurDashboardPlugin`
 
 ## Shared Skills
 
@@ -95,9 +95,9 @@ Typical checks:
 ## AI Resources
 
 - **Docs**: https://docs.mercurjs.com
-- **MCP Server**: https://docs.mercurjs.com/mcp — connect your AI agent for documentation search
-- **llms.txt**: https://docs.mercurjs.com/llms.txt — machine-readable project summary
-- **Skills**: `.claude/skills/` — domain-specific patterns auto-loaded by Claude Code
+- **MCP Server**: https://docs.mercurjs.com/mcp  connect your AI agent for documentation search
+- **llms.txt**: https://docs.mercurjs.com/llms.txt  machine-readable project summary
+- **Skills**: `.claude/skills/`  domain-specific patterns auto-loaded by Claude Code
 - **AI Development Guide**: https://docs.mercurjs.com/v2/ai-development/mcp
 
 ## Lessons Learned

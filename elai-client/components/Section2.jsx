@@ -3,52 +3,12 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { VENDOR_PORTAL_URL } from "@/lib/vendor-portal-url";
+import { SITE_CATEGORIES } from "@/lib/site-content";
 import "../styles/section2.scss";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const categories = [
-  {
-    title: "Fashion Jewellery",
-    items: "Earrings, rings, chains, pendants, chokers, anklets",
-    img: "1.png",
-  },
-  {
-    title: "Men's Accessories",
-    items: "Watches, wallets, belts, ties, sunglasses, caps",
-    img: "2.png",
-  },
-  {
-    title: "Bags & Travel",
-    items: "Handbags, totes, sling bags, backpacks, po...",
-    img: "3.png",
-  },
-  {
-    title: "Ethnic Accessories",
-    items: "Jhumkas, maang tikkas, kamarbandhs, turbans",
-    img: "4.png",
-  },
-  {
-    title: "Tech Accessories",
-    items: "Phone covers, smartwatch straps, earbuds c...",
-    img: "5.png",
-  },
-  {
-    title: "Beauty Add-Ons",
-    items: "Headbands, rollers, cosmetic pouches, organizers",
-    img: "6.png",
-  },
-  {
-    title: "Luxury Pieces",
-    items: "Silver, gold-plated, handcrafted, designer bags",
-    img: "7.png",
-  },
-  {
-    title: "Seasonal & Gifting",
-    items: "Festival collections, couple rings, personali...",
-    img: "8.png",
-  },
-];
+const categories = [...SITE_CATEGORIES];
 
 const Section2 = () => {
   const sectionRef = useRef(null);
@@ -96,7 +56,7 @@ const Section2 = () => {
         },
       });
 
-      // Cards — use fromTo so cards stay in final layout position.
+      // Cards  use fromTo so cards stay in final layout position.
       // Only animate opacity + scale, NO y movement, so all cards
       // remain on the same baseline throughout the animation.
       gsap.fromTo(
@@ -131,7 +91,7 @@ const Section2 = () => {
         {/* ── Header ── */}
         <div className="categories-top">
           <span className="categories-eyebrow" ref={eyebrowRef}>
-            40+ categories and growing
+            50+ categories and growing
           </span>
 
           <div className="categories-header">
@@ -145,9 +105,10 @@ const Section2 = () => {
             {/* Right: description + CTA */}
             <div className="categories-right" ref={rightRef}>
               <p className="categories-desc">
-                From everyday fashion to luxury statement pieces, Elai brings
-                India&apos;s widest accessories selection onto one elegant,
-                easy-to-browse platform.
+                From jewellery and bags to watches, eyewear, hair add-ons, tech
+                accessories, belts, socks, and travel essentials  ELAI brings
+                together every category that completes a look, with clean
+                segmentation and curated collections.
               </p>
               <a href={VENDOR_PORTAL_URL} className="categories-cta">
                 Apply as Seller →
@@ -160,7 +121,7 @@ const Section2 = () => {
         <div className="categories-grid">
           {categories.map((cat, index) => (
             <div
-              key={index}
+              key={cat.title}
               className="category-card"
               ref={(el) => (cardsRef.current[index] = el)}
             >

@@ -49,7 +49,7 @@ function resolveTabMeta<T extends FieldValues>(
     }
     if (!labelKey && !label) {
       console.warn(
-        `[TabbedForm] Tab "${id}" has no label or labelKey — header will be empty.`
+        `[TabbedForm] Tab "${id}" has no label or labelKey  header will be empty.`
       )
     }
   }

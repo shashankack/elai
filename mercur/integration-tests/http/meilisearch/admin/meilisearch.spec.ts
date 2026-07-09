@@ -1,11 +1,11 @@
 /**
  * Integration tests for admin Meilisearch endpoints:
- *   GET  /admin/meilisearch      — index status
- *   POST /admin/meilisearch/sync — trigger full re-index
+ *   GET  /admin/meilisearch       index status
+ *   POST /admin/meilisearch/sync  trigger full re-index
  *
  * Prerequisites (handled by test:integration:meilisearch script):
  *   - MEILISEARCH_HOST env var must be set
- *   - The meilisearch npm package is mocked below — no real Meilisearch instance needed
+ *   - The meilisearch npm package is mocked below  no real Meilisearch instance needed
  */
 
 import { medusaIntegrationTestRunner } from "@medusajs/test-utils"
@@ -57,7 +57,7 @@ medusaIntegrationTestRunner({
           expect(response.data.documentCount).toBe(0)
         })
 
-        it("requires admin authentication — returns 401 without token", async () => {
+        it("requires admin authentication  returns 401 without token", async () => {
           const response = await api.get("/admin/meilisearch", {
             headers: {},
           })
@@ -78,7 +78,7 @@ medusaIntegrationTestRunner({
           expect(response.data).toMatchObject({ message: "Sync in progress" })
         })
 
-        it("requires admin authentication — returns 401 without token", async () => {
+        it("requires admin authentication  returns 401 without token", async () => {
           const response = await api.post("/admin/meilisearch", {}, {
             headers: {},
           })

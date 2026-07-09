@@ -33,7 +33,7 @@ export function StepSidebar({ step, progress }: StepSidebarProps) {
           marketplace
         </h1>
         <p className="mt-4 max-w-xs text-sm leading-relaxed text-[#FFF7D4]/72">
-          Curated essentials, trusted vendors. Complete four quick steps — we review and
+          Curated essentials, trusted vendors. Complete four quick steps  we review and
           approve within a few business days.
         </p>
 

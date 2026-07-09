@@ -18,7 +18,7 @@ export const telemetry = new Command()
         return;
       }
 
-      // No flags — show current status
+      // No flags  show current status
       if (!opts.enable && !opts.disable) {
         const configEnabled = configStore.get("telemetry_enabled");
         const envDisabled = process.env.MERCUR_DISABLE_TELEMETRY === 'true';

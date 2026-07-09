@@ -14,7 +14,7 @@ import { useInventoryTableFilters } from "./use-inventory-table-filters"
 import { useInventoryTableQuery } from "./use-inventory-table-query"
 
 /**
- * Extended type matching the columns definition — API returns these fields
+ * Extended type matching the columns definition  API returns these fields
  * but they're not in the base InventoryItemDTO.
  */
 interface ExtendedInventoryItem extends InventoryTypes.InventoryItemDTO {

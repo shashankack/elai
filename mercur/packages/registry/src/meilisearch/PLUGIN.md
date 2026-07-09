@@ -2,20 +2,20 @@
 
 ## What It Does
 
-The Meilisearch Search block adds fast, full-text product search to your Mercur marketplace. Shoppers can find products instantly by typing keywords, filtering by category, price range, or seller — all with results appearing in milliseconds.
+The Meilisearch Search block adds fast, full-text product search to your Mercur marketplace. Shoppers can find products instantly by typing keywords, filtering by category, price range, or seller  all with results appearing in milliseconds.
 
 This is an **opt-in block**: it only activates when you install it and connect a Meilisearch instance. Your marketplace works normally without it.
 
 ## Key Features
 
 ### Instant Product Search
-Shoppers type a query and see matching products immediately. Results are ranked by relevance — the best matches appear first. Typos are handled gracefully ("runnig shoes" still finds "running shoes").
+Shoppers type a query and see matching products immediately. Results are ranked by relevance  the best matches appear first. Typos are handled gracefully ("runnig shoes" still finds "running shoes").
 
 ### Smart Filtering
 Shoppers can narrow results by:
-- **Category** — browse within a specific product category
-- **Price range** — set minimum and/or maximum price
-- **Seller** — view products from a specific store
+- **Category**  browse within a specific product category
+- **Price range**  set minimum and/or maximum price
+- **Seller**  view products from a specific store
 
 Filters combine naturally: "shoes under $100 from ACME Store" works as expected.
 
@@ -31,8 +31,8 @@ The search index stays in sync with your product catalog:
 
 ### Admin Dashboard Tools
 Marketplace administrators get two tools:
-- **Health check** — see whether the search engine is running and how many products are indexed
-- **Manual re-sync** — trigger a full re-index of all products if the index ever gets out of sync
+- **Health check**  see whether the search engine is running and how many products are indexed
+- **Manual re-sync**  trigger a full re-index of all products if the index ever gets out of sync
 
 ## How Shoppers Experience It
 
@@ -40,7 +40,7 @@ Marketplace administrators get two tools:
 2. Results appear ranked by relevance, showing product title, image, price, and seller
 3. The shopper can apply filters to narrow results (category, price, seller)
 4. Pagination lets them browse through large result sets
-5. Only products from active, approved sellers appear — suspended seller products are never shown
+5. Only products from active, approved sellers appear  suspended seller products are never shown
 
 ## What You Need
 
@@ -48,8 +48,8 @@ Marketplace administrators get two tools:
 Meilisearch is an open-source search engine. You need a running instance accessible from your Mercur server.
 
 **Options:**
-- **Meilisearch Cloud** (meilisearch.com) — managed hosting, easiest setup
-- **Self-hosted** — run Meilisearch on your own infrastructure (Docker, VPS, etc.)
+- **Meilisearch Cloud** (meilisearch.com)  managed hosting, easiest setup
+- **Self-hosted**  run Meilisearch on your own infrastructure (Docker, VPS, etc.)
 
 You will need:
 - The Meilisearch **host URL** (e.g., `https://search.yourmarketplace.com`)
@@ -71,11 +71,11 @@ npx @mercurjs/cli add meilisearch
 ```
 
 This copies the block source files into your project:
-- `src/modules/meilisearch/` — module service, types, and index configuration
-- `src/subscribers/` — event handlers for product/seller sync
-- `src/api/store/meilisearch/` — store search endpoint
-- `src/api/admin/meilisearch/` — admin status and sync endpoints
-- `src/workflows/meilisearch/` — full re-index workflow
+- `src/modules/meilisearch/`  module service, types, and index configuration
+- `src/subscribers/`  event handlers for product/seller sync
+- `src/api/store/meilisearch/`  store search endpoint
+- `src/api/admin/meilisearch/`  admin status and sync endpoints
+- `src/workflows/meilisearch/`  full re-index workflow
 
 The CLI also installs the `meilisearch` npm package as a dependency.
 
@@ -169,12 +169,12 @@ Search products. Requires `x-publishable-api-key` header.
 | `query` | string | `""` | Search query text |
 | `page` | number | `1` | Page number (1-based) |
 | `hitsPerPage` | number | `12` | Results per page (1-100) |
-| `filters.categories` | string[] | — | Filter by category IDs |
-| `filters.price_min` | number | — | Minimum price |
-| `filters.price_max` | number | — | Maximum price |
-| `filters.seller_handle` | string | — | Filter by seller handle |
-| `currency_code` | string | — | 3-letter currency for calculated prices |
-| `region_id` | string | — | Region ID for calculated prices |
+| `filters.categories` | string[] |  | Filter by category IDs |
+| `filters.price_min` | number |  | Minimum price |
+| `filters.price_max` | number |  | Maximum price |
+| `filters.seller_handle` | string |  | Filter by seller handle |
+| `currency_code` | string |  | 3-letter currency for calculated prices |
+| `region_id` | string |  | Region ID for calculated prices |
 
 **Response:**
 
@@ -261,7 +261,7 @@ const results = await sdk.client.fetch("/store/meilisearch/products/search", {
 })
 ```
 
-**Do not use raw `fetch()`** — the SDK automatically includes the required `x-publishable-api-key` header.
+**Do not use raw `fetch()`**  the SDK automatically includes the required `x-publishable-api-key` header.
 
 For autocomplete/typeahead, use a debounced version of the same endpoint with a smaller `hitsPerPage` (e.g., 5).
 
@@ -269,8 +269,8 @@ For autocomplete/typeahead, use a debounced version of the same endpoint with a 
 
 ## Security and Privacy
 
-- Search results **never** include products from suspended sellers — this is enforced server-side and cannot be bypassed by the storefront
-- Filter values are validated and sanitized — shoppers cannot inject malicious search filters
+- Search results **never** include products from suspended sellers  this is enforced server-side and cannot be bypassed by the storefront
+- Filter values are validated and sanitized  shoppers cannot inject malicious search filters
 - The store search endpoint requires a publishable API key
 - Admin endpoints require admin authentication
 - The Meilisearch API key is stored server-side and never exposed to shoppers

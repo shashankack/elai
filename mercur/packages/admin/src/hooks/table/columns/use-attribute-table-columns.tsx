@@ -71,14 +71,14 @@ const GlobalToggle = ({ attribute }: { attribute: Record<string, any> }) => {
 
   const handleToggle = async (checked: boolean) => {
     if (checked) {
-      // Turning ON global — remove category assignments
+      // Turning ON global  remove category assignments
       try {
         await mutateAsync({ product_category_ids: [] })
       } catch (err: any) {
         toast.error(err.message)
       }
     } else {
-      // Turning OFF global — need to pick categories
+      // Turning OFF global  need to pick categories
       setSelectedCategoryIds(categories.map((c: any) => c.id))
       setCategoryModalOpen(true)
     }

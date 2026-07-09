@@ -21,7 +21,7 @@ Area-specific checks for mercur code review. Use alongside the main `SKILL.md`.
 
 ## Registry Blocks (`packages/registry/`)
 
-- [ ] No imports from `@components/`, `@hooks/`, `@lib/` — use `@mercurjs/dashboard-shared`
+- [ ] No imports from `@components/`, `@hooks/`, `@lib/`  use `@mercurjs/dashboard-shared`
 - [ ] No barrel `index.ts` in `workflows/` or `steps/`
 - [ ] File layout matches CLI `resolveNestedFilePath()` expectations
 - [ ] `registry.json` entry has `docs` field with setup instructions

@@ -1,16 +1,16 @@
 ---
 title: "Subscriptions"
-description: "Recurring seller billing — platform toggle, default plans, per-seller overrides, and billing rules."
+description: "Recurring seller billing  platform toggle, default plans, per-seller overrides, and billing rules."
 ---
 
-**Subscriptions** allow the platform operator to charge sellers a recurring fee for marketplace access. This is an opt-in feature — when disabled, sellers operate without any platform billing. This page covers the subscription model, billing rules, and how overrides work.
+**Subscriptions** allow the platform operator to charge sellers a recurring fee for marketplace access. This is an opt-in feature  when disabled, sellers operate without any platform billing. This page covers the subscription model, billing rules, and how overrides work.
 
 ## Platform-Level Toggle
 
 Subscriptions are controlled by a **platform-wide toggle**:
 
-- **Disabled** (default) — No subscription billing occurs. Sellers are not charged any platform fees. The subscription UI is hidden from both the admin dashboard and the vendor portal.
-- **Enabled** — Sellers are billed according to their subscription plan. The operator must configure at least one default plan before enabling subscriptions.
+- **Disabled** (default)  No subscription billing occurs. Sellers are not charged any platform fees. The subscription UI is hidden from both the admin dashboard and the vendor portal.
+- **Enabled**  Sellers are billed according to their subscription plan. The operator must configure at least one default plan before enabling subscriptions.
 
 Toggling subscriptions off after they have been enabled **does not delete** existing subscription records. Billing simply stops, and sellers are not charged for subsequent periods. Re-enabling resumes billing from the next cycle.
 
@@ -32,7 +32,7 @@ When subscriptions are enabled, the operator defines a **default plan** for each
 
 When a new [seller](/core-concepts/seller) account is approved, the system automatically assigns the default plan matching the seller's currency. The seller begins their subscription immediately, starting with any configured free months.
 
-The `requires_orders` flag is designed for marketplaces that want to avoid charging inactive sellers. When this flag is set, a billing cycle with zero orders produces no invoice — the seller is effectively not charged for that month.
+The `requires_orders` flag is designed for marketplaces that want to avoid charging inactive sellers. When this flag is set, a billing cycle with zero orders produces no invoice  the seller is effectively not charged for that month.
 
 ## Per-Seller Overrides
 
@@ -41,8 +41,8 @@ The operator can override subscription terms for **individual sellers**. An over
 
 | Field            | Description                                                                           |
 | ---------------- | ------------------------------------------------------------------------------------- |
-| `monthly_amount` | Custom recurring fee (nullable — when null, the plan's amount applies)                |
-| `free_months`    | Custom number of free initial months (nullable — when null, the plan's value applies) |
+| `monthly_amount` | Custom recurring fee (nullable  when null, the plan's amount applies)                |
+| `free_months`    | Custom number of free initial months (nullable  when null, the plan's value applies) |
 | `free_from`      | Start date of a temporary free period                                                 |
 | `free_to`        | End date of a temporary free period                                                   |
 | `metadata`       | Arbitrary JSON metadata                                                               |
@@ -52,9 +52,9 @@ The `free_from` / `free_to` date range allows **time-bound fee waivers** indepen
 
 Overrides are managed through the admin dashboard and can be applied at any time during the seller's lifecycle. They are commonly used for:
 
-- **Promotional onboarding** — Offering an extended free trial to attract high-value sellers
-- **Negotiated rates** — Enterprise or high-volume sellers may negotiate custom pricing
-- **Temporary relief** — Waiving fees for a specific date range during platform incidents or market disruptions
+- **Promotional onboarding**  Offering an extended free trial to attract high-value sellers
+- **Negotiated rates**  Enterprise or high-volume sellers may negotiate custom pricing
+- **Temporary relief**  Waiving fees for a specific date range during platform incidents or market disruptions
 
 ## Billing Rules
 
@@ -77,7 +77,7 @@ Subscription billing continues regardless of the seller's [account status](/core
 | `terminated`       | No      | Final invoice issued at termination; no further billing |
 
 
-Suspended sellers **continue to be billed**. This is intentional — suspension is a temporary measure, and the seller retains their catalog, data, and platform presence. If the operator does not wish to charge a suspended seller, they can apply a per-seller override.
+Suspended sellers **continue to be billed**. This is intentional  suspension is a temporary measure, and the seller retains their catalog, data, and platform presence. If the operator does not wish to charge a suspended seller, they can apply a per-seller override.
 
 ### Negative Balance
 
@@ -88,4 +88,4 @@ Persistent negative balances may be grounds for suspension or termination at the
 ## Relationship to Other Concepts
 
 - **Seller accounts** determine which default plan applies based on `currency_code` (see [Seller](/core-concepts/seller))
-- Subscription status is independent of [member management](/core-concepts/seller-members) — adding or removing members does not affect billing
+- Subscription status is independent of [member management](/core-concepts/seller-members)  adding or removing members does not affect billing

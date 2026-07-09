@@ -3,19 +3,13 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { UVP_BENEFITS } from "@/lib/site-content";
 import "../styles/section4.scss";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Section4 = () => {
-  const benefits = [
-    "First-of-its-kind accessories-only marketplace in India",
-    "40+ deep-segregated categories for effortless discovery",
-    "Affordable options alongside premium and luxury picks",
-    "Trend-first platform, always current with micro & macro trends",
-    "Personalised recommendations via style quiz",
-    "One-day delivery in metros with Secure payments & COD",
-  ];
+  const benefits = [...UVP_BENEFITS];
 
   const sectionRef = useRef(null);
   const imgRef = useRef(null);
@@ -65,16 +59,18 @@ const Section4 = () => {
             </div>
 
             <div className="section4-right" ref={rightRef}>
-              <p className="section4-subtitle">WHY CHOOSE ELAI</p>
+              <p className="section4-subtitle">UNIQUE VALUE PROPOSITION</p>
               <h2 className="section4-title">
-                Why Elai
+                Why ELAI
                 <br />
                 is different?
               </h2>
               <p className="section4-description">
-                Unlike Amazon, Myntra, or Nykaa, Elai is exclusively built for
-                accessories. Every feature, every category, every drop —
-                designed for the accessory-first shopper.
+                Unlike Amazon, Myntra, or Nykaa, ELAI is exclusively built for
+                accessories. India lacks a dedicated, well-organised accessories
+                platform  we bring jewellery, bags, watches, eyewear, hair
+                add-ons, tech accessories, and more into one seamless,
+                enjoyable, and personalised experience.
               </p>
 
               <ul className="benefits-list">
@@ -115,16 +111,16 @@ const Section4 = () => {
       <div className="uvp-strip">
         <div className="uvp-strip__inner">
           {[
-            "Elai Choice",
-            "Elai Style",
-            "Elai Confidence",
-            "Elai Personality",
-            "Elai Convenience",
-            "Elai Choice",
-            "Elai Style",
-            "Elai Confidence",
-            "Elai Personality",
-            "Elai Convenience",
+            "Curated Collections",
+            "Trend Discovery",
+            "Style Expression",
+            "Verified Sellers",
+            "Effortless Browsing",
+            "Curated Collections",
+            "Trend Discovery",
+            "Style Expression",
+            "Verified Sellers",
+            "Effortless Browsing",
           ].map((tag, i) => (
             <span key={i} className="uvp-strip__tag">
               {tag}

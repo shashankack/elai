@@ -25,7 +25,7 @@ export const pluginBuild = new Command()
 
       const tsConfig = await compiler.loadTSConfigFile();
       if (!tsConfig) {
-        buildSpinner.fail("Unable to compile plugin — tsconfig not found.");
+        buildSpinner.fail("Unable to compile plugin  tsconfig not found.");
         process.exit(1);
       }
 

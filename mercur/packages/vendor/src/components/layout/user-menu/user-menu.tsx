@@ -26,8 +26,7 @@ import { Skeleton } from "../../common/skeleton";
 
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useLogout, useMe } from "../../../hooks/api";
-import { queryClient } from "../../../lib/query-client";
+import { useMe, usePerformLogout } from "../../../hooks/api";
 import { useGlobalShortcuts } from "../../../providers/keybind-provider/hooks";
 import { useTheme } from "../../../providers/theme-provider";
 import { useDocumentDirection } from "../../../hooks/use-document-direction";
@@ -245,24 +244,15 @@ export const LanguageToggle = () => {
 
 const Logout = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-
-  const { mutateAsync: logoutMutation } = useLogout();
-
-  const handleLogout = async () => {
-    await logoutMutation(undefined, {
-      onSuccess: () => {
-        /**
-         * When the user logs out, we want to clear the query cache
-         */
-        queryClient.clear();
-        navigate("/login");
-      },
-    });
-  };
+  const performLogout = usePerformLogout();
 
   return (
-    <DropdownMenu.Item onClick={handleLogout}>
+    <DropdownMenu.Item
+      onSelect={(event) => {
+        event.preventDefault();
+        void performLogout();
+      }}
+    >
       <div className="flex items-center gap-x-2">
         <OpenRectArrowOut className="text-ui-fg-subtle" />
         <span>{t("app.menus.actions.logout")}</span>

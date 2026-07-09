@@ -91,7 +91,7 @@ export const validatePossibleValuesRemovalStep = createStep(
           if (innerErr.type === MedusaError.Types.NOT_ALLOWED) {
             throw innerErr
           }
-          // Table doesn't exist yet — no vendor usage, allow deletion
+          // Table doesn't exist yet  no vendor usage, allow deletion
         }
       }
     }

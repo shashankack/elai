@@ -1,4 +1,4 @@
-# Form Field Patterns — Exact Code Examples
+# Form Field Patterns  Exact Code Examples
 
 ## Standard Text Input
 
@@ -243,7 +243,7 @@ Note: ChipInput is an exception where raw `Controller` may be used because it's 
 
 ## Inline Editable Row (Dynamic Array with Grid Layout)
 
-Used for inventory kits, variant options, price list items — any dynamic list where each row
+Used for inventory kits, variant options, price list items  any dynamic list where each row
 has multiple inline fields (label + input pairs) and a delete button.
 
 ### Row Structure
@@ -323,10 +323,10 @@ has multiple inline fields (label + input pairs) and a delete button.
 ```
 
 ### Key layout classes:
-- Outer: `grid grid-cols-[1fr_28px]` — content + delete button
-- Inner: `grid grid-cols-[min-content,1fr]` — label + input pairs
+- Outer: `grid grid-cols-[1fr_28px]`  content + delete button
+- Inner: `grid grid-cols-[min-content,1fr]`  label + input pairs
 - Card: `bg-ui-bg-component shadow-elevation-card-rest rounded-xl p-1.5`
-- Labels: `Label size="xsmall" weight="plus" className="text-ui-fg-subtle"` (NOT Form.Label — inline rows use raw Label for compact sizing)
+- Labels: `Label size="xsmall" weight="plus" className="text-ui-fg-subtle"` (NOT Form.Label  inline rows use raw Label for compact sizing)
 - Inputs: `className="bg-ui-bg-field-component"` for contrast background
 - Delete: `IconButton size="small" variant="transparent"` with `XMarkMini`
 
@@ -393,36 +393,36 @@ const isOptionDisabled = (option: { value: string }, currentIndex: number) => {
 
 ### Field Label
 ```tsx
-// WRONG — raw Label, asterisk in text
+// WRONG  raw Label, asterisk in text
 <Label htmlFor="seo-title">SEO Title *</Label>
 
-// RIGHT — Form.Label, optional prop for optional fields
+// RIGHT  Form.Label, optional prop for optional fields
 <Form.Label>{t("products.fields.seo_title.label")}</Form.Label>
 <Form.Label optional>{t("products.fields.seo_title.label")}</Form.Label>
 ```
 
 ### Error Display
 ```tsx
-// WRONG — manual error rendering
+// WRONG  manual error rendering
 {fieldState.error && (
   <span className="text-ui-fg-error text-small">
     {fieldState.error.message}
   </span>
 )}
 
-// RIGHT — auto error component
+// RIGHT  auto error component
 <Form.ErrorMessage />
 ```
 
 ### Field Wrapper
 ```tsx
-// WRONG — manual div wrapper
+// WRONG  manual div wrapper
 <div className="flex flex-col gap-y-2">
   <Label>...</Label>
   <Input />
 </div>
 
-// RIGHT — Form.Item
+// RIGHT  Form.Item
 <Form.Item>
   <Form.Label>...</Form.Label>
   <Form.Control>
@@ -434,11 +434,11 @@ const isOptionDisabled = (option: { value: string }, currentIndex: number) => {
 
 ### Strings
 ```tsx
-// WRONG — hardcoded
+// WRONG  hardcoded
 <Form.Label>SEO Title</Form.Label>
 <Input placeholder="Enter SEO title..." />
 
-// RIGHT — i18n
+// RIGHT  i18n
 <Form.Label>{t("products.fields.seo_title.label")}</Form.Label>
 <Input placeholder={t("products.fields.seo_title.placeholder")} />
 ```

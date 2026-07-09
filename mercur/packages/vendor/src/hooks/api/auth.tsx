@@ -4,7 +4,10 @@ import {
   InferClientOutput,
 } from "@mercurjs/client";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { sdk } from "../../lib/client";
+import { queryClient } from "../../lib/query-client";
 
 export const useSignInWithEmailPass = (
   options?: UseMutationOptions<
@@ -159,6 +162,26 @@ export const useLogout = (
     mutationFn: () => sdk.auth.session.delete({}),
     ...options,
   });
+};
+
+/**
+ * Clears local auth state and redirects to login.
+ * Always runs even if the session delete request fails (e.g. already expired).
+ */
+export const usePerformLogout = () => {
+  const navigate = useNavigate();
+  const { mutateAsync: logoutMutation } = useLogout();
+
+  return useCallback(async () => {
+    try {
+      await logoutMutation();
+    } catch {
+      // Session may already be invalid — still sign out locally.
+    } finally {
+      queryClient.clear();
+      navigate("/login", { replace: true });
+    }
+  }, [logoutMutation, navigate]);
 };
 
 export const useUpdateProviderForEmailPass = (

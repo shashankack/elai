@@ -29,6 +29,7 @@ const Navbar = () => {
 
           <nav className="header-nav">
             <a href="/shop">Shop</a>
+            <a href="#about">About</a>
             <a href="#categories">Categories</a>
             <a href="#why-elai">Why Elai</a>
             <a href="#sellers">Sell on Elai</a>
@@ -48,10 +49,13 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Always in DOM — animated via CSS */}
+        {/* Always in DOM  animated via CSS */}
         <nav className="mobile-menu">
           <a href="/shop" onClick={() => setMenuOpen(false)}>
             Shop
+          </a>
+          <a href="#about" onClick={() => setMenuOpen(false)}>
+            About
           </a>
           <a href="#categories" onClick={() => setMenuOpen(false)}>
             Categories

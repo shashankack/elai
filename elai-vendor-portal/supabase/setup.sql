@@ -1,4 +1,4 @@
--- ELAI Vendor Portal — full Supabase setup
+-- ELAI Vendor Portal  full Supabase setup
 -- Run this entire file in: Supabase Dashboard → SQL Editor → New query → Run
 
 -- ---------------------------------------------------------------------------
@@ -133,7 +133,7 @@ VALUES (
 ON CONFLICT ("userId") DO UPDATE SET "updatedAt" = now();
 
 -- ---------------------------------------------------------------------------
--- 3. Row Level Security (optional — API uses service role and bypasses RLS)
+-- 3. Row Level Security (optional  API uses service role and bypasses RLS)
 -- ---------------------------------------------------------------------------
 
 ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;

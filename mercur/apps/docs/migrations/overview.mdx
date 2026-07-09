@@ -17,12 +17,12 @@ If you're using an AI Agent/IDE (Claude Code, Cursor, or similar), your project 
 
 | 1.x | 2.0 |
 |-------|--------|
-| `@mercurjs/b2c-core` (monolithic) | `@mercurjs/core` — all core modules built in |
+| `@mercurjs/b2c-core` (monolithic) | `@mercurjs/core`  all core modules built in |
 | `@mercurjs/commission` (separate) | Built into core |
 | `@mercurjs/algolia`, reviews, requests | Registry blocks (`mercurjs add ...`) |
 | `@medusajs/admin-vite-plugin` | `@mercurjs/dashboard-sdk` (virtual modules) |
 | `@medusajs/js-sdk` (manual hooks) | `@mercurjs/client` (generated typed client) |
-| Custom admin/vendor pages | `@mercurjs/admin` / `@mercurjs/vendor` — complete panels out of the box |
+| Custom admin/vendor pages | `@mercurjs/admin` / `@mercurjs/vendor`  complete panels out of the box |
 | `apps/backend/` | `packages/api/` |
 | `src/routes/` (admin) | `src/pages/` (file-based routing) |
 | Yarn + Turbo | bun (recommended) |
@@ -31,16 +31,16 @@ If you're using an AI Agent/IDE (Claude Code, Cursor, or similar), your project 
 
 - MedusaJS v2 foundation (modules, workflows, links, subscribers, API routes)
 - Data model patterns (MikroORM, service layer)
-- Environment variables (`DATABASE_URL`, CORS, secrets — all the same)
+- Environment variables (`DATABASE_URL`, CORS, secrets  all the same)
 
 ## What You Need to Migrate
 
 **Most users don't need to migrate much.** Core-plugin and the official registry blocks cover most standard marketplace functionality. Core-admin/vendor panels provide 34+ pages out of the box.
 
 You only need to port:
-- **Custom modules** — business-specific modules not covered by core or blocks
-- **Custom workflows and routes** — your own endpoints and business logic
-- **Custom dashboard pages** — only if you have domain-specific pages not in core-admin/vendor
+- **Custom modules**  business-specific modules not covered by core or blocks
+- **Custom workflows and routes**  your own endpoints and business logic
+- **Custom dashboard pages**  only if you have domain-specific pages not in core-admin/vendor
 
 <Warning>
 Current migration exceptions:
@@ -54,5 +54,5 @@ See [From 1.x to 2.0](/migrations/from-1-x-to-2-0) for the full migration guidan
 
 ## Next Steps
 
-- [From 2.0 to 2.1](/migrations/from-2-0-to-2-1) — package rename (`@mercurjs/core-plugin` → `@mercurjs/core`) and a `db:migrate` step
-- [From 1.x to 2.0](/migrations/from-1-x-to-2-0) — full guide for porting an existing 1.x project
+- [From 2.0 to 2.1](/migrations/from-2-0-to-2-1)  package rename (`@mercurjs/core-plugin` → `@mercurjs/core`) and a `db:migrate` step
+- [From 1.x to 2.0](/migrations/from-1-x-to-2-0)  full guide for porting an existing 1.x project

@@ -1,9 +1,9 @@
 ---
 title: "Payout"
-description: "How seller payouts work in Mercur — accounts, onboarding, payment capture, and the transfer pipeline."
+description: "How seller payouts work in Mercur  accounts, onboarding, payment capture, and the transfer pipeline."
 ---
 
-The payout module handles the financial side of a marketplace — onboarding sellers to a payment provider, capturing authorized payments, and transferring funds to sellers after fulfillment.
+The payout module handles the financial side of a marketplace  onboarding sellers to a payment provider, capturing authorized payments, and transferring funds to sellers after fulfillment.
 
 ## Payout account
 
@@ -60,13 +60,13 @@ An order qualifies for payout when:
 
 A subscriber listens for `payout.requested` events and runs the `createPayoutWorkflow`:
 
-1. **Fetch order** — Loads the order with its seller, payout account, and commission lines
-2. **Calculate payout amount** — Subtracts commission from the order total:
+1. **Fetch order**  Loads the order with its seller, payout account, and commission lines
+2. **Calculate payout amount**  Subtracts commission from the order total:
    ```
    payout_amount = order.total - total_commission
    ```
-3. **Create payout** — Calls the payment provider to initiate the transfer and creates a `Payout` record
-4. **Link payout** — Associates the payout with the seller
+3. **Create payout**  Calls the payment provider to initiate the transfer and creates a `Payout` record
+4. **Link payout**  Associates the payout with the seller
 
 ### Payout statuses
 
@@ -170,6 +170,6 @@ curl http://localhost:9000/admin/payouts \
 
 ## Provider abstraction
 
-The payout module is **provider-agnostic**. A `PayoutProviderService` acts as a bridge to the external payment processor. It delegates all external operations — creating accounts, processing payouts, parsing webhooks — to a pluggable provider implementation.
+The payout module is **provider-agnostic**. A `PayoutProviderService` acts as a bridge to the external payment processor. It delegates all external operations  creating accounts, processing payouts, parsing webhooks  to a pluggable provider implementation.
 
 The module expects exactly one payout provider to be registered. Provider-specific data is stored in the `data` JSON fields on accounts, payouts, and onboarding records.
