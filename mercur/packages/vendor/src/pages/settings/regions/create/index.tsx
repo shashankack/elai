@@ -1,4 +1,4 @@
-import { RouteFocusModal } from "@components/modals/route-focus-modal"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { usePaymentProviders } from "@hooks/api/payments"
 import { useStore } from "@hooks/api/store"
 import { currencies } from "@lib/data/currencies"
@@ -20,11 +20,13 @@ const RegionCreate = () => {
 
   return (
     <RouteFocusModal>
-      {!isLoading && store && (
+      {!isLoading && store ? (
         <CreateRegionForm
           currencies={storeCurrencies}
           paymentProviders={paymentProviders}
         />
+      ) : (
+        <RouteModalLoading />
       )}
     </RouteFocusModal>
   )

@@ -11,6 +11,8 @@
   /* Landing page layout */
   --elai-shell-width: 1200px;
   --font-heading: "Kingred";
+  /* Fixed floating nav: top 20px + ~60px pill + gap */
+  --nav-offset: 7.25rem;
 }
 
 @theme inline {
@@ -52,6 +54,11 @@ body {
   margin-left: auto;
   margin-right: auto;
   padding-inline: clamp(20px, 5vw, 72px);
+}
+
+/* Shop routes sit under the fixed floating navbar */
+.elai-shop-page {
+  padding-top: var(--nav-offset);
 }
 
 /* Utility: Space Mono for mono/accent text */

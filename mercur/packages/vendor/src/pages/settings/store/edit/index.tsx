@@ -1,6 +1,6 @@
 import { Heading } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
-import { RouteDrawer } from "@components/modals";
+import { RouteDrawer, RouteModalLoading } from "@components/modals";
 import { useMe } from "@hooks/api";
 import { EditStoreForm } from "./_components/edit-store-form";
 
@@ -22,7 +22,11 @@ const StoreEdit = () => {
           {t("app.menus.store.editStore")}
         </Heading>
       </RouteDrawer.Header>
-      {ready && <EditStoreForm seller={seller} />}
+      {ready ? (
+        <EditStoreForm seller={seller} />
+      ) : (
+        <RouteModalLoading variant="drawer" />
+      )}
     </RouteDrawer>
   );
 };

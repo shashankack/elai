@@ -1,7 +1,12 @@
 import { Children, ReactNode, useCallback, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
-import { RouteFocusModal, StackedFocusModal, useStackedModal } from "@components/modals"
+import {
+  RouteFocusModal,
+  RouteModalLoading,
+  StackedFocusModal,
+  useStackedModal,
+} from "@components/modals"
 import { useSalesChannels } from "@hooks/api"
 import { useStore } from "@hooks/api/store"
 
@@ -122,12 +127,14 @@ const Root = ({ children }: { children?: ReactNode }) => {
       <RouteFocusModal.Description asChild>
         <span className="sr-only">{t("products.create.description")}</span>
       </RouteFocusModal.Description>
-      {ready && (
+      {ready ? (
         Children.count(children) > 0 ? (
           children
         ) : (
           <ProductCreateFormWithModal defaultChannel={defaultChannel} store={store} />
         )
+      ) : (
+        <RouteModalLoading />
       )}
     </RouteFocusModal>
   )

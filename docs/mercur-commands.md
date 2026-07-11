@@ -111,12 +111,59 @@ bunx medusa db:generate blog
 bunx medusa db:migrate
 ```
 
+### Wipe database
+
+Drops the `public` schema (all tables), then optionally remigrates and reseeds.
+
+```bash
+cd mercur/apps/api
+
+# Interactive (type YES to confirm)
+bun run wipe-db
+
+# Wipe only (no prompt)
+bun run wipe-db -- --force
+
+# Wipe → migrate → seed India demo data
+bun run wipe-db:reset
+# or:
+bun run wipe-db -- --force --seed
+```
+
+Uses `DATABASE_URL` from `mercur/apps/api/.env`. For Neon pooler URLs, the script switches to the direct host for DDL.
+
 ### Seed demo data
 
 ```bash
 cd mercur/apps/api
 bun run seed
 ```
+
+### Email (Resend)
+
+Transactional email uses **Resend** via Medusa's notification module.
+
+1. Create an API key at [resend.com](https://resend.com)
+2. Until your domain is verified, send from `onboarding@resend.dev` (Resend only delivers to your account email)
+3. Add to `mercur/apps/api/.env` (and VPS prod `.env`):
+
+```env
+RESEND_API_KEY=re_xxxx
+RESEND_FROM_EMAIL=Elai <onboarding@resend.dev>
+MERCUR_VENDOR_URL=http://localhost:7001   # prod: https://vendor.elaai.co
+MERCUR_ADMIN_URL=http://localhost:7000    # prod: https://admin.elaai.co
+STOREFRONT_URL=http://localhost:3000      # prod: https://elaai.co
+```
+
+4. Restart the API. Without `RESEND_API_KEY`, emails are logged locally (no send).
+
+Wired automatically:
+
+- Password reset (`auth.password_reset`) → admin / vendor / storefront reset links
+- Team member invites (`member_invite.created`) → `vendor…/invite?token=…`
+- Admin “invite seller” flow (uses notification `content.html`)
+
+For production, verify **elaai.co** (or your mail domain) in Resend and set `RESEND_FROM_EMAIL` to something like `Elai <noreply@elaai.co>`.
 
 ### Build before migrate (if needed)
 

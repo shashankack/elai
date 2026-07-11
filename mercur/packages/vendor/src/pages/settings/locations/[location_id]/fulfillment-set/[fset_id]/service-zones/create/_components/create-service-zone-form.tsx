@@ -1,7 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { VendorExtendedAdminStockLocation, VendorExtendedAdminFulfillmentSet } from "@custom-types/stock-location"
-import { Button, Heading, InlineTip, Input, toast } from "@medusajs/ui"
-import { useForm } from "react-hook-form"
+import {
+  VendorExtendedAdminStockLocation,
+  VendorExtendedAdminFulfillmentSet,
+} from "@custom-types/stock-location"
+import { Button, Heading, Input, Text, toast } from "@medusajs/ui"
+import { useEffect } from "react"
+import { useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import { z } from "zod"
 
@@ -18,6 +22,8 @@ import {
   FulfillmentSetType,
   GEO_ZONE_STACKED_MODAL_ID,
 } from "@pages/settings/locations/_common/constants"
+
+const INDIA = { iso_2: "in", display_name: "India" }
 
 const CreateServiceZoneSchema = z.object({
   name: z.string().min(1),
@@ -42,11 +48,28 @@ export function CreateServiceZoneForm({
 
   const form = useForm<z.infer<typeof CreateServiceZoneSchema>>({
     defaultValues: {
-      name: "",
-      countries: [],
+      name: INDIA.display_name,
+      countries: [INDIA],
     },
     resolver: zodResolver(CreateServiceZoneSchema),
   })
+
+  const countries = useWatch({ control: form.control, name: "countries" })
+
+  // Keep the label in sync when the seller only has one country selected
+  useEffect(() => {
+    if (countries?.length === 1) {
+      const currentName = form.getValues("name")
+      const countryName = countries[0].display_name
+      if (
+        !currentName ||
+        currentName === INDIA.display_name ||
+        countries.some((c) => c.display_name === currentName)
+      ) {
+        form.setValue("name", countryName, { shouldValidate: true })
+      }
+    }
+  }, [countries, form])
 
   const { mutateAsync, isPending } = useCreateFulfillmentSetServiceZone(
     fulfillmentSet.id
@@ -89,37 +112,53 @@ export function CreateServiceZoneForm({
           <StackedFocusModal id={GEO_ZONE_STACKED_MODAL_ID}>
             <div className="flex flex-1 flex-col items-center">
               <div className="flex w-full max-w-[720px] flex-col gap-y-8 px-2 py-16">
-                <Heading>
-                  {type === FulfillmentSetType.Pickup
-                    ? t("stockLocations.serviceZones.create.headerPickup", {
-                        location: location.name,
-                      })
-                    : t("stockLocations.serviceZones.create.headerShipping", {
-                        location: location.name,
-                      })}
-                </Heading>
-
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  <Form.Field
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => {
-                      return (
-                        <Form.Item>
-                          <Form.Label>{t("fields.name")}</Form.Label>
-                          <Form.Control>
-                            <Input {...field} />
-                          </Form.Control>
-                          <Form.ErrorMessage />
-                        </Form.Item>
-                      )
-                    }}
-                  />
+                <div>
+                  <Heading>
+                    {type === FulfillmentSetType.Pickup
+                      ? t("stockLocations.serviceZones.create.headerPickup", {
+                          location: location.name,
+                        })
+                      : t(
+                          "stockLocations.serviceZones.create.headerShipping",
+                          {
+                            location: location.name,
+                          }
+                        )}
+                  </Heading>
+                  <Text size="small" className="text-ui-fg-subtle mt-1">
+                    {t("stockLocations.serviceZones.create.hint")}
+                  </Text>
                 </div>
 
-                <InlineTip label={t("general.tip")}>
+                <Form.Field
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => {
+                    return (
+                      <Form.Item>
+                        <Form.Label>
+                          {t("stockLocations.serviceZones.create.name")}
+                        </Form.Label>
+                        <Form.Control>
+                          <Input
+                            placeholder={t(
+                              "stockLocations.serviceZones.create.namePlaceholder"
+                            )}
+                            {...field}
+                          />
+                        </Form.Control>
+                        <Form.Hint>
+                          {t("stockLocations.serviceZones.create.nameHint")}
+                        </Form.Hint>
+                        <Form.ErrorMessage />
+                      </Form.Item>
+                    )
+                  }}
+                />
+
+                <Text size="small" className="text-ui-fg-subtle">
                   {t("stockLocations.serviceZones.fields.tip")}
-                </InlineTip>
+                </Text>
 
                 <GeoZoneForm form={form} />
               </div>

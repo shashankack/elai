@@ -1,6 +1,6 @@
 import { json, useParams } from "react-router-dom"
 
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { useShippingOption } from "@hooks/api/shipping-options"
 import { EditShippingOptionsPricingForm } from "./_components/edit-shipping-options-pricing-form"
 
@@ -28,8 +28,10 @@ function LocationServiceZoneShippingOptionPricing() {
 
   return (
     <RouteFocusModal prev={`/settings/locations/${location_id}`}>
-      {shippingOption && (
+      {shippingOption ? (
         <EditShippingOptionsPricingForm shippingOption={shippingOption} />
+      ) : (
+        <RouteModalLoading />
       )}
     </RouteFocusModal>
   )

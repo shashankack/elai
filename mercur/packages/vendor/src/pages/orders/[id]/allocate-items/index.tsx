@@ -2,7 +2,7 @@
 import { useParams } from "react-router-dom"
 
 import { useOrder } from "@hooks/api/orders"
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { OrderAllocateItemsForm } from "./order-create-fulfillment-form"
 
 export const Component = () => {
@@ -21,7 +21,11 @@ export const Component = () => {
 
   return (
     <RouteFocusModal>
-      {ready && <OrderAllocateItemsForm order={order} />}
+      {ready ? (
+        <OrderAllocateItemsForm order={order} />
+      ) : (
+        <RouteModalLoading />
+      )}
     </RouteFocusModal>
   )
 }

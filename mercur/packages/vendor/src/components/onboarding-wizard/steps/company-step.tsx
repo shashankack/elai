@@ -51,8 +51,14 @@ export const CompanyStep = ({ onSubmit, onSkip, isPending }: CompanyStepProps) =
                     {t("onboarding.wizard.company.corporateName")}
                   </Form.Label>
                   <Form.Control>
-                    <Input {...field} />
+                    <Input
+                      placeholder={t("onboarding.wizard.company.corporateNamePlaceholder")}
+                      {...field}
+                    />
                   </Form.Control>
+                  <Form.Hint>
+                    {t("onboarding.wizard.company.corporateNameHint")}
+                  </Form.Hint>
                   <Form.ErrorMessage />
                 </Form.Item>
               )}
@@ -69,6 +75,9 @@ export const CompanyStep = ({ onSubmit, onSkip, isPending }: CompanyStepProps) =
                     <Form.Control>
                       <Input {...field} />
                     </Form.Control>
+                    <Form.Hint>
+                      {t("onboarding.wizard.company.registrationNumberHint")}
+                    </Form.Hint>
                     <Form.ErrorMessage />
                   </Form.Item>
                 )}
@@ -83,8 +92,13 @@ export const CompanyStep = ({ onSubmit, onSkip, isPending }: CompanyStepProps) =
                     {t("onboarding.wizard.company.taxId")}
                   </Form.Label>
                   <Form.Control>
-                    <Input {...field} />
+                    <Input
+                      placeholder={t("onboarding.wizard.company.taxIdPlaceholder")}
+                      className="font-mono uppercase"
+                      {...field}
+                    />
                   </Form.Control>
+                  <Form.Hint>{t("onboarding.wizard.company.taxIdHint")}</Form.Hint>
                   <Form.ErrorMessage />
                 </Form.Item>
               )}

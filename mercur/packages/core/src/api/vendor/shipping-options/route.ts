@@ -6,6 +6,7 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
 import { createSellerShippingOptionsWorkflow } from "../../../workflows/shipping-option"
+import { ensureServiceZoneFulfillmentProvider } from "../stock-locations/helpers"
 import { refetchShippingOption } from "./helpers"
 import { VendorCreateShippingOptionType } from "./validators"
 
@@ -35,11 +36,21 @@ export const POST = async (
   res: MedusaResponse<HttpTypes.VendorShippingOptionResponse>
 ) => {
   const sellerId = req.seller_context!.seller_id
+  const body = req.validatedBody
+
+  // Medusa requires the provider to be linked to the stock location first
+  if (body.service_zone_id && body.provider_id) {
+    await ensureServiceZoneFulfillmentProvider(
+      req.scope,
+      body.service_zone_id,
+      body.provider_id
+    )
+  }
 
   const { result } = await createSellerShippingOptionsWorkflow(req.scope).run({
     input: {
       seller_id: sellerId,
-      shipping_options: [req.validatedBody],
+      shipping_options: [body],
     },
   })
 

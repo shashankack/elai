@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { useParams } from "react-router-dom"
 
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { useStockLocations } from "@hooks/api"
 import { useMultipleInventoryItemLevels } from "@hooks/api/inventory"
 import { useProduct } from "@hooks/api/products"
@@ -70,13 +70,15 @@ export const ProductEditStocksAndPrices = () => {
 
   return (
     <RouteFocusModal>
-      {ready && (
+      {ready ? (
         <StocksAndPricesEdit
           product={product}
           inventoryItems={inventoryItemsWithLevels}
           stockLocations={stock_locations}
           productId={id!}
         />
+      ) : (
+        <RouteModalLoading />
       )}
     </RouteFocusModal>
   )

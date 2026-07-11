@@ -1,7 +1,7 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
-import { RouteDrawer } from "@components/modals"
+import { RouteDrawer, RouteModalLoading } from "@components/modals"
 import { useProductTag } from "@hooks/api"
 import { ProductTagEditForm } from "./_components/product-tag-edit-form"
 
@@ -27,7 +27,11 @@ const ProductTagEdit = () => {
           {t("productTags.edit.subtitle")}
         </RouteDrawer.Description>
       </RouteDrawer.Header>
-      {ready && <ProductTagEditForm productTag={product_tag} />}
+      {ready ? (
+        <ProductTagEditForm productTag={product_tag} />
+      ) : (
+        <RouteModalLoading variant="drawer" />
+      )}
     </RouteDrawer>
   )
 }

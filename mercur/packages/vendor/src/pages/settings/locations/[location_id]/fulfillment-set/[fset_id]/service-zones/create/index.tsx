@@ -1,6 +1,6 @@
 import { json, useParams } from "react-router-dom"
 
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { useStockLocation } from "@hooks/api/stock-locations"
 import { CreateServiceZoneForm } from "./_components/create-service-zone-form"
 import { FulfillmentSetType } from "@pages/settings/locations/_common/constants"
@@ -35,12 +35,14 @@ function LocationCreateServiceZone() {
 
   return (
     <RouteFocusModal prev={`/settings/locations/${location_id}`}>
-      {fulfillmentSet && (
+      {fulfillmentSet ? (
         <CreateServiceZoneForm
           fulfillmentSet={fulfillmentSet}
           location={stock_location!}
           type={type}
         />
+      ) : (
+        <RouteModalLoading />
       )}
     </RouteFocusModal>
   )

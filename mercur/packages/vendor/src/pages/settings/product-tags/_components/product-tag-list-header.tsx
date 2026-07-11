@@ -1,10 +1,17 @@
 import { Children, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import { Heading } from "@medusajs/ui";
+import { Heading, Text } from "@medusajs/ui";
 
 export const ProductTagListTitle = () => {
   const { t } = useTranslation();
-  return <Heading>{t("productTags.domain")}</Heading>;
+  return (
+    <div>
+      <Heading>{t("productTags.domain")}</Heading>
+      <Text className="text-ui-fg-subtle" size="small">
+        {t("productTags.subtitle")}
+      </Text>
+    </div>
+  );
 };
 
 export const ProductTagListActions = ({

@@ -57,7 +57,12 @@ export const ProductCreateOrganizationSection = () => {
 
   return (
     <div id="organize" className="flex flex-col gap-y-8">
-      <Heading>{t("products.organization.header")}</Heading>
+      <div>
+        <Heading>{t("products.organization.header")}</Heading>
+        <p className="text-ui-fg-subtle mt-1 text-sm">
+          {t("products.organization.hint")}
+        </p>
+      </div>
       <SwitchBox
         control={form.control}
         name="discountable"
@@ -72,7 +77,7 @@ export const ProductCreateOrganizationSection = () => {
           render={({ field }) => {
             return (
               <Form.Item>
-                <Form.Label optional>
+                <Form.Label optional tooltip={t("products.fields.tags.hint")}>
                   {t("products.fields.tags.label")}
                 </Form.Label>
                 <Form.Control>
@@ -95,7 +100,7 @@ export const ProductCreateOrganizationSection = () => {
           render={({ field }) => {
             return (
               <Form.Item>
-                <Form.Label optional>
+                <Form.Label optional tooltip={t("products.fields.type.hint")}>
                   {t("products.fields.type.label")}
                 </Form.Label>
                 <Form.Control>
@@ -149,7 +154,10 @@ export const ProductCreateOrganizationSection = () => {
           render={({ field }) => {
             return (
               <Form.Item>
-                <Form.Label optional>
+                <Form.Label
+                  optional
+                  tooltip={t("products.fields.secondaryCategories.hint")}
+                >
                   {t("products.fields.secondaryCategories.label", "Secondary Categories")}
                 </Form.Label>
                 <Form.Control>
@@ -171,7 +179,10 @@ export const ProductCreateOrganizationSection = () => {
           render={({ field }) => {
             return (
               <Form.Item>
-                <Form.Label optional>
+                <Form.Label
+                  optional
+                  tooltip={t("products.fields.collection.hint")}
+                >
                   {t("products.fields.collection.label")}
                 </Form.Label>
                 <Form.Control>

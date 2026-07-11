@@ -43,6 +43,7 @@
     "plusCount": "+ {{count}}",
     "plusCountMore": "+ {{count}} more",
     "areYouSure": "Are you sure?",
+    "loading": "Loading…",
     "areYouSureDescription": "You are about to delete the {{entity}} {{title}}. This action cannot be undone.",
     "yes": "Yes",
     "no": "No",
@@ -3639,6 +3640,38 @@
     "toggle": {
       "enabledToast": "Commission rate enabled successfully",
       "disabledToast": "Commission rate disabled successfully"
+    }
+  },
+  "platformShipping": {
+    "domain": "ELAI Shipping",
+    "description": "Define the default courier options vendors can use when they do not have their own shipping service.",
+    "list": {
+      "empty": "No ELAI shipping options yet. Create one for vendors to opt into."
+    },
+    "create": {
+      "header": "Create ELAI shipping option",
+      "description": "Vendors can enable this on their packing location. Fulfillment stays manual until courier APIs are connected.",
+      "successToast": "ELAI shipping option created."
+    },
+    "edit": {
+      "header": "Edit ELAI shipping option",
+      "successToast": "ELAI shipping option updated."
+    },
+    "delete": {
+      "confirmation": "Delete \"{{name}}\"? Vendors will no longer be able to opt into it.",
+      "successToast": "ELAI shipping option deleted."
+    },
+    "fields": {
+      "name": "Name shown at checkout",
+      "courier": "Courier partners",
+      "courierHint": "Shown to vendors so they know who will pick up orders.",
+      "amount": "Price (INR)",
+      "amountHint": "Flat delivery fee charged to the customer.",
+      "description": "Description",
+      "active": "Active",
+      "default": "Default",
+      "defaultHint": "Suggested first option for new vendors.",
+      "noCourier": "Courier TBD"
     }
   }
 }

@@ -9,4 +9,5 @@ export enum MercurModules {
     CODEGEN = "codegen",
     ATTRIBUTE = "attribute",
     VENDOR_PRODUCT_ATTRIBUTE = "vendor_product_attribute",
+    PLATFORM_SHIPPING = "platform_shipping",
 }

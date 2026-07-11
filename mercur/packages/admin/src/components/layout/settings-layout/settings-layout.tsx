@@ -89,6 +89,10 @@ const useSettingRoutes = (): INavItem[] => {
         label: t("commissionRates.domain"),
         to: "/settings/commission-rates",
       },
+      {
+        label: t("platformShipping.domain"),
+        to: "/settings/platform-shipping-options",
+      },
       ...extensionNavItems,
     ],
     [t],

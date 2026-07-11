@@ -2,7 +2,7 @@ import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
 
-import { RouteDrawer } from "@components/modals"
+import { RouteDrawer, RouteModalLoading } from "@components/modals"
 import { usePaymentProviders } from "@hooks/api/payments"
 import { useRegion } from "@hooks/api/regions"
 import { useStore } from "@hooks/api/store"
@@ -70,13 +70,15 @@ const RegionEdit = () => {
       <RouteDrawer.Header>
         <Heading>{t("regions.editRegion")}</Heading>
       </RouteDrawer.Header>
-      {!isLoading && region && (
+      {!isLoading && region ? (
         <EditRegionForm
           region={region}
           currencies={storeCurrencies}
           paymentProviders={paymentProviders}
           pricePreferences={pricePreferences}
         />
+      ) : (
+        <RouteModalLoading variant="drawer" />
       )}
     </RouteDrawer>
   )

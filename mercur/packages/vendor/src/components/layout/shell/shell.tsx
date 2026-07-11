@@ -40,7 +40,8 @@ export const Shell = ({ children }: PropsWithChildren) => {
             className={clx(
               "flex h-full w-full flex-col items-center overflow-y-auto transition-opacity delay-200 duration-200",
               {
-                "opacity-25": loading,
+                // Keep content readable while navigating — opacity-25 felt like a blank page
+                "opacity-60 pointer-events-none": loading,
               }
             )}
           >

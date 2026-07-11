@@ -1,6 +1,6 @@
 // Route: /products/:id/variants/create
 import { useParams } from "react-router-dom"
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { useProduct } from "@hooks/api/products"
 import { CreateProductVariantForm } from "./create-product-variant-form"
 
@@ -15,7 +15,11 @@ export const Component = () => {
 
   return (
     <RouteFocusModal>
-      {!isLoading && product && <CreateProductVariantForm product={product} />}
+      {!isLoading && product ? (
+        <CreateProductVariantForm product={product} />
+      ) : (
+        <RouteModalLoading />
+      )}
     </RouteFocusModal>
   )
 }

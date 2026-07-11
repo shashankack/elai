@@ -213,7 +213,9 @@ export const ProductOrganizationForm = ({ product }: ProductOrganizationFormProp
               name="tag_ids"
               render={({ field }) => (
                 <Form.Item>
-                  <Form.Label optional>{t("products.fields.tags.label")}</Form.Label>
+                  <Form.Label optional tooltip={t("products.fields.tags.hint")}>
+                    {t("products.fields.tags.label")}
+                  </Form.Label>
                   <Form.Control>
                     <Combobox
                       {...field}
@@ -233,7 +235,9 @@ export const ProductOrganizationForm = ({ product }: ProductOrganizationFormProp
               name="type_id"
               render={({ field }) => (
                 <Form.Item>
-                  <Form.Label optional>{t("products.fields.type.label")}</Form.Label>
+                  <Form.Label optional tooltip={t("products.fields.type.hint")}>
+                    {t("products.fields.type.label")}
+                  </Form.Label>
                   <Form.Control>
                     <Combobox
                       {...field}
@@ -268,7 +272,10 @@ export const ProductOrganizationForm = ({ product }: ProductOrganizationFormProp
               name="secondary_categories"
               render={({ field }) => (
                 <Form.Item>
-                  <Form.Label optional>
+                  <Form.Label
+                    optional
+                    tooltip={t("products.fields.secondaryCategories.hint")}
+                  >
                     {t("products.fields.secondaryCategories.label", "Secondary Categories")}
                   </Form.Label>
                   <Form.Control>
@@ -283,7 +290,12 @@ export const ProductOrganizationForm = ({ product }: ProductOrganizationFormProp
               name="collection_id"
               render={({ field }) => (
                 <Form.Item>
-                  <Form.Label optional>{t("products.fields.collection.label")}</Form.Label>
+                  <Form.Label
+                    optional
+                    tooltip={t("products.fields.collection.hint")}
+                  >
+                    {t("products.fields.collection.label")}
+                  </Form.Label>
                   <Form.Control>
                     <Combobox
                       {...field}

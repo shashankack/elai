@@ -6,7 +6,10 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
 import { createSellerShippingProfilesWorkflow } from "../../../workflows/shipping-profile"
-import { refetchShippingProfile } from "./helpers"
+import {
+  ensureSellerDefaultShippingProfile,
+  refetchShippingProfile,
+} from "./helpers"
 import { VendorCreateShippingProfileType } from "./validators"
 
 export const GET = async (
@@ -14,6 +17,9 @@ export const GET = async (
   res: MedusaResponse<HttpTypes.VendorShippingProfileListResponse>
 ) => {
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
+  const sellerId = req.seller_context!.seller_id
+
+  await ensureSellerDefaultShippingProfile(req.scope, sellerId)
 
   const { data: shipping_profiles, metadata } = await query.graph({
     entity: "shipping_profile",

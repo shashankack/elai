@@ -19,9 +19,14 @@ function LocationsFulfillmentProvidersSection({
   return (
     <Container className="flex flex-col px-6 py-4">
       <div className="flex items-center justify-between">
-        <Heading level="h2">
-          {t("stockLocations.fulfillmentProviders.header")}
-        </Heading>
+        <div>
+          <Heading level="h2">
+            {t("stockLocations.fulfillmentProviders.header")}
+          </Heading>
+          <p className="text-ui-fg-subtle txt-small mt-1">
+            {t("stockLocations.fulfillmentProviders.hint")}
+          </p>
+        </div>
 
         <ActionMenu
           groups={[

@@ -2,7 +2,7 @@ import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { json, useParams } from "react-router-dom"
 
-import { RouteDrawer } from "@components/modals"
+import { RouteDrawer, RouteModalLoading } from "@components/modals"
 import { useStockLocation } from "@hooks/api/stock-locations"
 import { EditServiceZoneForm } from "./_components/edit-service-zone-form"
 
@@ -37,12 +37,14 @@ const LocationServiceZoneEdit = () => {
       <RouteDrawer.Header>
         <Heading>{t("stockLocations.serviceZones.edit.header")}</Heading>
       </RouteDrawer.Header>
-      {serviceZone && (
+      {serviceZone ? (
         <EditServiceZoneForm
           zone={serviceZone}
           fulfillmentSetId={fset_id!}
           locationId={location_id!}
         />
+      ) : (
+        <RouteModalLoading variant="drawer" />
       )}
     </RouteDrawer>
   )

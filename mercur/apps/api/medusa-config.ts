@@ -8,6 +8,40 @@ const isLocalDb =
   process.env.DATABASE_URL.includes('localhost') ||
   process.env.DATABASE_URL.includes('127.0.0.1')
 
+const hasResend = Boolean(process.env.RESEND_API_KEY)
+
+const notificationProviders = [
+  {
+    resolve: '@medusajs/medusa/notification-local',
+    id: 'local',
+    options: {
+      channels: ['feed', 'seller_feed'],
+    },
+  },
+  ...(hasResend
+    ? [
+        {
+          resolve: './src/modules/resend',
+          id: 'resend',
+          options: {
+            channels: ['email'],
+            api_key: process.env.RESEND_API_KEY,
+            from: process.env.RESEND_FROM_EMAIL || 'Elai <hello@elaai.co>',
+          },
+        },
+      ]
+    : [
+        // Logs email payloads locally when Resend is not configured
+        {
+          resolve: '@medusajs/medusa/notification-local',
+          id: 'local-email',
+          options: {
+            channels: ['email'],
+          },
+        },
+      ]),
+]
+
 module.exports = withMercur({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
@@ -54,6 +88,12 @@ module.exports = withMercur({
         path: '/seller',
         disable: true
       }
+    },
+    {
+      resolve: '@medusajs/medusa/notification',
+      options: {
+        providers: notificationProviders,
+      },
     },
   ],
 })

@@ -65,6 +65,9 @@ export const ProductTypeListDataTable = () => {
       queryObject={raw}
       pagination
       search
+      noRecords={{
+        message: t("productTypes.list.noRecordsMessage"),
+      }}
     />
   )
 }

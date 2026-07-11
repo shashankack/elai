@@ -1,7 +1,7 @@
 // Route: /products/:id/media
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { useProduct } from "@hooks/api/products"
 import { ProductMediaView } from "./product-media-view"
 
@@ -25,7 +25,11 @@ export const Component = () => {
       <RouteFocusModal.Description asChild>
         <span className="sr-only">{t("products.media.editHint")}</span>
       </RouteFocusModal.Description>
-      {ready && <ProductMediaView product={product} />}
+      {ready ? (
+        <ProductMediaView product={product} />
+      ) : (
+        <RouteModalLoading />
+      )}
     </RouteFocusModal>
   )
 }

@@ -1,6 +1,6 @@
 import { json, useParams, useSearchParams } from "react-router-dom"
 
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { useStockLocation } from "@hooks/api/stock-locations"
 import { CreateShippingOptionsForm } from "./_components/create-shipping-options-form"
 import { LOC_CREATE_SHIPPING_OPTION_FIELDS } from "./constants"
@@ -46,13 +46,15 @@ function LocationServiceZoneShippingOptionCreate() {
 
   return (
     <RouteFocusModal prev={`/settings/locations/${location_id}`}>
-      {zone && (
+      {zone ? (
         <CreateShippingOptionsForm
           zone={zone}
           isReturn={isReturn}
           locationId={location_id!}
           type={fulfillmentSet!.type as FulfillmentSetType}
         />
+      ) : (
+        <RouteModalLoading />
       )}
     </RouteFocusModal>
   )

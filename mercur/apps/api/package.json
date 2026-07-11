@@ -19,6 +19,11 @@
   ],
   "scripts": {
     "seed": "bun x medusa exec ./src/scripts/seed.ts",
+    "seed:elai-catalog": "bun x medusa exec ./src/scripts/seed-elai-catalog.ts",
+    "wipe-db": "bun ./src/scripts/wipe-db.ts",
+    "wipe-db:reset": "bun ./src/scripts/wipe-db.ts --force --seed",
+    "wipe:admin-catalog": "bun ./src/scripts/run-wipe-admin-catalog.ts",
+    "wipe:vendor": "bun ./src/scripts/run-wipe-vendor.ts",
     "start": "bun ../../packages/cli/dist/index.js start",
     "dev": "bun ../../packages/cli/dist/index.js develop",
     "test:integration:http": "TEST_TYPE=integration:http NODE_OPTIONS=--experimental-vm-modules jest --silent=false --runInBand --forceExit",
@@ -27,16 +32,17 @@
   },
   "dependencies": {
     "@medusajs/admin-sdk": "^2.13.4",
-    "@medusajs/cli": "^2.13.4",
-    "@medusajs/framework": "^2.13.4",
-    "@medusajs/dashboard": "^2.13.4",
     "@medusajs/admin-shared": "^2.13.4",
-    "@medusajs/medusa": "^2.13.4",
+    "@medusajs/cli": "^2.13.4",
+    "@medusajs/dashboard": "^2.13.4",
     "@medusajs/draft-order": "2.13.4",
+    "@medusajs/framework": "^2.13.4",
+    "@medusajs/medusa": "^2.13.4",
+    "@mercurjs/cli": "*",
     "@mercurjs/core": "*",
     "@mercurjs/types": "*",
     "http-proxy-middleware": "^3.0.3",
-    "@mercurjs/cli": "*"
+    "resend": "^6.17.2"
   },
   "devDependencies": {
     "@medusajs/test-utils": "^2.13.4",

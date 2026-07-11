@@ -2,7 +2,7 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
-import { RouteDrawer } from "@components/modals"
+import { RouteDrawer, RouteModalLoading } from "@components/modals"
 import { useProduct } from "@hooks/api/products"
 import { CreateProductOptionForm } from "./create-product-option-form"
 
@@ -21,7 +21,11 @@ export const Component = () => {
       <RouteDrawer.Header>
         <Heading>{t("products.options.create.header")}</Heading>
       </RouteDrawer.Header>
-      {!isLoading && product && <CreateProductOptionForm product={product} />}
+      {!isLoading && product ? (
+        <CreateProductOptionForm product={product} />
+      ) : (
+        <RouteModalLoading variant="drawer" />
+      )}
     </RouteDrawer>
   )
 }

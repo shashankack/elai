@@ -15,6 +15,9 @@ export * as HttpTypes from "./http"
 // Subscription types
 export * from "./subscription"
 
+// Platform shipping types
+export * from "./platform-shipping"
+
 // Payout types
 export * from "./payout"
 

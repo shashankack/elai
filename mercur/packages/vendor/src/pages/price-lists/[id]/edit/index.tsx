@@ -2,7 +2,7 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
-import { RouteDrawer } from "@components/modals"
+import { RouteDrawer, RouteModalLoading } from "@components/modals"
 import { usePriceList } from "@hooks/api/price-lists"
 import { PriceListEditForm } from "./price-list-edit-form"
 
@@ -23,7 +23,11 @@ export const Component = () => {
       <RouteDrawer.Header>
         <Heading>{t("priceLists.edit.header")}</Heading>
       </RouteDrawer.Header>
-      {ready && <PriceListEditForm priceList={price_list} />}
+      {ready ? (
+        <PriceListEditForm priceList={price_list} />
+      ) : (
+        <RouteModalLoading variant="drawer" />
+      )}
     </RouteDrawer>
   )
 }

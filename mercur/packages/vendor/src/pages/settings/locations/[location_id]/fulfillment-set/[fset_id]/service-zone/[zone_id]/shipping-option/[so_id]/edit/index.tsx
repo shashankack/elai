@@ -2,7 +2,7 @@ import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { json, useParams } from "react-router-dom"
 
-import { RouteDrawer } from "@components/modals"
+import { RouteDrawer, RouteModalLoading } from "@components/modals"
 import { useShippingOptions } from "@hooks/api/shipping-options"
 import { EditShippingOptionForm } from "./_components/edit-shipping-option-form"
 import { FulfillmentSetType } from "@pages/settings/locations/_common/constants"
@@ -40,12 +40,14 @@ const LocationServiceZoneShippingOptionEdit = () => {
     <RouteDrawer>
       <RouteDrawer.Header>
         <Heading>
-          {t(
-            `stockLocations.${isPickup ? "pickupOptions" : "shippingOptions"}.edit.header`
-          )}
+          {shippingOption
+            ? t(
+                `stockLocations.${isPickup ? "pickupOptions" : "shippingOptions"}.edit.header`
+              )
+            : t("general.loading")}
         </Heading>
       </RouteDrawer.Header>
-      {shippingOption && (
+      {shippingOption ? (
         <EditShippingOptionForm
           shippingOption={shippingOption}
           locationId={location_id!}
@@ -54,6 +56,8 @@ const LocationServiceZoneShippingOptionEdit = () => {
               .type as FulfillmentSetType
           }
         />
+      ) : (
+        <RouteModalLoading variant="drawer" />
       )}
     </RouteDrawer>
   )

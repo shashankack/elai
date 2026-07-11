@@ -1,7 +1,7 @@
 // Route: /orders/:id/fulfillment
 import { useParams, useSearchParams } from "react-router-dom"
 
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { useOrder } from "@hooks/api/orders"
 import { OrderCreateFulfillmentForm } from "./order-create-fulfillment-form"
 
@@ -22,11 +22,13 @@ export const Component = () => {
 
   return (
     <RouteFocusModal>
-      {ready && (
+      {ready ? (
         <OrderCreateFulfillmentForm
           order={order}
           requiresShipping={requiresShipping}
         />
+      ) : (
+        <RouteModalLoading />
       )}
     </RouteFocusModal>
   )

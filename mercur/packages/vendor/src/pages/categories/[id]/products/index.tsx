@@ -1,6 +1,6 @@
 // Route: /categories/:id/products
 import { useParams } from "react-router-dom";
-import { RouteFocusModal } from "@components/modals";
+import { RouteFocusModal, RouteModalLoading } from "@components/modals";
 import { useProductCategory } from "@hooks/api";
 import { EditCategoryProductsForm } from "./edit-category-products-form";
 
@@ -15,13 +15,17 @@ export const Component = () => {
     throw error;
   }
 
+  const ready = !isLoading && !!product_category
+
   return (
     <RouteFocusModal>
-      {!isLoading && product_category && (
+      {ready ? (
         <EditCategoryProductsForm
           categoryId={id!}
           products={product_category.products}
         />
+      ) : (
+        <RouteModalLoading />
       )}
     </RouteFocusModal>
   );

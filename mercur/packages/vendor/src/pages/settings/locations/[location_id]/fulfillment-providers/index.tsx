@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { useStockLocation } from "@hooks/api/stock-locations"
 import { LocationEditFulfillmentProvidersForm } from "./_components/edit-fulfillment-providers-form"
 
@@ -19,8 +19,10 @@ const LocationFulfillmentProviders = () => {
 
   return (
     <RouteFocusModal>
-      {ready && (
+      {ready ? (
         <LocationEditFulfillmentProvidersForm location={stock_location} />
+      ) : (
+        <RouteModalLoading />
       )}
     </RouteFocusModal>
   )

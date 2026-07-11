@@ -1,7 +1,7 @@
 // Route: /inventory/:id/stock
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
-import { RouteFocusModal } from "@components/modals";
+import { RouteFocusModal, RouteModalLoading } from "@components/modals";
 import { useInventoryItems, useStockLocations } from "@hooks/api";
 import { InventoryStockForm } from "./inventory-stock-form";
 
@@ -42,11 +42,13 @@ export const Component = () => {
       <RouteFocusModal.Description asChild>
         <span className="sr-only">{t("inventory.stock.description")}</span>
       </RouteFocusModal.Description>
-      {ready && (
+      {ready ? (
         <InventoryStockForm
           items={inventory_items}
           locations={stock_locations}
         />
+      ) : (
+        <RouteModalLoading />
       )}
     </RouteFocusModal>
   );

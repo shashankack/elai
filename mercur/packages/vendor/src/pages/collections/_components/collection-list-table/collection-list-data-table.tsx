@@ -65,6 +65,9 @@ export const CollectionListDataTable = () => {
       navigateTo={(row) => `/collections/${row.original.id}`}
       queryObject={raw}
       isLoading={isLoading}
+      noRecords={{
+        message: t("collections.list.noRecordsMessage"),
+      }}
     />
   );
 };

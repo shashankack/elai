@@ -5,6 +5,7 @@ export * from "./campaigns";
 export * from "./categories";
 export * from "./collections";
 export * from "./commission-rates";
+export * from "./platform-shipping-options";
 export * from "./currencies";
 export * from "./customer-groups";
 export * from "./customers";

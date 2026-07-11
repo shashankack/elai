@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { useRegion } from "@hooks/api/regions"
 import { AddCountriesForm } from "./_components/add-countries-form"
 
@@ -19,9 +19,15 @@ const RegionAddCountries = () => {
     throw error
   }
 
+  const ready = !isLoading && !!region
+
   return (
     <RouteFocusModal>
-      {!isLoading && region && <AddCountriesForm region={region} />}
+      {ready ? (
+        <AddCountriesForm region={region} />
+      ) : (
+        <RouteModalLoading />
+      )}
     </RouteFocusModal>
   )
 }

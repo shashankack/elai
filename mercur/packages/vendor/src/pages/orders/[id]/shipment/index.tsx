@@ -1,7 +1,7 @@
 // Route: /orders/:id/:f_id/create-shipment
 import { useParams } from "react-router-dom"
 
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { useOrder } from "@hooks/api/orders"
 import { OrderCreateShipmentForm } from "./order-create-shipment-form"
 
@@ -16,17 +16,18 @@ export const Component = () => {
     throw error
   }
 
-  const ready = !isLoading && order
-
   const fulfillment = order?.fulfillments?.find((f) => f.id === f_id)
+  const ready = !isLoading && !!order && !!fulfillment
 
   return (
     <RouteFocusModal>
-      {ready && fulfillment && (
+      {ready ? (
         <OrderCreateShipmentForm
           order={order}
           fulfillment={fulfillment}
         />
+      ) : (
+        <RouteModalLoading />
       )}
     </RouteFocusModal>
   )

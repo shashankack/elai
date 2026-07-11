@@ -86,10 +86,21 @@ export const EditLocationForm = ({ location }: EditLocationFormProps) => {
               render={({ field }) => {
                 return (
                   <Form.Item>
-                    <Form.Label>{t("fields.name")}</Form.Label>
+                    <Form.Label>
+                      {t("stockLocations.edit.name")}
+                    </Form.Label>
                     <Form.Control>
-                      <Input size="small" {...field} />
+                      <Input
+                        size="small"
+                        placeholder={t(
+                          "stockLocations.edit.namePlaceholder",
+                        )}
+                        {...field}
+                      />
                     </Form.Control>
+                    <Form.Hint>
+                      {t("stockLocations.edit.nameHint")}
+                    </Form.Hint>
                     <Form.ErrorMessage />
                   </Form.Item>
                 )

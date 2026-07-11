@@ -68,6 +68,7 @@ const Content: ComponentType<ContentProps> = ({ stackedModalOpen, children }: Co
 
   return (
     <FocusModal.Content
+      aria-describedby={undefined}
       onEscapeKeyDown={
         shouldPreventClose
           ? (e) => {
@@ -79,6 +80,8 @@ const Content: ComponentType<ContentProps> = ({ stackedModalOpen, children }: Co
         "!bg-ui-bg-disabled !inset-x-5 !inset-y-3": stackedModalOpen,
       })}
     >
+      {/* Required by Radix Dialog when child routes omit an explicit title (e.g. loading). */}
+      <FocusModal.Title className="sr-only" />
       {children}
     </FocusModal.Content>
   )

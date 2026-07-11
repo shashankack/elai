@@ -1,4 +1,4 @@
-import { RouteFocusModal } from "@/components/modals";
+import { RouteFocusModal, RouteModalLoading } from "@/components/modals";
 import { useParams, useSearchParams } from "react-router-dom";
 import { PriceListPricesEditForm } from "../[variant_id]/edit/price-list-prices-edit-form";
 import { usePriceListCurrencyData } from "@/pages/price-lists/common/hooks/use-price-list-currency-data";
@@ -51,7 +51,7 @@ export const Component = () => {
       <RouteFocusModal.Description className="sr-only">
         Update prices for products in the price list
       </RouteFocusModal.Description>
-      {ready && (
+      {ready ? (
         <PriceListPricesEditForm
           priceList={price_list}
           products={products}
@@ -59,6 +59,8 @@ export const Component = () => {
           currencies={currencies}
           pricePreferences={pricePreferences}
         />
+      ) : (
+        <RouteModalLoading />
       )}
     </RouteFocusModal>
   );

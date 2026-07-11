@@ -1238,6 +1238,39 @@ export function getRouteMap({
                 ],
               },
               {
+                path: "platform-shipping-options",
+                errorElement: <ErrorBoundary />,
+                element: <Outlet />,
+                handle: {
+                  breadcrumb: () => t("platformShipping.domain"),
+                },
+                children: [
+                  {
+                    path: "",
+                    lazy: () =>
+                      import(
+                        "./pages/platform-shipping-options/platform-shipping-option-list"
+                      ),
+                    children: [
+                      {
+                        path: "create",
+                        lazy: () =>
+                          import(
+                            "./pages/platform-shipping-options/platform-shipping-option-create"
+                          ),
+                      },
+                      {
+                        path: ":id/edit",
+                        lazy: () =>
+                          import(
+                            "./pages/platform-shipping-options/platform-shipping-option-edit"
+                          ),
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
                 path: "users",
                 errorElement: <ErrorBoundary />,
                 element: <Outlet />,

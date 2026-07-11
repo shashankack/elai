@@ -72,7 +72,8 @@
     "true": "True",
     "false": "False",
     "decrement": "Decrement",
-    "increment": "Increment"
+    "increment": "Increment",
+    "loading": "Loading…"
   },
   "json": {
     "header": "JSON",
@@ -692,20 +693,24 @@
         "hint": "Connect the product to a shipping profile"
       },
       "type": {
-        "label": "Type"
+        "label": "Type",
+        "hint": "Types are set up by ELAI Admin. Pick one for this product."
       },
       "collection": {
-        "label": "Collection"
+        "label": "Collection",
+        "hint": "Collections are set up by ELAI Admin. Optional — use for shop groupings."
       },
       "categories": {
-        "label": "Categories"
+        "label": "Categories",
+        "hint": "Categories are set up by ELAI Admin. Assign this product to the right ones."
       },
       "tags": {
-        "label": "Tags"
+        "label": "Tags",
+        "hint": "Tags are set up by ELAI Admin. Optional labels for filtering."
       },
       "sales_channels": {
         "label": "Sales channels",
-        "hint": "This product will only be available in the default sales channel if left untouched."
+        "hint": "Sales channels are set up by ELAI Admin. This product will only be available in the default channel if left untouched."
       },
       "countryOrigin": {
         "label": "Country of origin"
@@ -771,12 +776,13 @@
         "enterValuePlaceholder": "Enter value",
         "selectValuePlaceholder": "Select a value"
       },
-      "secondaryCategories": {
-        "label": "Secondary Categories"
-      },
       "primaryCategory": {
         "label": "Primary Category",
-        "tooltip": "The primary category defines which attributes are available for this product. Attributes are created by the Admin when setting up the marketplace."
+        "tooltip": "Categories and attributes are set up by ELAI Admin. The primary category controls which attributes appear for this product."
+      },
+      "secondaryCategories": {
+        "label": "Secondary Categories",
+        "hint": "Optional extra categories from the marketplace list set up by ELAI Admin."
       }
     },
     "variant": {
@@ -840,6 +846,7 @@
     },
     "organization": {
       "header": "Organize",
+      "hint": "Type, tags, categories, and collections are set up by ELAI Admin. Assign them to this product here.",
       "edit": {
         "header": "Edit Organization",
         "toasts": {
@@ -890,9 +897,12 @@
   },
   "collections": {
     "domain": "Collections",
-    "subtitle": "Organize products into collections.",
+    "subtitle": "Marketplace collections are set up by ELAI Admin. Add your products to them here — you can’t create new collections.",
     "createCollection": "Create Collection",
-    "createCollectionHint": "Create a new collection to organize your products.",
+    "createCollectionHint": "Collections are created by ELAI Admin. Contact admin if you need a new collection.",
+    "list": {
+      "noRecordsMessage": "No collections yet. ELAI Admin will add marketplace collections you can use."
+    },
     "createSuccess": "Collection created successfully.",
     "editCollection": "Edit Collection",
     "handleTooltip": "The handle is used to reference the collection in your storefront. If not specified, the handle will be generated from the collection title.",
@@ -916,10 +926,13 @@
   },
   "categories": {
     "domain": "Categories",
-    "subtitle": "Organize products into categories, and manage those categories' ranking and hierarchy.",
+    "subtitle": "Marketplace categories are set up by ELAI Admin. Assign your products to them — you can’t create or reorder categories.",
+    "list": {
+      "noRecordsMessage": "No categories yet. ELAI Admin will add marketplace categories you can use."
+    },
     "create": {
       "header": "Create Category",
-      "hint": "Create a new category to organize your products.",
+      "hint": "Categories are created by ELAI Admin. Contact admin if you need a new category.",
       "tabs": {
         "details": "Details",
         "organize": "Organize Ranking"
@@ -1726,119 +1739,136 @@
   "stockLocations": {
     "domain": "Locations & Shipping",
     "list": {
-      "description": "Manage your store's stock locations and shipping options.",
+      "description": "Set where you pack orders from, and how customers get them (delivery or pickup).",
       "noRecordsMessage": "No records",
-      "noRecordsMessageEmpty": "No locations found",
-      "noRecordsMessageFiltered": "No locations found matching the filters"
+      "noRecordsMessageEmpty": "No packing locations yet — add one to start shipping.",
+      "noRecordsMessageFiltered": "No locations match your filters"
     },
     "create": {
-      "header": "Create Stock Location",
-      "hint": "A stock location is a physical site where products are stored and shipped from.",
-      "successToast": "Location {{name}} was successfully created."
+      "header": "Add a packing location",
+      "hint": "This is where you keep stock and pack orders from — for example your home studio, shop, or warehouse.",
+      "name": "Location nickname",
+      "nameHint": "A short name only you will see in the dashboard (not your company legal name). Examples: Home studio, Mumbai warehouse, Main shop.",
+      "namePlaceholder": "e.g. Home studio",
+      "addressHint": "Street and building where this location is.",
+      "addressPlaceholder": "e.g. 12 MG Road, near City Mall",
+      "postalCode": "PIN code",
+      "postalCodeHint": "6-digit Indian PIN code.",
+      "postalCodePlaceholder": "e.g. 400001",
+      "cityHint": "City or town for this location.",
+      "cityPlaceholder": "e.g. Mumbai",
+      "state": "State / UT",
+      "companyHint": "Optional — company name on shipping labels if different from your store name.",
+      "phoneHint": "Optional contact number for this location.",
+      "successToast": "Location {{name}} was created."
     },
     "edit": {
-      "header": "Edit Stock Location",
+      "header": "Edit packing location",
+      "name": "Location nickname",
+      "nameHint": "A short name only you will see in the dashboard (not your company legal name).",
+      "namePlaceholder": "e.g. Home studio",
       "viewInventory": "View inventory",
-      "successToast": "Location {{name}} was successfully updated."
+      "successToast": "Location {{name}} was updated."
     },
     "delete": {
-      "confirmation": "You are about to delete the stock location \"{{name}}\". This action cannot be undone.",
-      "successToast": "Location \"{{name}}\" was successfully deleted."
+      "confirmation": "Delete packing location \"{{name}}\"? This cannot be undone.",
+      "successToast": "Location \"{{name}}\" was deleted."
     },
     "fulfillmentProviders": {
-      "header": "Fulfillment Providers",
-      "shippingOptionsTooltip": "This dropdown will only consist of providers enabled for this location. Add them to the location if the dropdown is disabled.",
-      "label": "Connected fulfillment providers",
-      "connectedTo": "Connected to {{count}} of {{total}} fulfillment providers",
-      "noProviders": "This Stock Location is not connected to any fulfillment providers.",
-      "action": "Connect Providers",
-      "successToast": "Fulfillment providers for stock location were successfully updated."
+      "header": "How orders are fulfilled",
+      "hint": "This is the system that handles dispatch. For most sellers, leave Manual — you pack the order and book BlueDart / Shiprocket / your courier yourself. ELAI courier APIs can be connected later.",
+      "shippingOptionsTooltip": "Only providers connected to this location appear when creating delivery options.",
+      "label": "Connected fulfillment methods",
+      "connectedTo": "{{count}} of {{total}} methods connected",
+      "noProviders": "No fulfillment method connected yet. Connect Manual to create delivery options.",
+      "action": "Connect method",
+      "successToast": "Fulfillment methods updated."
     },
     "fulfillmentSets": {
       "pickup": {
-        "header": "Pickup"
+        "header": "Customer pickup"
       },
       "shipping": {
-        "header": "Shipping"
+        "header": "Home delivery"
       },
       "disable": {
-        "confirmation": "Are you sure that you want to disable \"{{name}}\"? This will delete all associated service zones and shipping options, and cannot be undone.",
-        "pickup": "Pickup was successfully disabled.",
-        "shipping": "Shipping was successfully disabled."
+        "confirmation": "Turn off \"{{name}}\"? This deletes its delivery areas and options, and cannot be undone.",
+        "pickup": "Customer pickup turned off.",
+        "shipping": "Home delivery turned off."
       },
       "enable": {
-        "pickup": "Pickup was successfully enabled.",
-        "shipping": "Shipping was successfully enabled."
+        "pickup": "Customer pickup turned on.",
+        "shipping": "Home delivery turned on."
       }
     },
     "sidebar": {
-      "header": "Shipping Configuration",
+      "header": "More shipping settings",
       "shippingProfiles": {
-        "label": "Shipping Profiles",
-        "description": "Group products by shipping requirements"
+        "label": "Product shipping groups",
+        "description": "Optional — group products that ship differently (e.g. fragile vs standard)"
       },
       "shippingOptionTypes": {
-        "label": "Shipping Option Types",
-        "description": "Group shipping options by types"
+        "label": "Delivery option types",
+        "description": "Advanced labels for delivery options"
       }
     },
     "salesChannels": {
-      "header": "Sales Channels",
-      "hint": "Manage the sales channels that are connected to this location.",
+      "header": "Sales channels",
+      "hint": "Which storefronts can sell stock from this location.",
       "label": "Connected sales channels",
       "connectedTo": "Connected to {{count}} of {{total}} sales channels",
-      "noChannels": "The location is not connected to any sales channels.",
+      "noChannels": "This location is not linked to any sales channel yet.",
       "action": "Connect sales channels",
-      "successToast": "Sales channels were successfully updated."
+      "successToast": "Sales channels updated."
     },
     "pickupOptions": {
       "edit": {
-        "header": "Edit Pickup Option"
+        "header": "Edit pickup option"
       }
     },
     "shippingOptions": {
       "create": {
         "shipping": {
-          "header": "Create Shipping Option for {{zone}}",
-          "hint": "Create a new shipping option to define how products are shipped from this location.",
-          "label": "Shipping options",
-          "successToast": "Shipping option {{name}} was successfully created."
+          "header": "Add a delivery option for {{zone}}",
+          "hint": "This is what customers choose at checkout — e.g. Standard delivery. Next you’ll set the price.",
+          "label": "Delivery options",
+          "successToast": "Delivery option {{name}} was created."
         },
         "pickup": {
-          "header": "Create Pickup Option for {{zone}}",
-          "hint": "Create a new pickup option to define how products are picked up from this location.",
+          "header": "Add a pickup option for {{zone}}",
+          "hint": "This is what customers choose if they collect the order themselves.",
           "label": "Pickup options",
-          "successToast": "Pickup option {{name}} was successfully created."
+          "successToast": "Pickup option {{name}} was created."
         },
         "returns": {
-          "header": "Create a Return Option for {{zone}}",
-          "hint": "Create a new return option to define how products are returned to this location.",
+          "header": "Add a return option for {{zone}}",
+          "hint": "How customers send items back to you.",
           "label": "Return options",
-          "successToast": "Return option {{name}} was successfully created."
+          "successToast": "Return option {{name}} was created."
         },
         "tabs": {
           "details": "Details",
-          "prices": "Prices"
+          "prices": "Price"
         },
-        "action": "Create option"
+        "action": "Add option"
       },
       "delete": {
-        "confirmation": "You are about to delete the shipping option \"{{name}}\". This action cannot be undone.",
-        "successToast": "Shipping option {{name}} was successfully deleted."
+        "confirmation": "Delete delivery option \"{{name}}\"? This cannot be undone.",
+        "successToast": "Option {{name}} was deleted."
       },
       "edit": {
-        "header": "Edit Shipping Option",
+        "header": "Edit delivery option",
         "action": "Edit option",
-        "successToast": "Shipping option {{name}} was successfully updated."
+        "successToast": "Option {{name}} was updated."
       },
       "pricing": {
-        "action": "Edit prices"
+        "action": "Edit price"
       },
       "conditionalPrices": {
-        "header": "Conditional Prices for {{name}}",
-        "description": "Manage the conditional prices for this shipping option based on the cart item total.",
+        "header": "Special prices for {{name}}",
+        "description": "Optional rules — e.g. free delivery above a cart total.",
         "attributes": {
-          "cartItemTotal": "Cart item total"
+          "cartItemTotal": "Cart total"
         },
         "summaries": {
           "range": "If <0>{{attribute}}</0> is between <1>{{gte}}</1> and <2>{{lte}}</2>",
@@ -1847,109 +1877,119 @@
         },
         "actions": {
           "addPrice": "Add price",
-          "manageConditionalPrices": "Manage conditional prices"
+          "manageConditionalPrices": "Manage special prices"
         },
         "rules": {
-          "amount": "Shipping option price",
-          "gte": "Minimum cart item total",
-          "lte": "Maximum cart item total"
+          "amount": "Delivery price",
+          "gte": "Minimum cart total",
+          "lte": "Maximum cart total"
         },
         "customRules": {
           "label": "Custom rules",
-          "tooltip": "This conditional price has rules that cannot be managed in the dashboard.",
-          "eq": "Cart item total must equal",
-          "gt": "Cart item total must be greater than",
-          "lt": "Cart item total must be less than"
+          "tooltip": "This price has rules that cannot be managed here.",
+          "eq": "Cart total must equal",
+          "gt": "Cart total must be greater than",
+          "lt": "Cart total must be less than"
         },
         "errors": {
-          "amountRequired": "Shipping option price is required",
-          "minOrMaxRequired": "At least one of minimum or maximum cart item total must be provided",
-          "minGreaterThanMax": "Minimum cart item total must be less than or equal to maximum cart item total",
-          "duplicateAmount": "Shipping option price must be unique for each condition",
-          "overlappingConditions": "Conditions must be unique across all price rules"
+          "amountRequired": "Delivery price is required",
+          "minOrMaxRequired": "Enter at least a minimum or maximum cart total",
+          "minGreaterThanMax": "Minimum must be less than or equal to maximum",
+          "duplicateAmount": "Each special price must be unique",
+          "overlappingConditions": "Conditions must not overlap"
         }
       },
       "fields": {
         "count": {
-          "shipping_one": "{{count}} shipping option",
-          "shipping_other": "{{count}} shipping options",
+          "shipping_one": "{{count}} delivery option",
+          "shipping_other": "{{count}} delivery options",
           "pickup_one": "{{count}} pickup option",
           "pickup_other": "{{count}} pickup options",
           "returns_one": "{{count}} return option",
           "returns_other": "{{count}} return options"
         },
+        "name": "Name at checkout",
+        "nameHint": "What the customer sees — e.g. Standard delivery, Express (2–3 days).",
+        "namePlaceholder": "e.g. Standard delivery",
         "priceType": {
-          "label": "Price type",
+          "label": "How is the price set?",
+          "simpleHint": "Next step: set a flat delivery fee in INR. Most sellers use one simple price.",
           "options": {
             "fixed": {
-              "label": "Fixed",
-              "hint": "The shipping option's price is fixed and does not change based on the order's contents."
+              "label": "Fixed price",
+              "hint": "You set one delivery fee (recommended)."
             },
             "calculated": {
-              "label": "Calculated",
-              "hint": "The shipping option's price is calculated by the fulfillment provider during checkout."
+              "label": "Calculated by courier",
+              "hint": "Price comes from a connected courier during checkout."
             }
           }
         },
         "enableInStore": {
-          "label": "Enable in store",
-          "hint": "Whether customers can use this option during checkout."
+          "label": "Show at checkout",
+          "hint": "Turn off to hide this option from customers without deleting it."
         },
-        "provider": "Fulfillment provider",
-        "profile": "Shipping profile",
-        "type": "Shipping option type",
+        "provider": "Fulfillment method",
+        "profile": "Product shipping group",
+        "profileHint": "Usually leave as Default. Only change this if some products need special shipping (heavy, fragile, etc.).",
+        "profileLoading": "Setting up Default shipping group…",
+        "type": "Option type",
         "fulfillmentOption": "Fulfillment option"
       }
     },
     "serviceZones": {
       "create": {
-        "headerPickup": "Create Service Zone for Pickup from {{location}}",
-        "headerShipping": "Create Service Zone for Shipping from {{location}}",
-        "action": "Create service zone",
-        "successToast": "Service zone {{name}} was successfully created."
+        "headerPickup": "Where can customers pick up from {{location}}?",
+        "headerShipping": "Where do you deliver from {{location}}?",
+        "hint": "Most sellers ship across India. You can change this later if you only deliver to certain places.",
+        "action": "Add delivery area",
+        "name": "Label (for you)",
+        "nameHint": "A short name you’ll see in the dashboard — e.g. India, or Maharashtra only.",
+        "namePlaceholder": "e.g. India",
+        "successToast": "Delivery area {{name}} was added."
       },
       "edit": {
-        "header": "Edit Service Zone",
-        "successToast": "Service zone {{name}} was successfully updated."
+        "header": "Edit delivery area",
+        "successToast": "Delivery area {{name}} was updated."
       },
       "delete": {
-        "confirmation": "You are about to delete the service zone \"{{name}}\". This action cannot be undone.",
-        "successToast": "Service zone {{name}} was successfully deleted."
+        "confirmation": "You are about to delete the delivery area \"{{name}}\". This also removes its shipping options and cannot be undone.",
+        "successToast": "Delivery area {{name}} was deleted."
       },
       "manageAreas": {
-        "header": "Manage Areas for {{name}}",
-        "action": "Manage areas",
-        "label": "Areas",
-        "hint": "Select the geographical areas that the service zone covers.",
-        "successToast": "Areas for {{name}} were successfully updated."
+        "header": "Choose countries for {{name}}",
+        "action": "Change countries",
+        "label": "Countries you deliver to",
+        "hint": "Customers outside these countries will not see your shipping options.",
+        "successToast": "Countries for {{name}} were updated."
       },
       "fields": {
-        "noRecords": "There are no service zones to add shipping options to.",
-        "tip": "A service zone is a collection of geographical zones or areas. It's used to restrict available shipping options to a defined set of locations."
+        "noRecords": "Add a delivery area before you can create shipping options.",
+        "tip": "This tells the shop which countries you deliver to. For most ELAI sellers, leave India selected and save."
       }
     }
   },
   "shippingProfile": {
-    "domain": "Shipping Profiles",
-    "subtitle": "Group products with similar shipping requirements into profiles.",
+    "domain": "Product shipping groups",
+    "subtitle": "Optional. Most sellers only need Default. Create extra groups if some products ship differently (e.g. fragile or oversized).",
     "create": {
-      "header": "Create Shipping Profile",
-      "hint": "Create a new shipping profile to group products with similar shipping requirements.",
-      "successToast": "Shipping profile {{name}} was successfully created."
+      "header": "Add a shipping group",
+      "hint": "Give it a clear name like Fragile or Heavy. Then assign products to this group.",
+      "successToast": "Shipping group {{name}} was created."
     },
     "delete": {
-      "title": "Delete Shipping Profile",
-      "description": "You are about to delete the shipping profile {{name}}. This action cannot be undone.",
-      "successToast": "Shipping profile {{name}} was successfully deleted."
+      "title": "Delete shipping group",
+      "description": "Delete shipping group {{name}}? This cannot be undone.",
+      "successToast": "Shipping group {{name}} was deleted."
     },
     "tooltip": {
-      "type": "Enter shipping profile type, for example: Heavy, Oversized, Freight-only, etc."
+      "type": "Optional type label, e.g. Heavy, Oversized, Fragile."
     }
   },
   "taxRegions": {
     "domain": "Tax Regions",
     "list": {
-      "hint": "Manage what you charge your customers when they shop from different countries and regions."
+      "hint": "Tax regions are set up by ELAI Admin for the marketplace."
     },
     "delete": {
       "confirmation": "You are about to delete a tax region. This action cannot be undone.",
@@ -1957,7 +1997,7 @@
     },
     "create": {
       "header": "Create Tax Region",
-      "hint": "Create a new tax region to define tax rates for a specific country.",
+      "hint": "Tax regions are created by ELAI Admin.",
       "errors": {
         "missingProvider": "Provider is required when creating a tax region.",
         "missingCountry": "Country is required when creating a tax region."
@@ -2910,19 +2950,19 @@
   },
   "regions": {
     "domain": "Regions",
-    "subtitle": "A region is an area that you sell products in. It can cover multiple countries, and has different tax rates, providers, and currency.",
+    "subtitle": "Regions are set up by ELAI Admin for the marketplace (countries, currency, and tax). You can’t create regions here.",
     "createRegion": "Create Region",
-    "createRegionHint": "Manage tax rates and providers for a set of countries.",
+    "createRegionHint": "Regions are created by ELAI Admin.",
     "addCountries": "Add countries",
     "editRegion": "Edit Region",
-    "countriesHint": "Add the countries included in this region.",
+    "countriesHint": "Countries included in this region.",
     "deleteRegionWarning": "You are about to delete the region {{name}}. This action cannot be undone.",
     "removeCountriesWarning_one": "You are about to remove {{count}} country from the region. This action cannot be undone.",
     "removeCountriesWarning_other": "You are about to remove {{count}} countries from the region. This action cannot be undone.",
     "removeCountryWarning": "You are about to remove the country {{name}} from the region. This action cannot be undone.",
     "automaticTaxesHint": "When enabled, taxes will only be calculated at checkout based on the shipping address.",
     "taxInclusiveHint": "When enabled, prices in the region will be tax inclusive.",
-    "providersHint": "Add which payment providers are available in this region.",
+    "providersHint": "Payment providers available in this region.",
     "shippingOptions": "Shipping Options",
     "deleteShippingOptionWarning": "You are about to delete the shipping option {{name}}. This action cannot be undone.",
     "return": "Return",
@@ -2931,7 +2971,7 @@
     "flatRate": "Flat Rate",
     "calculated": "Calculated",
     "list": {
-      "noRecordsMessage": "Create a region for the areas that you sell in."
+      "noRecordsMessage": "No regions yet. ELAI Admin will configure where the marketplace sells."
     },
     "toast": {
       "delete": "Region deleted successfully",
@@ -3032,11 +3072,11 @@
   },
   "salesChannels": {
     "domain": "Sales Channels",
-    "subtitle": "Manage the online and offline channels you sell products on.",
+    "subtitle": "Sales channels are set up by ELAI Admin. Add your products to the channels where they should appear.",
     "list": {
       "empty": {
         "heading": "No sales channels found",
-        "description": "Once a sales channel has been created, it will appear here."
+        "description": "ELAI Admin will set up sales channels. Once available, they will appear here."
       },
       "filtered": {
         "heading": "No results",
@@ -3044,7 +3084,7 @@
       }
     },
     "createSalesChannel": "Create Sales Channel",
-    "createSalesChannelHint": "Create a new sales channel to sell your products on.",
+    "createSalesChannelHint": "Sales channels are created by ELAI Admin.",
     "enabledHint": "Specify whether the sales channel is enabled.",
     "removeProductsWarning_one": "You are about to remove {{count}} product from {{sales_channel}}.",
     "removeProductsWarning_other": "You are about to remove {{count}} products from {{sales_channel}}.",
@@ -3153,13 +3193,13 @@
   },
   "returnReasons": {
     "domain": "Return Reasons",
-    "subtitle": "Manage reasons for returned items.",
-    "calloutHint": "Manage the reasons to categorize returns.",
+    "subtitle": "Return reasons are set up by ELAI Admin for the marketplace.",
+    "calloutHint": "These reasons are provided by ELAI Admin to categorize returns.",
     "editReason": "Edit Return Reason",
     "create": {
       "header": "Add Return Reason",
-      "subtitle": "Specify the most common reasons for returns.",
-      "hint": "Create a new return reason to categorize returns.",
+      "subtitle": "Return reasons are created by ELAI Admin.",
+      "hint": "Return reasons are created by ELAI Admin.",
       "successToast": "Return reason {{label}} was successfully created."
     },
     "edit": {
@@ -3351,41 +3391,65 @@
       },
       "store": {
         "title": "Enter your store details",
-        "name": "Name",
-        "email": "Email",
+        "name": "Store name",
+        "nameHint": "How shoppers will see your brand on ELAI (e.g. Priya's Accessories).",
+        "namePlaceholder": "e.g. Priya's Accessories",
+        "email": "Store email",
+        "emailHint": "Public contact email for your shop. Can be different from your login email.",
+        "emailPlaceholder": "shop@yourbrand.in",
         "handle": "Handle",
         "handleTooltip": "The handle becomes the URL slug for your store. Leave empty to auto-generate from the name.",
         "handlePlaceholder": "my-store",
         "currency": "Currency",
         "selectCurrency": "Select",
-        "currencyHint": "Cannot be changed after store is created"
+        "currencyHint": "Cannot be changed after store is created. ELAI sellers use INR."
       },
-      "skip": "Skip",
+      "skip": "Skip for now",
       "address": {
         "title": "Enter your address",
-        "name": "Name",
-        "namePlaceholder": "Headquarters",
-        "address": "Address",
+        "name": "Location name",
+        "nameHint": "A short label for this place — not your personal name (e.g. Main studio, Head office).",
+        "namePlaceholder": "e.g. Main studio",
+        "address": "Street address",
+        "addressHint": "Building, street, and landmark so couriers and ELAI can reach you.",
+        "addressPlaceholder": "e.g. 12 MG Road, near City Mall",
         "address2": "Apartment, suite, etc.",
         "postalCode": "PIN code",
+        "postalCodeHint": "6-digit Indian PIN code for this address.",
+        "postalCodePlaceholder": "e.g. 400001",
         "city": "City",
+        "cityHint": "City or town where this location is.",
+        "cityPlaceholder": "e.g. Mumbai",
         "country": "Country",
-        "state": "State"
+        "state": "State / UT"
       },
       "company": {
         "title": "Enter your company details",
         "subtitle": "Professional seller information",
         "corporateName": "Legal business name",
+        "corporateNameHint": "Registered company or firm name if you have one. Sole proprietors can use their trade name or leave blank.",
+        "corporateNamePlaceholder": "e.g. Priya Crafts Pvt Ltd",
         "registrationNumber": "Registration number",
-        "taxId": "GSTIN"
+        "registrationNumberHint": "Company / LLP / shop registration number if applicable.",
+        "taxId": "GSTIN",
+        "taxIdHint": "15-character GST number if you are GST-registered. Leave blank if not registered yet.",
+        "taxIdPlaceholder": "e.g. 27AAAAA0000A1Z5"
       },
       "payment": {
         "title": "Enter your payment details",
         "subtitle": "Indian bank account for ELAI payouts",
         "accountName": "Account holder name",
+        "accountNameHint": "Must match the name on your bank account exactly (as on passbook / cheque).",
+        "accountNamePlaceholder": "e.g. Priya Sharma",
         "bankName": "Bank name",
+        "bankNameHint": "Your bank's name (HDFC, SBI, ICICI, Axis, etc.).",
+        "bankNamePlaceholder": "e.g. HDFC Bank",
         "accountNumber": "Account number",
+        "accountNumberHint": "Savings or current account number where ELAI should send payouts. Double-check digits.",
+        "accountNumberPlaceholder": "Account number",
         "ifsc": "IFSC code",
+        "ifscHint": "11-character IFSC from your bank / cheque book (e.g. HDFC0001234).",
+        "ifscPlaceholder": "e.g. HDFC0001234",
         "achRoutingNumber": "ACH routing number",
         "iban": "IBAN",
         "swiftBic": "SWIFT / BIC"
@@ -3517,10 +3581,13 @@
   },
   "productTypes": {
     "domain": "Product Types",
-    "subtitle": "Organize your products into types.",
+    "subtitle": "Product types are set up by ELAI Admin. Assign a type when organizing a product — you can’t create new types here.",
+    "list": {
+      "noRecordsMessage": "No product types yet. ELAI Admin will add types you can use."
+    },
     "create": {
       "header": "Create Product Type",
-      "hint": "Create a new product type to categorize your products.",
+      "hint": "Product types are created by ELAI Admin. Contact admin if you need a new type.",
       "successToast": "Product type {{value}} was successfully created."
     },
     "edit": {
@@ -3537,9 +3604,13 @@
   },
   "productTags": {
     "domain": "Product Tags",
+    "subtitle": "Product tags are set up by ELAI Admin. Assign tags when organizing a product — you can’t create new tags here.",
+    "list": {
+      "noRecordsMessage": "No product tags yet. ELAI Admin will add tags you can use."
+    },
     "create": {
       "header": "Create Product Tag",
-      "subtitle": "Create a new product tag to categorize your products.",
+      "subtitle": "Product tags are created by ELAI Admin. Contact admin if you need a new tag.",
       "successToast": "Product tag {{value}} was successfully created."
     },
     "edit": {
@@ -3588,7 +3659,7 @@
     "from": "From",
     "to": "To",
     "beaware": "Be aware",
-    "loading": "Loading",
+    "loading": "Loading…",
     "selectValue": "Select Value",
     "selectValues": "Select Values"
   },
@@ -3801,6 +3872,15 @@
     "login": {
       "authenticationFailed": "Authentication failed",
       "cloud": "Log in with Mercur"
+    }
+  },
+  "platformShipping": {
+    "vendor": {
+      "header": "ELAI delivery",
+      "hint": "Do not have your own courier? Turn this on and ELAI will arrange pickup and delivery (e.g. BlueDart / Shiprocket). You still pack the order.",
+      "courier": "Via {{courier}}",
+      "enabledToast": "ELAI delivery enabled for this location.",
+      "disabledToast": "ELAI delivery turned off for this location."
     }
   }
 }

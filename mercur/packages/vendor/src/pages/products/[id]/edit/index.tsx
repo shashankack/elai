@@ -3,7 +3,7 @@ import { Heading } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
-import { RouteDrawer } from "@components/modals";
+import { RouteDrawer, RouteModalLoading } from "@components/modals";
 import { useProduct } from "@hooks/api/products";
 import { EditProductForm } from "./edit-product-form";
 
@@ -27,7 +27,11 @@ export const Component = () => {
           {t("products.edit.description")}
         </RouteDrawer.Description>
       </RouteDrawer.Header>
-      {!isLoading && product && <EditProductForm product={product} />}
+      {!isLoading && product ? (
+        <EditProductForm product={product} />
+      ) : (
+        <RouteModalLoading variant="drawer" />
+      )}
     </RouteDrawer>
   );
 };

@@ -1,7 +1,7 @@
 import { Heading } from "@medusajs/ui"
 import { useTranslation } from "react-i18next"
 import { useParams } from "react-router-dom"
-import { RouteDrawer } from "@components/modals"
+import { RouteDrawer, RouteModalLoading } from "@components/modals"
 import { useStockLocation } from "@hooks/api/stock-locations"
 import { EditLocationForm } from "./_components/edit-location-form"
 
@@ -27,7 +27,11 @@ const LocationEdit = () => {
       <RouteDrawer.Header>
         <Heading className="capitalize">{t("locations.editLocation")}</Heading>
       </RouteDrawer.Header>
-      {ready && <EditLocationForm location={stock_location} />}
+      {ready ? (
+        <EditLocationForm location={stock_location} />
+      ) : (
+        <RouteModalLoading variant="drawer" />
+      )}
     </RouteDrawer>
   )
 }

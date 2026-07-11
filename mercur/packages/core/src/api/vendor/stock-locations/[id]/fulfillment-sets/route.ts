@@ -5,7 +5,11 @@ import {
 } from "@medusajs/framework/http"
 import { HttpTypes } from "@mercurjs/types"
 
-import { refetchStockLocation, validateSellerStockLocation } from "../../helpers"
+import {
+  ensureStockLocationFulfillmentProvider,
+  refetchStockLocation,
+  validateSellerStockLocation,
+} from "../../helpers"
 import { VendorCreateStockLocationFulfillmentSetType } from "../../validators"
 
 export const POST = async (
@@ -26,6 +30,10 @@ export const POST = async (
       },
     },
   })
+
+  // Auto-enable manual fulfillment so sellers can add delivery options without
+  // a separate "fulfillment providers" step.
+  await ensureStockLocationFulfillmentProvider(req.scope, id, "manual_manual")
 
   const stockLocation = await refetchStockLocation(
     req.scope,

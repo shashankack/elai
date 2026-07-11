@@ -457,6 +457,9 @@ export type Routes = {
             };
         };
         members: typeof import("../../src/api/admin/members/route");
+        platformShippingOptions: typeof import("../../src/api/admin/platform-shipping-options/route") & {
+            $id: typeof import("../../src/api/admin/platform-shipping-options/[id]/route");
+        };
         subscriptionPlans: typeof import("../../src/api/admin/subscription-plans/route") & {
             $id: typeof import("../../src/api/admin/subscription-plans/[id]/route") & {
                 overrides: typeof import("../../src/api/admin/subscription-plans/[id]/overrides/route") & {
@@ -752,12 +755,22 @@ export type Routes = {
         uploads: typeof import("../../src/api/vendor/uploads/route");
         attributes: typeof import("../../src/api/vendor/attributes/route");
         featureFlags: typeof import("../../src/api/vendor/feature-flags/route");
-        fulfillmentProviders: typeof import("../../src/api/vendor/fulfillment-providers/route");
+        fulfillmentProviders: typeof import("../../src/api/vendor/fulfillment-providers/route") & {
+            $id: {
+                options: typeof import("../../src/api/vendor/fulfillment-providers/[id]/options/route");
+            };
+        };
         members: {
             invites: {
                 accept: typeof import("../../src/api/vendor/members/invites/accept/route");
             };
             me: typeof import("../../src/api/vendor/members/me/route");
+        };
+        platformShipping: {
+            optIn: typeof import("../../src/api/vendor/platform-shipping/opt-in/route");
+            optIns: typeof import("../../src/api/vendor/platform-shipping/opt-ins/route");
+            optOut: typeof import("../../src/api/vendor/platform-shipping/opt-out/route");
+            options: typeof import("../../src/api/vendor/platform-shipping/options/route");
         };
         productVariants: typeof import("../../src/api/vendor/product-variants/route");
         stores: typeof import("../../src/api/vendor/stores/route");

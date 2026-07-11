@@ -8,7 +8,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { ProgressBar } from "@components/common/progress-bar"
 import { Skeleton } from "@components/common/skeleton"
 import { DataGridSkeleton } from "@components/data-grid/components"
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { ProductStockForm } from "./product-stock-form"
 import { useProduct, useStockLocations } from "@hooks/api"
 
@@ -66,19 +66,23 @@ export const Component = () => {
         <RouteFocusModal.Description asChild>
           <span className="sr-only">{t("products.stock.description")}</span>
         </RouteFocusModal.Description>
-        <Suspense fallback={<ProductStockFallback />}>
-          <Await resolve={{ allVariants, locations: stock_locations }}>
-            {() => {
-              return (
-                <ProductStockForm
-                  variants={allVariants || []}
-                  locations={stock_locations || []}
-                  onLoaded={onLoaded}
-                />
-              )
-            }}
-          </Await>
-        </Suspense>
+        {isProductLoading || isStockLoading ? (
+          <RouteModalLoading />
+        ) : (
+          <Suspense fallback={<ProductStockFallback />}>
+            <Await resolve={{ allVariants, locations: stock_locations }}>
+              {() => {
+                return (
+                  <ProductStockForm
+                    variants={allVariants || []}
+                    locations={stock_locations || []}
+                    onLoaded={onLoaded}
+                  />
+                )
+              }}
+            </Await>
+          </Suspense>
+        )}
       </RouteFocusModal>
     </div>
   )

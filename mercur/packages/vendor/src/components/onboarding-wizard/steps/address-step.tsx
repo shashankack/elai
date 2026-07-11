@@ -67,8 +67,12 @@ export const AddressStep = ({ onSubmit, onSkip, isPending }: AddressStepProps) =
                     {t("onboarding.wizard.address.name")}
                   </Form.Label>
                   <Form.Control>
-                    <Input {...field} />
+                    <Input
+                      placeholder={t("onboarding.wizard.address.namePlaceholder")}
+                      {...field}
+                    />
                   </Form.Control>
+                  <Form.Hint>{t("onboarding.wizard.address.nameHint")}</Form.Hint>
                   <Form.ErrorMessage />
                 </Form.Item>
               )}
@@ -80,8 +84,13 @@ export const AddressStep = ({ onSubmit, onSkip, isPending }: AddressStepProps) =
                 <Form.Item>
                   <Form.Label optional>{t("onboarding.wizard.address.address")}</Form.Label>
                   <Form.Control>
-                    <Input autoComplete="address-line1" {...field} />
+                    <Input
+                      autoComplete="address-line1"
+                      placeholder={t("onboarding.wizard.address.addressPlaceholder")}
+                      {...field}
+                    />
                   </Form.Control>
+                  <Form.Hint>{t("onboarding.wizard.address.addressHint")}</Form.Hint>
                   <Form.ErrorMessage />
                 </Form.Item>
               )}
@@ -110,8 +119,14 @@ export const AddressStep = ({ onSubmit, onSkip, isPending }: AddressStepProps) =
                 <Form.Item>
                   <Form.Label optional>{t("onboarding.wizard.address.postalCode")}</Form.Label>
                   <Form.Control>
-                    <Input autoComplete="postal-code" {...field} />
+                    <Input
+                      autoComplete="postal-code"
+                      inputMode="numeric"
+                      placeholder={t("onboarding.wizard.address.postalCodePlaceholder")}
+                      {...field}
+                    />
                   </Form.Control>
+                  <Form.Hint>{t("onboarding.wizard.address.postalCodeHint")}</Form.Hint>
                   <Form.ErrorMessage />
                 </Form.Item>
               )}
@@ -123,8 +138,13 @@ export const AddressStep = ({ onSubmit, onSkip, isPending }: AddressStepProps) =
                 <Form.Item>
                   <Form.Label optional>{t("onboarding.wizard.address.city")}</Form.Label>
                   <Form.Control>
-                    <Input autoComplete="address-level2" {...field} />
+                    <Input
+                      autoComplete="address-level2"
+                      placeholder={t("onboarding.wizard.address.cityPlaceholder")}
+                      {...field}
+                    />
                   </Form.Control>
+                  <Form.Hint>{t("onboarding.wizard.address.cityHint")}</Form.Hint>
                   <Form.ErrorMessage />
                 </Form.Item>
               )}

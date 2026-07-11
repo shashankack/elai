@@ -1,6 +1,6 @@
 // Route: /price-lists/:id/products/add
 import { useParams } from "react-router-dom"
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { usePriceList } from "@hooks/api/price-lists"
 import { usePriceListCurrencyData } from "../../../common/hooks/use-price-list-currency-data"
 import { PriceListPricesAddForm } from "./price-list-prices-add-form"
@@ -25,8 +25,10 @@ export const Component = () => {
       <RouteFocusModal.Description className="sr-only">
         Add products and set prices for the price list
       </RouteFocusModal.Description>
-      {ready && (
+      {ready ? (
         <PriceListPricesAddForm priceList={price_list} {...currencyData} />
+      ) : (
+        <RouteModalLoading />
       )}
     </RouteFocusModal>
   )

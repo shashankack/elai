@@ -69,6 +69,9 @@ export const ProductTagListDataTable = () => {
           label: t("fields.updatedAt"),
         },
       ]}
+      noRecords={{
+        message: t("productTags.list.noRecordsMessage"),
+      }}
     />
   );
 };

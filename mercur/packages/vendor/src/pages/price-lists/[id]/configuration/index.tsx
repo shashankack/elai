@@ -1,7 +1,7 @@
 import { Heading } from "@medusajs/ui";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import { RouteDrawer } from "@components/modals";
+import { RouteDrawer, RouteModalLoading } from "@components/modals";
 // import { useCustomerGroups } from "@hooks/api/customer-groups";
 import { usePriceList } from "@hooks/api/price-lists";
 import { PriceListConfigurationForm } from "./price-list-configuration-form";
@@ -53,11 +53,13 @@ export const Component = () => {
           <Heading>{t("priceLists.configuration.edit.header")}</Heading>
         </RouteDrawer.Title>
       </RouteDrawer.Header>
-      {ready && (
+      {ready ? (
         <PriceListConfigurationForm
           priceList={price_list}
           customerGroups={[]}
         />
+      ) : (
+        <RouteModalLoading variant="drawer" />
       )}
     </RouteDrawer>
   );

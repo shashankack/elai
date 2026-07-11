@@ -156,10 +156,20 @@ export const EditShippingOptionForm = ({
                   render={({ field }) => {
                     return (
                       <Form.Item>
-                        <Form.Label>{t("fields.name")}</Form.Label>
+                        <Form.Label>
+                          {t("stockLocations.shippingOptions.fields.name")}
+                        </Form.Label>
                         <Form.Control>
-                          <Input {...field} />
+                          <Input
+                            placeholder={t(
+                              "stockLocations.shippingOptions.fields.namePlaceholder"
+                            )}
+                            {...field}
+                          />
                         </Form.Control>
+                        <Form.Hint>
+                          {t("stockLocations.shippingOptions.fields.nameHint")}
+                        </Form.Hint>
                         <Form.ErrorMessage />
                       </Form.Item>
                     )
@@ -186,6 +196,11 @@ export const EditShippingOptionForm = ({
                             disabled={shippingProfiles.disabled}
                           />
                         </Form.Control>
+                        <Form.Hint>
+                          {t(
+                            "stockLocations.shippingOptions.fields.profileHint"
+                          )}
+                        </Form.Hint>
                         <Form.ErrorMessage />
                       </Form.Item>
                     )

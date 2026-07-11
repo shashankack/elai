@@ -1,7 +1,7 @@
 // Route: /products/:id/prices OR /products/:product_id/variants/:variant_id/prices
 import { useParams } from "react-router-dom"
 
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { useProduct } from "@hooks/api/products"
 import { PricingEdit } from "./pricing-edit"
 
@@ -17,8 +17,10 @@ export const Component = () => {
 
   return (
     <RouteFocusModal>
-      {!isLoading && product && (
+      {!isLoading && product ? (
         <PricingEdit product={product} variantId={variant_id} />
+      ) : (
+        <RouteModalLoading />
       )}
     </RouteFocusModal>
   )

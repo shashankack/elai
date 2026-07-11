@@ -38,7 +38,7 @@ export const CreateLocationForm = () => {
         address_2: "",
         city: "",
         company: "",
-        country_code: "",
+        country_code: "in",
         phone: "",
         postal_code: "",
         province: "",
@@ -93,10 +93,21 @@ export const CreateLocationForm = () => {
                   render={({ field }) => {
                     return (
                       <Form.Item>
-                        <Form.Label>{t("fields.name")}</Form.Label>
+                        <Form.Label>
+                          {t("stockLocations.create.name")}
+                        </Form.Label>
                         <Form.Control>
-                          <Input size="small" {...field} />
+                          <Input
+                            size="small"
+                            placeholder={t(
+                              "stockLocations.create.namePlaceholder",
+                            )}
+                            {...field}
+                          />
                         </Form.Control>
+                        <Form.Hint>
+                          {t("stockLocations.create.nameHint")}
+                        </Form.Hint>
                         <Form.ErrorMessage />
                       </Form.Item>
                     )
@@ -112,8 +123,17 @@ export const CreateLocationForm = () => {
                       <Form.Item>
                         <Form.Label>{t("fields.address")}</Form.Label>
                         <Form.Control>
-                          <Input size="small" {...field} />
+                          <Input
+                            size="small"
+                            placeholder={t(
+                              "stockLocations.create.addressPlaceholder",
+                            )}
+                            {...field}
+                          />
                         </Form.Control>
+                        <Form.Hint>
+                          {t("stockLocations.create.addressHint")}
+                        </Form.Hint>
                         <Form.ErrorMessage />
                       </Form.Item>
                     )
@@ -141,11 +161,21 @@ export const CreateLocationForm = () => {
                     return (
                       <Form.Item>
                         <Form.Label optional>
-                          {t("fields.postalCode")}
+                          {t("stockLocations.create.postalCode")}
                         </Form.Label>
                         <Form.Control>
-                          <Input size="small" {...field} />
+                          <Input
+                            size="small"
+                            inputMode="numeric"
+                            placeholder={t(
+                              "stockLocations.create.postalCodePlaceholder",
+                            )}
+                            {...field}
+                          />
                         </Form.Control>
+                        <Form.Hint>
+                          {t("stockLocations.create.postalCodeHint")}
+                        </Form.Hint>
                         <Form.ErrorMessage />
                       </Form.Item>
                     )
@@ -159,8 +189,17 @@ export const CreateLocationForm = () => {
                       <Form.Item>
                         <Form.Label optional>{t("fields.city")}</Form.Label>
                         <Form.Control>
-                          <Input size="small" {...field} />
+                          <Input
+                            size="small"
+                            placeholder={t(
+                              "stockLocations.create.cityPlaceholder",
+                            )}
+                            {...field}
+                          />
                         </Form.Control>
+                        <Form.Hint>
+                          {t("stockLocations.create.cityHint")}
+                        </Form.Hint>
                         <Form.ErrorMessage />
                       </Form.Item>
                     )
@@ -187,7 +226,9 @@ export const CreateLocationForm = () => {
                   render={({ field }) => {
                     return (
                       <Form.Item>
-                        <Form.Label optional>{t("fields.state")}</Form.Label>
+                        <Form.Label optional>
+                          {t("stockLocations.create.state")}
+                        </Form.Label>
                         <Form.Control>
                           <Input size="small" {...field} />
                         </Form.Control>
@@ -206,6 +247,9 @@ export const CreateLocationForm = () => {
                         <Form.Control>
                           <Input size="small" {...field} />
                         </Form.Control>
+                        <Form.Hint>
+                          {t("stockLocations.create.companyHint")}
+                        </Form.Hint>
                         <Form.ErrorMessage />
                       </Form.Item>
                     )
@@ -221,6 +265,9 @@ export const CreateLocationForm = () => {
                         <Form.Control>
                           <Input size="small" {...field} />
                         </Form.Control>
+                        <Form.Hint>
+                          {t("stockLocations.create.phoneHint")}
+                        </Form.Hint>
                         <Form.ErrorMessage />
                       </Form.Item>
                     )

@@ -77,8 +77,13 @@ export const StoreStep = ({ onSubmit, isPending }: StoreStepProps) => {
                 <Form.Item>
                   <Form.Label>{t("onboarding.wizard.store.name")}</Form.Label>
                   <Form.Control>
-                    <Input autoComplete="organization" {...field} />
+                    <Input
+                      autoComplete="organization"
+                      placeholder={t("onboarding.wizard.store.namePlaceholder")}
+                      {...field}
+                    />
                   </Form.Control>
+                  <Form.Hint>{t("onboarding.wizard.store.nameHint")}</Form.Hint>
                   <Form.ErrorMessage />
                 </Form.Item>
               )}
@@ -90,8 +95,14 @@ export const StoreStep = ({ onSubmit, isPending }: StoreStepProps) => {
                 <Form.Item>
                   <Form.Label>{t("onboarding.wizard.store.email")}</Form.Label>
                   <Form.Control>
-                    <Input type="email" autoComplete="email" {...field} />
+                    <Input
+                      type="email"
+                      autoComplete="email"
+                      placeholder={t("onboarding.wizard.store.emailPlaceholder")}
+                      {...field}
+                    />
                   </Form.Control>
+                  <Form.Hint>{t("onboarding.wizard.store.emailHint")}</Form.Hint>
                   <Form.ErrorMessage />
                 </Form.Item>
               )}

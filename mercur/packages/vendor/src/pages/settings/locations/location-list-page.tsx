@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useLoaderData } from "react-router-dom";
 
 import { SidebarLink } from "@components/common/sidebar-link/sidebar-link";
+import { TwoColumnPageSkeleton } from "@components/common/skeleton";
 import { TwoColumnPage } from "@components/layout/pages";
 import { useStockLocations } from "@hooks/api/stock-locations";
 
@@ -41,6 +42,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
 
   const {
     stock_locations: stockLocations = [],
+    isPending,
     isError,
     error,
   } = useStockLocations(
@@ -55,26 +57,30 @@ const Root = ({ children }: { children?: ReactNode }) => {
     throw error;
   }
 
+  if (Children.count(children) > 0) {
+    return <>{children}</>;
+  }
+
+  if (isPending && !stockLocations.length) {
+    return (
+      <TwoColumnPageSkeleton mainSections={2} sidebarSections={1} />
+    );
+  }
+
   return (
-    <>
-      {Children.count(children) > 0 ? (
-        children
-      ) : (
-        <TwoColumnPage>
-          <TwoColumnPage.Main>
-            <LocationListHeader />
-            <div className="flex flex-col gap-3 lg:col-span-2">
-              {stockLocations.map((location) => (
-                <LocationListItem key={location.id} location={location} />
-              ))}
-            </div>
-          </TwoColumnPage.Main>
-          <TwoColumnPage.Sidebar>
-            <LinksSection />
-          </TwoColumnPage.Sidebar>
-        </TwoColumnPage>
-      )}
-    </>
+    <TwoColumnPage>
+      <TwoColumnPage.Main>
+        <LocationListHeader />
+        <div className="flex flex-col gap-3 lg:col-span-2">
+          {stockLocations.map((location) => (
+            <LocationListItem key={location.id} location={location} />
+          ))}
+        </div>
+      </TwoColumnPage.Main>
+      <TwoColumnPage.Sidebar>
+        <LinksSection />
+      </TwoColumnPage.Sidebar>
+    </TwoColumnPage>
   );
 };
 

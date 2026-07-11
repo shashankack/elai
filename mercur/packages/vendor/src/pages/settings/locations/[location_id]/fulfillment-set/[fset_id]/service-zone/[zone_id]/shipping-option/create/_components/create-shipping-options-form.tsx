@@ -4,7 +4,7 @@ import { Button, ProgressStatus, ProgressTabs, toast } from "@medusajs/ui"
 import { useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   RouteFocusModal,
   useRouteModal,
@@ -47,10 +47,15 @@ export function CreateShippingOptionsForm({
 
   const { t } = useTranslation()
   const { handleSuccess } = useRouteModal()
+  const isPickup = type === FulfillmentSetType.Pickup
 
   const form = useForm<CreateShippingOptionSchema>({
     defaultValues: {
-      name: "",
+      name: isPickup
+        ? "Store pickup"
+        : isReturn
+          ? "Return shipping"
+          : "Standard delivery",
       price_type: ShippingOptionPriceType.FlatRate,
       enabled_in_store: true,
       shipping_profile_id: "",
@@ -73,6 +78,22 @@ export function CreateShippingOptionsForm({
     useFulfillmentProviderOptions(selectedProviderId, {
       enabled: !!selectedProviderId,
     })
+
+  // Pick a matching manual fulfillment option once loaded
+  useEffect(() => {
+    if (!fulfillmentProviderOptions?.length) return
+    const current = form.getValues("fulfillment_option_id")
+    if (current) return
+
+    const match =
+      fulfillmentProviderOptions.find(
+        (fo: { is_return?: boolean }) => !!fo.is_return === !!isReturn
+      ) || fulfillmentProviderOptions[0]
+
+    if (match?.id) {
+      form.setValue("fulfillment_option_id", match.id)
+    }
+  }, [fulfillmentProviderOptions, form, isReturn])
 
   const isCalculatedPriceType =
     form.watch("price_type") === ShippingOptionPriceType.Calculated
@@ -106,9 +127,10 @@ export function CreateShippingOptionsForm({
       })
       .filter((p): p is { region_id: string; amount: number } => !!p)
 
-    const fulfillmentOptionData = fulfillmentProviderOptions?.find(
-      (fo) => fo.id === data.fulfillment_option_id
-    )
+    const fulfillmentOptionData =
+      fulfillmentProviderOptions?.find(
+        (fo: { id?: string }) => fo.id === data.fulfillment_option_id
+      ) || { id: "manual-fulfillment" }
 
     await mutateAsync(
       {
@@ -132,10 +154,13 @@ export function CreateShippingOptionsForm({
           },
         ],
         type: {
-          // TODO: FETCH TYPES
-          label: "Type label",
-          description: "Type description",
-          code: "type-code",
+          label: isPickup ? "Pickup" : isReturn ? "Return" : "Standard",
+          description: isPickup
+            ? "Customer collects the order"
+            : isReturn
+              ? "Customer returns the order"
+              : "Standard delivery",
+          code: isPickup ? "pickup" : isReturn ? "return" : "standard",
         },
       },
       {

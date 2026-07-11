@@ -12,6 +12,17 @@ alwaysApply: true
 - Repo on VPS: `~/elai` (not `/www/wwwroot/elaai.co`)
 - **~2 GB RAM** — never run `bun run setup` / full monorepo builds on VPS (causes swap thrash)
 
+## Databases (do not confuse)
+
+| Environment | Postgres | Notes |
+|-------------|----------|--------|
+| **Local / dev** | **Neon** (cloud) | `DATABASE_URL` in `mercur/apps/api/.env` — wipe/seed here is fine |
+| **Production** | **Postgres on the VPS itself** | Used by `mercur-api` on the server — **not** Neon |
+
+- Local Neon ≠ production. Never assume wiping Neon affects live vendors.
+- Never run `wipe-db`, destructive SQL, or careless migrations against the **VPS** database unless the user explicitly asks.
+- Redis: local may use Upstash or local Redis; production Redis is whatever is configured on the VPS / prod `.env`.
+
 ## Domains
 
 | URL | App |

@@ -1,5 +1,5 @@
 // Route: /inventory/create
-import { RouteFocusModal } from "@components/modals"
+import { RouteFocusModal, RouteModalLoading } from "@components/modals"
 import { useStockLocations } from "@hooks/api"
 import { InventoryCreateForm } from "./inventory-create-form"
 
@@ -11,7 +11,11 @@ export const Component = () => {
 
   return (
     <RouteFocusModal>
-      {ready && <InventoryCreateForm locations={stock_locations} />}
+      {ready ? (
+        <InventoryCreateForm locations={stock_locations} />
+      ) : (
+        <RouteModalLoading />
+      )}
     </RouteFocusModal>
   )
 }

@@ -6,6 +6,7 @@ import { TwoColumnPage } from "@components/layout/pages";
 import { useStockLocation } from "@hooks/api/stock-locations";
 
 import { LocationGeneralSection } from "./_components/location-general-section";
+import { LocationElaiShippingSection } from "./_components/location-elai-shipping-section";
 import LocationsFulfillmentProvidersSection from "./_components/location-fulfillment-providers-section";
 import { LOCATION_DETAILS_FIELD } from "./constants";
 
@@ -46,6 +47,7 @@ const Root = ({ children }: { children?: ReactNode }) => {
         <TwoColumnPage data={location} hasOutlet>
           <TwoColumnPage.Main>
             <LocationGeneralSection location={location} />
+            <LocationElaiShippingSection locationId={location.id} />
           </TwoColumnPage.Main>
           <TwoColumnPage.Sidebar>
             <LocationsFulfillmentProvidersSection location={location} />

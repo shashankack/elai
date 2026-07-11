@@ -1,5 +1,6 @@
 import { keepPreviousData } from "@tanstack/react-query";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { _DataTable } from "@components/table/data-table";
 import { useProductCategories } from "@hooks/api/categories";
@@ -10,6 +11,7 @@ import { useCategoryTableQuery } from "./use-category-table-query";
 const PAGE_SIZE = 20;
 
 export const CategoryListDataTable = () => {
+  const { t } = useTranslation();
   const { raw, searchParams } = useCategoryTableQuery({
     pageSize: PAGE_SIZE,
   });
@@ -64,6 +66,9 @@ export const CategoryListDataTable = () => {
       queryObject={raw}
       search
       pagination
+      noRecords={{
+        message: t("categories.list.noRecordsMessage"),
+      }}
     />
   );
 };

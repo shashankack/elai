@@ -15,14 +15,47 @@ import {
   remapKeysForProduct,
   remapProductResponse,
 } from "@medusajs/medusa/api/admin/products/helpers"
+import { listProductQueryConfig } from "@medusajs/medusa/api/admin/products/query-config"
+import { AdminGetProductsParams } from "@medusajs/medusa/api/admin/products/validators"
 import { HttpTypes } from "@medusajs/types"
+import { validateAndTransformQuery } from "@medusajs/framework"
 
 import { AdminGetProductsParamsType } from "./validators"
+
+const ensureProductQueryConfig = validateAndTransformQuery(
+  AdminGetProductsParams,
+  listProductQueryConfig
+)
+
+async function runMiddleware(
+  req: AuthenticatedMedusaRequest,
+  res: MedusaResponse,
+  middleware: (
+    req: AuthenticatedMedusaRequest,
+    res: MedusaResponse,
+    next: (err?: unknown) => void
+  ) => void
+) {
+  await new Promise<void>((resolve, reject) => {
+    middleware(req, res, (err?: unknown) => {
+      if (err) {
+        reject(err)
+        return
+      }
+
+      resolve()
+    })
+  })
+}
 
 export const GET = async (
   req: AuthenticatedMedusaRequest<AdminGetProductsParamsType>,
   res: MedusaResponse<HttpTypes.AdminProductListResponse>
 ) => {
+  if (!req.queryConfig) {
+    await runMiddleware(req, res, ensureProductQueryConfig)
+  }
+
   if (FeatureFlag.isFeatureEnabled(indexEngineFeatureFlag.key)) {
     if (
       Object.keys(req.filterableFields).length === 0 ||

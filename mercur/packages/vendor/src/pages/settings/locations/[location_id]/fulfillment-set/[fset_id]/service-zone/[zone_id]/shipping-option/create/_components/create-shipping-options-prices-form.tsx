@@ -56,7 +56,7 @@ export const CreateShippingOptionsPricesForm = ({
   )
 
   const {
-    regions,
+    regions: regionsData,
     isLoading: isRegionsLoading,
     isError: isRegionsError,
     error: regionsError,
@@ -64,6 +64,8 @@ export const CreateShippingOptionsPricesForm = ({
     fields: "id,name,currency_code",
     limit: 999,
   })
+
+  const regions = regionsData || []
 
   const { setCloseOnEscape } = useRouteModal()
 
@@ -78,39 +80,33 @@ export const CreateShippingOptionsPricesForm = ({
     regions,
   })
 
-  const isLoading = isStoreLoading || !store || isRegionsLoading || !regions
+  const isLoading = isStoreLoading || !store || isRegionsLoading
 
   const data = useMemo(
-    () => [[...(currencies || []), ...(regions || [])]],
+    () => [[...currencies, ...regions]],
     [currencies, regions]
   )
 
   /**
-   * Prefill prices with 0 if createing a pickup (shipping) option
+   * Prefill prices with 0 if creating a pickup option
    */
   useEffect(() => {
-    if (!isLoading && isPickup) {
-      if (currencies.length > 0) {
-        currencies.forEach((currency) => {
-          form.setValue(`currency_prices.${currency}`, "0")
-        })
-      }
-
-      if (regions.length > 0) {
-        regions.forEach((region) => {
-          form.setValue(`region_prices.${region.id}`, "0")
-        })
-      }
+    if (isLoading || !isPickup) {
+      return
     }
-  }, [
-	isLoading,
-	isPickup,
-	currencies.length,
-	currencies,
-	regions.length,
-	regions,
-	form
-])
+
+    if (currencies.length > 0) {
+      currencies.forEach((currency) => {
+        form.setValue(`currency_prices.${currency}`, "0")
+      })
+    }
+
+    if (regions.length > 0) {
+      regions.forEach((region) => {
+        form.setValue(`region_prices.${region.id}`, "0")
+      })
+    }
+  }, [isLoading, isPickup, currencies, regions, form])
 
   if (isStoreError) {
     throw storeError
