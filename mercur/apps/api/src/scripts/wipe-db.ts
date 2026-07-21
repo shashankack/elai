@@ -8,10 +8,11 @@
  *   bun run wipe-db:reset               # same as --force --seed
  *
  * --seed runs:
- *   1. seed              — India platform (region, shipping, API key; no products/stores)
- *   2. seed:elai-catalog — types, categories, collections, attributes
+ *   1. seed               India platform (region, shipping, API key; no products/stores)
+ *   2. seed:elai-catalog  types, categories, collections, attributes
  *
  * Requires DATABASE_URL in .env (Neon or local Postgres).
+ * Non-dev hosts are blocked unless MERCUR_ALLOW_WIPE_DB=1.
  */
 import { SQL } from "bun"
 import { spawn } from "node:child_process"
@@ -72,6 +73,24 @@ const databaseUrl = process.env.DATABASE_URL
 
 if (!databaseUrl) {
   console.error("DATABASE_URL is not set. Add it to mercur/apps/api/.env")
+  process.exit(1)
+}
+
+function looksLikeDevDb(url: string) {
+  const s = url.toLowerCase()
+  return (
+    s.includes("localhost") ||
+    s.includes("127.0.0.1") ||
+    s.includes("neondb") ||
+    s.includes("neon.tech")
+  )
+}
+
+if (!looksLikeDevDb(databaseUrl) && process.env.MERCUR_ALLOW_WIPE_DB !== "1") {
+  console.error(
+    "Safety block: DATABASE_URL does not look like a local/Neon dev DB.\n" +
+      "Refusing to wipe unless MERCUR_ALLOW_WIPE_DB=1 is set.",
+  )
   process.exit(1)
 }
 

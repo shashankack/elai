@@ -1,20 +1,9 @@
-// Elai Hero
+// Elai Hero   keep styles scoped; global resets live in app/globals.css
+// so they are not unloaded on client navigations away from the homepage.
 $bg: #fff7d4;
 $fg: #2e3e20;
 $highlight: #748956;
 $white: #ffffff;
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: var(--font-body), serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
 .elai-container {
   position: relative;

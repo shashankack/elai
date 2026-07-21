@@ -39,17 +39,6 @@ $highlight: #748956;
   background: rgba(116, 137, 86, 0.13);
 }
 
-// Shell / container
-.elai-shell {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 40px;
-
-  @media (max-width: 768px) {
-    padding: 0 20px;
-  }
-}
-
 // ── Header ──────────────────────────────────────────
 .categories-top {
   position: relative;
@@ -156,6 +145,9 @@ $highlight: #748956;
   will-change: transform;
   border: 1px solid rgba(46, 62, 32, 0.1);
   background: #fff7d4;
+  text-decoration: none;
+  color: inherit;
+  display: block;
   transition:
     transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
     box-shadow 0.4s ease,

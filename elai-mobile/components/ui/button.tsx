@@ -1,56 +1,52 @@
-import { Colors } from "@/constants/theme";
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import React from "react";
+import { Colors, Radii } from '@/constants/theme';
+import React from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
   Text,
   TouchableOpacity,
   TouchableOpacityProps,
-} from "react-native";
+} from 'react-native';
 
 interface ButtonProps extends TouchableOpacityProps {
   title: string;
-  variant?: "primary" | "secondary";
+  variant?: 'primary' | 'secondary';
   loading?: boolean;
 }
 
 export function Button({
   title,
-  variant = "primary",
+  variant = 'primary',
   loading = false,
   disabled,
   style,
   ...props
 }: ButtonProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? "light"];
-
-  const isPrimary = variant === "primary";
+  const colors = Colors.light;
+  const isPrimary = variant === 'primary';
   const isDisabled = disabled || loading;
-  
-  // Primary button: white background with dark text in dark mode, tint background with white text in light mode
-  const primaryBgColor = colorScheme === 'dark' ? '#fff' : colors.tint;
-  const primaryTextColor = colorScheme === 'dark' ? '#000' : '#fff';
 
   return (
     <TouchableOpacity
       style={[
         styles.button,
-        isPrimary ? { backgroundColor: primaryBgColor } : styles.secondaryButton,
+        isPrimary
+          ? { backgroundColor: colors.tint }
+          : { backgroundColor: 'transparent', borderWidth: 1, borderColor: colors.border },
         isDisabled && styles.disabled,
         style,
       ]}
       disabled={isDisabled}
+      activeOpacity={0.85}
       {...props}
     >
       {loading ? (
-        <ActivityIndicator color={isPrimary ? primaryTextColor : colors.tint} />
+        <ActivityIndicator color={isPrimary ? '#fff' : colors.tint} />
       ) : (
         <Text
           style={[
             styles.text,
-            isPrimary ? { color: primaryTextColor } : { color: colors.tint },
+            { color: isPrimary ? '#fff' : colors.text },
           ]}
         >
           {title}
@@ -64,22 +60,17 @@ const styles = StyleSheet.create({
   button: {
     paddingVertical: 14,
     paddingHorizontal: 24,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
+    borderRadius: Radii.md,
+    alignItems: 'center',
+    justifyContent: 'center',
     minHeight: 48,
   },
-  secondaryButton: {
-    backgroundColor: "transparent",
-    borderWidth: 1,
-    borderColor: "#ccc",
-  },
   text: {
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: 15,
+    fontWeight: '700',
+    letterSpacing: 0.2,
   },
   disabled: {
     opacity: 0.5,
   },
 });
-

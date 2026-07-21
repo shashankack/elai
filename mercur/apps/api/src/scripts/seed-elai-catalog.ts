@@ -16,7 +16,7 @@
  * Production (API host, with prod .env / DATABASE_URL):
  *   cd ~/elai/mercur/apps/api && bun run seed:elai-catalog
  *
- * Safe to re-run — existing rows are skipped.
+ * Safe to re-run  existing rows are skipped.
  */
 import { ExecArgs } from "@medusajs/framework/types"
 import {
@@ -715,7 +715,7 @@ export default async function seedElaiCatalog({ container }: ExecArgs) {
   }
 
   // --- Categories ---
-  // List ALL categories (do not filter by handle array — Medusa may not match $in
+  // List ALL categories (do not filter by handle array  Medusa may not match $in
   // correctly, which caused "handle already exists" on re-runs).
   logger.info("Seeding categories...")
   const childHandles = CATEGORY_TREE.flatMap((c) => c.children.map((ch) => ch.handle))
@@ -848,7 +848,7 @@ export default async function seedElaiCatalog({ container }: ExecArgs) {
 
       if (category_handles?.length && !product_category_ids?.length) {
         logger.warn(
-          `Attribute "${a.name}" skipped category link — parents not found: ${category_handles.join(", ")}`
+          `Attribute "${a.name}" skipped category link  parents not found: ${category_handles.join(", ")}`
         )
       }
 

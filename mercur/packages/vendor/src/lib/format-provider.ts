@@ -4,7 +4,7 @@
  */
 export const formatProvider = (id: string) => {
   if (id === "manual_manual" || id === "manual") {
-    return "Manual — you book the courier"
+    return "Manual  you book the courier"
   }
 
   const parts = id.split("_")

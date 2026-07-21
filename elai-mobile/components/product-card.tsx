@@ -1,58 +1,77 @@
-import { Colors } from "@/constants/theme";
-import { useRegion } from "@/context/region-context";
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import { formatPrice } from "@/lib/format-price";
-import type { HttpTypes } from "@medusajs/types";
-import { Image } from "expo-image";
-import { useRouter } from "expo-router";
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Colors, Radii, Spacing } from '@/constants/theme';
+import { useRegion } from '@/context/region-context';
+import { useLayout } from '@/hooks/use-layout';
+import { formatPrice } from '@/lib/format-price';
+import type { HttpTypes } from '@medusajs/types';
+import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface ProductCardProps {
   product: HttpTypes.StoreProduct;
+  /** Override image height from parent grid layout. */
+  imageHeight?: number;
 }
 
-export const ProductCard = React.memo(function ProductCard({ product }: ProductCardProps) {
+export const ProductCard = React.memo(function ProductCard({
+  product,
+  imageHeight,
+}: ProductCardProps) {
   const router = useRouter();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? "light"];
+  const colors = Colors.light;
   const { selectedRegion } = useRegion();
+  const { productImageHeight, isCompact } = useLayout();
 
   const thumbnail = product.thumbnail || product.images?.[0]?.url;
   const variant = product.variants?.[0];
-  
-  // Get price from calculated_price.calculated_amount
-  const priceAmount = variant?.calculated_price?.calculated_amount || 0
-  
-  // Use selected region's currency code
+  const priceAmount = variant?.calculated_price?.calculated_amount || 0;
   const currencyCode = selectedRegion?.currency_code;
+  const imgH = imageHeight ?? productImageHeight;
 
   return (
     <TouchableOpacity
-      style={[styles.card, { backgroundColor: colors.background }]}
-      onPress={() => router.push({
-        pathname: `/(home)/product/${product.id}` as any,
-        params: { title: product.title }
-      })}
-      activeOpacity={0.7}
+      style={[
+        styles.card,
+        {
+          backgroundColor: colors.cardBackground,
+          borderColor: colors.border,
+          maxWidth: '100%',
+        },
+      ]}
+      onPress={() =>
+        router.push({
+          pathname: `/(drawer)/(tabs)/(home)/product/${product.id}` as never,
+          params: { title: product.title },
+        })
+      }
+      activeOpacity={0.8}
     >
       <Image
-        source={{ uri: thumbnail || "https://via.placeholder.com/200" }}
-        style={[styles.image, { backgroundColor: colors.imagePlaceholder }]}
+        source={{ uri: thumbnail || 'https://via.placeholder.com/200' }}
+        style={[
+          styles.image,
+          { backgroundColor: colors.imagePlaceholder, height: imgH },
+        ]}
         contentFit="cover"
       />
-      <View style={styles.content}>
+      <View style={[styles.content, { padding: isCompact ? Spacing.sm : Spacing.md }]}>
         <Text
-          style={[styles.title, { color: colors.text }]}
+          style={[
+            styles.title,
+            {
+              color: colors.text,
+              fontSize: isCompact ? 12 : 13,
+              minHeight: isCompact ? 32 : 36,
+            },
+          ]}
           numberOfLines={2}
         >
           {product.title}
         </Text>
-        <View style={styles.priceRow}>
-          <Text style={[styles.price, { color: colors.tint }]}>
-            {formatPrice(priceAmount, currencyCode)}
-          </Text>
-        </View>
+        <Text style={[styles.price, { color: colors.tint, fontSize: isCompact ? 13 : 14 }]}>
+          {formatPrice(priceAmount, currencyCode)}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -61,37 +80,22 @@ export const ProductCard = React.memo(function ProductCard({ product }: ProductC
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    margin: 8,
-    overflow: "hidden",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    overflow: 'hidden',
+    borderRadius: Radii.md,
+    borderWidth: 1,
+    minWidth: 0,
   },
   image: {
-    width: "100%",
-    height: 180,
-    borderRadius: 8,
+    width: '100%',
   },
   content: {
-    padding: 12,
+    gap: 4,
   },
   title: {
-    fontSize: 14,
-    fontWeight: "600",
-    marginBottom: 12,
-  },
-  priceRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 8,
+    fontWeight: '600',
+    lineHeight: 18,
   },
   price: {
-    fontSize: 14,
-    fontWeight: "400",
-    flex: 1,
+    fontWeight: '700',
   },
 });
-

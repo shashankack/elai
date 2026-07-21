@@ -1,42 +1,49 @@
 export const SITE_CATEGORIES = [
   {
     title: "Jewellery Accessories",
+    handle: "jewellery-accessories",
     items:
       "Necklaces, earrings, rings, bracelets, anklets, brooches, charm jewellery & festive sets",
     img: "1.png",
   },
   {
     title: "Fashion Accessories",
+    handle: "fashion-accessories",
     items:
       "Belts, sunglasses, hats, scarves, gloves, statement collars & trend-driven pins",
     img: "2.png",
   },
   {
     title: "Hair Accessories",
+    handle: "hair-accessories",
     items:
       "Claw clips, scrunchies, headbands, decorative pins, hair scarves, bun makers & extensions",
     img: "3.png",
   },
   {
     title: "Bags & Small Accessories",
+    handle: "bags-and-small-accessories",
     items:
       "Totes, crossbody bags, mini bags, wallets, pouches, belt bags & travel organisers",
     img: "4.png",
   },
   {
     title: "Beauty Add-On Accessories",
+    handle: "beauty-add-on-accessories",
     items:
       "Makeup pouches, brush sets, beauty blenders, press-on nails, compact mirrors & comb sets",
     img: "5.png",
   },
   {
     title: "Tech Accessories",
+    handle: "tech-accessories",
     items:
       "Phone cases, pop sockets, AirPods cases, smartwatch straps, laptop sleeves & chargers",
     img: "6.png",
   },
   {
     title: "Lifestyle Accessories",
+    handle: "lifestyle-accessories",
     items:
       "Keychains, pocket perfumes, planners, passport covers, ID holders & gift sets",
     img: "7.png",

@@ -226,7 +226,7 @@ body {
   text-transform: uppercase;
 }
 
-/* Select / dropdown menus — portaled; fix contrast, height, and stacking */
+/* Select / dropdown menus  portaled; fix contrast, height, and stacking */
 [data-radix-popper-content-wrapper] {
   z-index: 10050 !important;
 }

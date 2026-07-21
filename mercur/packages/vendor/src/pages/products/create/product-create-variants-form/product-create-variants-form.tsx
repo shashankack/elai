@@ -343,17 +343,30 @@ export const ProductCreateVariantsForm = ({
 ])
 
   return (
-    <div className="border-ui-border flex h-full flex-col justify-between divide-y">
-      <DataGrid
-        columns={columns}
-        data={filteredVariantData}
-        state={form}
-        searchValue={searchValue}
-        onSearchChange={setSearchValue}
-        searchPlaceholder={t(
-          "products.create.variants.productVariants.searchPlaceholder"
-        )}
-      />
+    <div className="flex h-full flex-col">
+      <div className="border-ui-border-base border-b px-6 py-4">
+        <p className="txt-compact-small-plus text-ui-fg-base">
+          {t("products.create.variants.header")}
+        </p>
+        <p className="txt-compact-small text-ui-fg-subtle mt-1">
+          {t("products.create.variants.headerHint")}
+        </p>
+        <p className="txt-compact-small text-ui-fg-muted mt-2">
+          {t("products.create.variants.productVariants.tip")}
+        </p>
+      </div>
+      <div className="border-ui-border flex min-h-0 flex-1 flex-col justify-between divide-y">
+        <DataGrid
+          columns={columns}
+          data={filteredVariantData}
+          state={form}
+          searchValue={searchValue}
+          onSearchChange={setSearchValue}
+          searchPlaceholder={t(
+            "products.create.variants.productVariants.searchPlaceholder"
+          )}
+        />
+      </div>
     </div>
   )
 }

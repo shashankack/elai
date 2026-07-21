@@ -103,7 +103,7 @@ export const useOnboarding = (memberEmail: string) => {
 
   /**
    * Creates seller with ALL collected data (Steps 1-4) in one API call.
-   * This goes through POST /vendor/sellers which is unauthenticated —
+   * This goes through POST /vendor/sellers which is unauthenticated  
    * no seller_context needed, no session issues.
    */
   const createSellerWithAllData = useCallback(

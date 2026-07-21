@@ -2,8 +2,22 @@ import { DeliveryStep } from '@/components/checkout/delivery-step';
 import { PaymentStep } from '@/components/checkout/payment-step';
 import { ShippingStep } from '@/components/checkout/shipping-step';
 import { Colors } from '@/constants/theme';
+import { useAuth } from '@/context/auth-context';
 import { useCart } from '@/context/cart-context';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import {
+  customerAddressToForm,
+  listCustomerAddresses,
+  pickDefaultAddress,
+  type StoreCustomerAddress,
+} from '@/lib/addresses';
+import {
+  completeCheckoutCart,
+  confirmationPathFromCompleteResult,
+  confirmRazorpayPayment,
+  isRazorpayProvider,
+  pickRazorpaySession,
+} from '@/lib/checkout';
+import { getRazorpayKeyId, openRazorpayCheckout } from '@/lib/razorpay';
 import { sdk } from '@/lib/sdk';
 import type { HttpTypes } from '@medusajs/types';
 import { useRouter } from 'expo-router';
@@ -12,82 +26,142 @@ import { Alert, StyleSheet, Text, View } from 'react-native';
 
 type CheckoutStep = 'delivery' | 'shipping' | 'payment';
 
+const emptyAddress = () => ({
+  firstName: '',
+  lastName: '',
+  address: '',
+  city: '',
+  postalCode: '',
+  countryCode: '',
+  phone: '',
+});
+
 export default function CheckoutScreen() {
   const router = useRouter();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const colors = Colors.light;
   const { cart, refreshCart } = useCart();
+  const { customer } = useAuth();
 
   const [currentStep, setCurrentStep] = useState<CheckoutStep>('delivery');
   const [loading, setLoading] = useState(false);
 
-  // Contact & Address state
   const [email, setEmail] = useState('');
-  const [shippingAddress, setShippingAddress] = useState({
-    firstName: '',
-    lastName: '',
-    address: '',
-    city: '',
-    postalCode: '',
-    countryCode: '',
-    phone: '',
-  });
+  const [shippingAddress, setShippingAddress] = useState(emptyAddress());
   const [useSameForBilling, setUseSameForBilling] = useState(true);
-  const [billingAddress, setBillingAddress] = useState({
-    firstName: '',
-    lastName: '',
-    address: '',
-    city: '',
-    postalCode: '',
-    countryCode: '',
-    phone: '',
-  });
+  const [billingAddress, setBillingAddress] = useState(emptyAddress());
 
-  // Shipping step
-  const [shippingOptions, setShippingOptions] = useState<HttpTypes.StoreCartShippingOption[]>([]);
-  const [selectedShippingOption, setSelectedShippingOption] = useState<string | null>(null);
+  const [savedAddresses, setSavedAddresses] = useState<StoreCustomerAddress[]>(
+    [],
+  );
+  const [savedAddressesLoading, setSavedAddressesLoading] = useState(false);
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(
+    null,
+  );
+  const [useNewAddress, setUseNewAddress] = useState(false);
 
-  // Payment step
-  const [paymentProviders, setPaymentProviders] = useState<HttpTypes.StorePaymentProvider[]>([]);
-  const [selectedPaymentProvider, setSelectedPaymentProvider] = useState<string | null>(null);
+  const [shippingOptions, setShippingOptions] = useState<
+    HttpTypes.StoreCartShippingOption[]
+  >([]);
+  const [selectedShippingOption, setSelectedShippingOption] = useState<
+    string | null
+  >(null);
 
-  // Sync form state with cart values (handles both prepopulation and reset)
+  const [paymentProviders, setPaymentProviders] = useState<
+    HttpTypes.StorePaymentProvider[]
+  >([]);
+  const [selectedPaymentProvider, setSelectedPaymentProvider] = useState<
+    string | null
+  >(null);
+
+  const applySavedAddress = useCallback((address: StoreCustomerAddress) => {
+    const form = customerAddressToForm(address);
+    setSelectedAddressId(address.id);
+    setUseNewAddress(false);
+    setShippingAddress(form);
+    setBillingAddress(form);
+    setUseSameForBilling(true);
+  }, []);
+
+  const loadSavedAddresses = useCallback(async () => {
+    if (!customer) {
+      setSavedAddresses([]);
+      setSelectedAddressId(null);
+      setUseNewAddress(true);
+      return;
+    }
+
+    setSavedAddressesLoading(true);
+    try {
+      const list = await listCustomerAddresses();
+      setSavedAddresses(list);
+      const preferred = pickDefaultAddress(list);
+      if (preferred) {
+        applySavedAddress(preferred);
+        if (customer.email) setEmail(customer.email);
+      } else {
+        setUseNewAddress(true);
+        setSelectedAddressId(null);
+      }
+    } catch (err) {
+      console.error('Failed to load saved addresses:', err);
+      setSavedAddresses([]);
+      setUseNewAddress(true);
+    } finally {
+      setSavedAddressesLoading(false);
+    }
+  }, [customer, applySavedAddress]);
+
   useEffect(() => {
-    // Populate form with existing cart data or reset to empty values
-    setEmail(cart?.email || '');
-    setShippingAddress({
-      firstName: cart?.shipping_address?.first_name || '',
-      lastName: cart?.shipping_address?.last_name || '',
-      address: cart?.shipping_address?.address_1 || '',
-      city: cart?.shipping_address?.city || '',
-      postalCode: cart?.shipping_address?.postal_code || '',
-      countryCode: cart?.shipping_address?.country_code || '',
-      phone: cart?.shipping_address?.phone || '',
-    });
-    
-    // Billing address - check if different from shipping
-    const hasDifferentBilling = cart?.billing_address && 
-      (cart.billing_address.address_1 !== cart.shipping_address?.address_1 ||
-       cart.billing_address.city !== cart.shipping_address?.city);
-    
-    setUseSameForBilling(!hasDifferentBilling);
-    setBillingAddress({
-      firstName: cart?.billing_address?.first_name || '',
-      lastName: cart?.billing_address?.last_name || '',
-      address: cart?.billing_address?.address_1 || '',
-      city: cart?.billing_address?.city || '',
-      postalCode: cart?.billing_address?.postal_code || '',
-      countryCode: cart?.billing_address?.country_code || '',
-      phone: cart?.billing_address?.phone || '',
-    });
-    
-    // Reset selections when cart is null
+    void loadSavedAddresses();
+  }, [loadSavedAddresses]);
+
+  useEffect(() => {
+    // Prefer customer email when signed in; otherwise cart email.
+    if (customer?.email) {
+      setEmail(customer.email);
+    } else {
+      setEmail(cart?.email || '');
+    }
+
+    // Only hydrate from cart when not using a selected saved address.
+    if (!selectedAddressId || useNewAddress) {
+      const hasCartShipping = Boolean(cart?.shipping_address?.address_1);
+      if (hasCartShipping) {
+        setShippingAddress({
+          firstName: cart?.shipping_address?.first_name || '',
+          lastName: cart?.shipping_address?.last_name || '',
+          address: cart?.shipping_address?.address_1 || '',
+          city: cart?.shipping_address?.city || '',
+          postalCode: cart?.shipping_address?.postal_code || '',
+          countryCode: cart?.shipping_address?.country_code || '',
+          phone: cart?.shipping_address?.phone || '',
+        });
+
+        const hasDifferentBilling =
+          cart?.billing_address &&
+          (cart.billing_address.address_1 !==
+            cart.shipping_address?.address_1 ||
+            cart.billing_address.city !== cart.shipping_address?.city);
+
+        setUseSameForBilling(!hasDifferentBilling);
+        setBillingAddress({
+          firstName: cart?.billing_address?.first_name || '',
+          lastName: cart?.billing_address?.last_name || '',
+          address: cart?.billing_address?.address_1 || '',
+          city: cart?.billing_address?.city || '',
+          postalCode: cart?.billing_address?.postal_code || '',
+          countryCode: cart?.billing_address?.country_code || '',
+          phone: cart?.billing_address?.phone || '',
+        });
+      }
+    }
+
     if (!cart) {
       setSelectedShippingOption(null);
       setSelectedPaymentProvider(null);
       setCurrentStep('delivery');
     }
-  }, [cart]);
+  }, [cart, customer, selectedAddressId, useNewAddress]);
 
   const fetchShippingOptions = useCallback(async () => {
     if (!cart) return;
@@ -132,19 +206,30 @@ export default function CheckoutScreen() {
   }, [currentStep, fetchShippingOptions, fetchPaymentProviders]);
 
   const handleDeliveryNext = async () => {
-    // Validate shipping address
-    if (!email || !shippingAddress.firstName || !shippingAddress.lastName || 
-        !shippingAddress.address || !shippingAddress.city || !shippingAddress.postalCode || 
-        !shippingAddress.countryCode || !shippingAddress.phone) {
+    if (
+      !email ||
+      !shippingAddress.firstName ||
+      !shippingAddress.lastName ||
+      !shippingAddress.address ||
+      !shippingAddress.city ||
+      !shippingAddress.postalCode ||
+      !shippingAddress.countryCode ||
+      !shippingAddress.phone
+    ) {
       Alert.alert('Error', 'Please fill in all shipping address fields');
       return;
     }
 
-    // Validate billing address if different
     if (!useSameForBilling) {
-      if (!billingAddress.firstName || !billingAddress.lastName || !billingAddress.address || 
-          !billingAddress.city || !billingAddress.postalCode || !billingAddress.countryCode || 
-          !billingAddress.phone) {
+      if (
+        !billingAddress.firstName ||
+        !billingAddress.lastName ||
+        !billingAddress.address ||
+        !billingAddress.city ||
+        !billingAddress.postalCode ||
+        !billingAddress.countryCode ||
+        !billingAddress.phone
+      ) {
         Alert.alert('Error', 'Please fill in all billing address fields');
         return;
       }
@@ -164,15 +249,17 @@ export default function CheckoutScreen() {
         phone: shippingAddress.phone,
       };
 
-      const billingAddressData = useSameForBilling ? shippingAddressData : {
-        first_name: billingAddress.firstName,
-        last_name: billingAddress.lastName,
-        address_1: billingAddress.address,
-        city: billingAddress.city,
-        postal_code: billingAddress.postalCode,
-        country_code: billingAddress.countryCode,
-        phone: billingAddress.phone,
-      };
+      const billingAddressData = useSameForBilling
+        ? shippingAddressData
+        : {
+            first_name: billingAddress.firstName,
+            last_name: billingAddress.lastName,
+            address_1: billingAddress.address,
+            city: billingAddress.city,
+            postal_code: billingAddress.postalCode,
+            country_code: billingAddress.countryCode,
+            phone: billingAddress.phone,
+          };
 
       await sdk.store.cart.update(cart.id, {
         email,
@@ -219,27 +306,78 @@ export default function CheckoutScreen() {
       return;
     }
 
+    if (isRazorpayProvider(selectedPaymentProvider) && !customer) {
+      Alert.alert('Sign in required', 'Please sign in to pay with Razorpay.', [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Account',
+          onPress: () => router.push('/(drawer)/(tabs)/(account)'),
+        },
+      ]);
+      return;
+    }
+
     try {
       setLoading(true);
 
-      // Create payment session
-      await sdk.store.payment.initiatePaymentSession(cart, {
-        provider_id: selectedPaymentProvider,
-      });
+      const sessionResponse = await sdk.store.payment.initiatePaymentSession(
+        cart,
+        {
+          provider_id: selectedPaymentProvider,
+        },
+      );
 
-      // Complete cart (converts cart to order on backend)
-      const result = await sdk.store.cart.complete(cart.id);
+      if (isRazorpayProvider(selectedPaymentProvider)) {
+        const sessionData = pickRazorpaySession(
+          sessionResponse.payment_collection,
+          selectedPaymentProvider,
+        );
+        const orderId = sessionData?.razorpay_order_id || sessionData?.id;
+        const key = getRazorpayKeyId(sessionData?.key_id);
+        const amount = Number(sessionData?.amount || 0);
+        const currency = String(sessionData?.currency || 'INR');
 
-      if (result.type === 'order') {
-        // Navigate to order confirmation first
-        // Cart will be cleared on the order confirmation page to prevent empty cart flash
-        router.replace(`/order-confirmation/${result.order.id}`);
-      } else {
-        Alert.alert('Error', result.error?.message || 'Failed to complete order');
+        if (!orderId || !key || !amount) {
+          throw new Error(
+            'Razorpay session is incomplete. Check API Razorpay keys and EXPO_PUBLIC_RAZORPAY_KEY_ID.',
+          );
+        }
+
+        const payment = await openRazorpayCheckout({
+          key,
+          amount,
+          currency,
+          orderId,
+          description: 'Elai order',
+          prefill: {
+            email: customer?.email || email || undefined,
+            contact: shippingAddress.phone || customer?.phone || undefined,
+            name:
+              [shippingAddress.firstName, shippingAddress.lastName]
+                .filter(Boolean)
+                .join(' ')
+                .trim() || undefined,
+          },
+        });
+
+        await confirmRazorpayPayment(cart.id, payment);
       }
-    } catch (err: any) {
+
+      const result = await completeCheckoutCart(cart.id);
+      const path = confirmationPathFromCompleteResult(result);
+      if (!path) {
+        throw new Error(
+          result.type === 'cart'
+            ? result.error?.message || 'Payment could not be completed.'
+            : 'Order was not created.',
+        );
+      }
+      router.replace(path as never);
+    } catch (err: unknown) {
       console.error('Failed to complete order:', err);
-      Alert.alert('Error', err?.message || 'Failed to complete order');
+      const message =
+        err instanceof Error ? err.message : 'Failed to complete order';
+      Alert.alert('Error', message);
     } finally {
       setLoading(false);
     }
@@ -247,7 +385,9 @@ export default function CheckoutScreen() {
 
   if (!cart) {
     return (
-      <View style={[styles.centerContainer, { backgroundColor: colors.background }]}>
+      <View
+        style={[styles.centerContainer, { backgroundColor: colors.background }]}
+      >
         <Text style={[styles.errorText, { color: colors.text }]}>
           No cart found. Please add items to your cart first.
         </Text>
@@ -255,46 +395,50 @@ export default function CheckoutScreen() {
     );
   }
 
-  // Active step uses inverted colors: white bg with dark text in dark mode, tint bg with white text in light mode
-  const activeStepBg = colorScheme === 'dark' ? '#fff' : colors.tint;
-  const activeStepText = colorScheme === 'dark' ? '#000' : '#fff';
+  const activeStepBg = colors.tint;
+  const activeStepText = '#fff';
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={[styles.steps, { borderBottomColor: colors.border }]}>
-        {(['delivery', 'shipping', 'payment'] as CheckoutStep[]).map((step, index) => (
-          <View key={step} style={styles.stepIndicator}>
-            <View
-              style={[
-                styles.stepCircle,
-                {
-                  backgroundColor:
-                    currentStep === step ? activeStepBg : colors.icon + '30',
-                },
-              ]}
-            >
-              <Text
+        {(['delivery', 'shipping', 'payment'] as CheckoutStep[]).map(
+          (step, index) => (
+            <View key={step} style={styles.stepIndicator}>
+              <View
                 style={[
-                  styles.stepNumber,
-                  { color: currentStep === step ? activeStepText : colors.icon },
+                  styles.stepCircle,
+                  {
+                    backgroundColor:
+                      currentStep === step ? activeStepBg : colors.icon + '30',
+                  },
                 ]}
               >
-                {index + 1}
+                <Text
+                  style={[
+                    styles.stepNumber,
+                    {
+                      color:
+                        currentStep === step ? activeStepText : colors.icon,
+                    },
+                  ]}
+                >
+                  {index + 1}
+                </Text>
+              </View>
+              <Text
+                style={[
+                  styles.stepLabel,
+                  {
+                    color: currentStep === step ? colors.text : colors.icon,
+                    fontWeight: currentStep === step ? '600' : '400',
+                  },
+                ]}
+              >
+                {step.charAt(0).toUpperCase() + step.slice(1)}
               </Text>
             </View>
-            <Text
-              style={[
-                styles.stepLabel,
-                {
-                  color: currentStep === step ? colors.text : colors.icon,
-                  fontWeight: currentStep === step ? '600' : '400',
-                },
-              ]}
-            >
-              {step.charAt(0).toUpperCase() + step.slice(1)}
-            </Text>
-          </View>
-        ))}
+          ),
+        )}
       </View>
 
       <View style={styles.content}>
@@ -305,14 +449,34 @@ export default function CheckoutScreen() {
             billingAddress={billingAddress}
             useSameForBilling={useSameForBilling}
             loading={loading}
+            isAuthenticated={Boolean(customer)}
+            savedAddresses={savedAddresses}
+            savedAddressesLoading={savedAddressesLoading}
+            selectedAddressId={selectedAddressId}
+            useNewAddress={useNewAddress}
             onEmailChange={setEmail}
-            onShippingAddressChange={(field, value) => 
-              setShippingAddress(prev => ({ ...prev, [field]: value }))
+            onShippingAddressChange={(field, value) =>
+              setShippingAddress((prev) => ({ ...prev, [field]: value }))
             }
-            onBillingAddressChange={(field, value) => 
-              setBillingAddress(prev => ({ ...prev, [field]: value }))
+            onBillingAddressChange={(field, value) =>
+              setBillingAddress((prev) => ({ ...prev, [field]: value }))
             }
             onUseSameForBillingChange={setUseSameForBilling}
+            onSelectSavedAddress={(addressId) => {
+              const found = savedAddresses.find((a) => a.id === addressId)
+              if (found) applySavedAddress(found)
+            }}
+            onUseNewAddressChange={(next) => {
+              setUseNewAddress(next)
+              if (next) {
+                setSelectedAddressId(null)
+              } else {
+                const preferred =
+                  savedAddresses.find((a) => a.id === selectedAddressId) ||
+                  pickDefaultAddress(savedAddresses)
+                if (preferred) applySavedAddress(preferred)
+              }
+            }}
             onNext={handleDeliveryNext}
           />
         )}
@@ -359,7 +523,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 20,
-    borderBottomWidth: 1,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   stepIndicator: {
     alignItems: 'center',
@@ -374,7 +538,7 @@ const styles = StyleSheet.create({
   },
   stepNumber: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   stepLabel: {
     fontSize: 12,
@@ -387,4 +551,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-

@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { assertMercurConfigured } from './config'
 import { getStoreRegionId } from './regions'
 import { MercurStoreError, storeFetch } from './store-client'
@@ -33,6 +34,7 @@ export type StoreProduct = {
   collection?: { id?: string; title?: string } | null
   type?: { id?: string; value?: string } | null
   tags?: { id?: string; value?: string }[]
+  categories?: { id?: string; name?: string; handle?: string }[]
 }
 
 type ProductListResponse = {
@@ -43,7 +45,7 @@ type ProductListResponse = {
 }
 
 const PRODUCT_LIST_FIELDS =
-  'id,title,handle,description,thumbnail,*variants.calculated_price'
+  'id,title,handle,description,thumbnail,*variants.calculated_price,*type,*tags,*categories'
 
 const PRODUCT_DETAIL_FIELDS = [
   'id',
@@ -62,13 +64,21 @@ const PRODUCT_DETAIL_FIELDS = [
   '*collection',
   '*type',
   '*tags',
+  '*categories',
 ].join(',')
 
-export async function listProducts(options?: {
+export type ListProductsOptions = {
   limit?: number
   offset?: number
   q?: string
-}): Promise<ProductListResponse> {
+  /** Medusa product category id */
+  categoryId?: string
+  order?: string
+}
+
+export async function listProducts(
+  options?: ListProductsOptions,
+): Promise<ProductListResponse> {
   assertMercurConfigured()
   const region_id = await getStoreRegionId()
 
@@ -79,33 +89,40 @@ export async function listProducts(options?: {
       limit: options?.limit ?? 24,
       offset: options?.offset ?? 0,
       q: options?.q,
+      category_id: options?.categoryId,
+      order: options?.order,
     },
   })
 }
 
-export async function getProductByHandle(
-  handle: string,
-): Promise<StoreProduct | null> {
-  assertMercurConfigured()
-  const region_id = await getStoreRegionId()
+export const getProductByHandle = cache(
+  async (handle: string): Promise<StoreProduct | null> => {
+    assertMercurConfigured()
+    const region_id = await getStoreRegionId()
 
-  const data = await storeFetch<ProductListResponse>('/store/products', {
-    searchParams: {
-      region_id,
-      handle,
-      fields: PRODUCT_DETAIL_FIELDS,
-      limit: 1,
-    },
-  })
+    const data = await storeFetch<ProductListResponse>('/store/products', {
+      searchParams: {
+        region_id,
+        handle,
+        fields: PRODUCT_DETAIL_FIELDS,
+        limit: 1,
+      },
+    })
 
-  return data.products[0] ?? null
-}
+    return data.products[0] ?? null
+  },
+)
 
 export async function listRelatedProducts(
   product: StoreProduct,
   limit = 4,
 ): Promise<StoreProduct[]> {
-  const { products } = await listProducts({ limit: limit + 8 })
+  const categoryId = product.categories?.[0]?.id
+  // Single list call   avoid a second waterfall just to pad related items.
+  const { products } = await listProducts({
+    limit: limit + 8,
+    categoryId,
+  })
   return products.filter((p) => p.id !== product.id).slice(0, limit)
 }
 

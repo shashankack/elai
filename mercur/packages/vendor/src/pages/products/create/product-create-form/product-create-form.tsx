@@ -688,7 +688,8 @@ export const ProductCreateForm = ({
         })) || [],
       collection_id:
         (finalPayload as any).collection_id || undefined,
-      shipping_profile_id: undefined,
+      // Omit so API assigns the seller Default shipping profile (required for checkout).
+      shipping_profile_id: (finalPayload as any).shipping_profile_id || undefined,
       enable_variants: undefined,
       options:
         allOptions.length > 0
@@ -1104,7 +1105,7 @@ const PrimaryButton = ({
         size="small"
         isLoading={isLoading}
       >
-        {t("actions.publish")}
+        {t("products.create.publishAction")}
       </Button>
     )
   }

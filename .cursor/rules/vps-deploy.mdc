@@ -7,17 +7,17 @@ alwaysApply: true
 
 ## Server
 
-- SSH: `elaai@51.21.141.111` (hostname `mail`) — use **WSL**, not PowerShell SSH unless asked
-- User `elaai` has **no sudo** — never suggest `sudo reboot`, `drop_caches`, `certbot`, or system service restarts; ask Ruban/aaPanel for those
+- SSH: `elaai@51.21.141.111` (hostname `mail`)  use **WSL**, not PowerShell SSH unless asked
+- User `elaai` has **no sudo**  never suggest `sudo reboot`, `drop_caches`, `certbot`, or system service restarts; ask Ruban/aaPanel for those
 - Repo on VPS: `~/elai` (not `/www/wwwroot/elaai.co`)
-- **~2 GB RAM** — never run `bun run setup` / full monorepo builds on VPS (causes swap thrash)
+- **~2 GB RAM**  never run `bun run setup` / full monorepo builds on VPS (causes swap thrash)
 
 ## Databases (do not confuse)
 
 | Environment | Postgres | Notes |
 |-------------|----------|--------|
-| **Local / dev** | **Neon** (cloud) | `DATABASE_URL` in `mercur/apps/api/.env` — wipe/seed here is fine |
-| **Production** | **Postgres on the VPS itself** | Used by `mercur-api` on the server — **not** Neon |
+| **Local / dev** | **Neon** (cloud) | `DATABASE_URL` in `mercur/apps/api/.env`  wipe/seed here is fine |
+| **Production** | **Postgres on the VPS itself** | Used by `mercur-api` on the server  **not** Neon |
 
 - Local Neon ≠ production. Never assume wiping Neon affects live vendors.
 - Never run `wipe-db`, destructive SQL, or careless migrations against the **VPS** database unless the user explicitly asks.
@@ -55,12 +55,12 @@ Requires aaPanel/Ruban (no sudo for `elaai`). After change: `nginx -t && systemc
 
 ## PM2 (only these two)
 
-- `mercur-api` — API on `127.0.0.1:9000`
-- `elai-client` — Next.js marketing site
+- `mercur-api`  API on `127.0.0.1:9000`
+- `elai-client`  Next.js marketing site
 
-Vendor and admin are **nginx static `dist/`** — no PM2, no restart after upload.
+Vendor and admin are **nginx static `dist/`**  no PM2, no restart after upload.
 
-`elai-vendor-portal` is **deprecated** — not deployed; seller flow is Mercur `vendor.elaai.co/register`.
+`elai-vendor-portal` is **deprecated**  not deployed; seller flow is Mercur `vendor.elaai.co/register`.
 
 ## Build locally (WSL), upload `dist/`
 
@@ -92,7 +92,7 @@ Prod env: `VITE_MERCUR_BACKEND_URL=https://admin.elaai.co/__api`, `VITE_MERCUR_V
 
 Runs as **`pm2` `elai-client`** → nginx proxies `elaai.co` to `localhost:3000`.
 
-**1. Build locally (WSL)** — env is baked in at build time:
+**1. Build locally (WSL)**  env is baked in at build time:
 
 ```bash
 cd /mnt/c/crucifer/BAW/ELAI/elai-client
@@ -124,7 +124,7 @@ scp .env.production.local package.json package-lock.json next.config.ts \
   elaai@51.21.141.111:~/elai/elai-client/
 ```
 
-**3. On VPS** — restart only (no sudo):
+**3. On VPS**  restart only (no sudo):
 
 ```bash
 ssh elaai@51.21.141.111
@@ -142,7 +142,7 @@ Only redeploy/restart when backend code changes: `pm2 restart mercur-api`. Onboa
 
 ## Stuck/slow VPS (no sudo)
 
-- `pgrep -af 'bun|turbo|tsup|vite|tsc' | grep -v pm2` — if only `bun run start` / medusa cli, that is **mercur-api** (do not kill)
+- `pgrep -af 'bun|turbo|tsup|vite|tsc' | grep -v pm2`  if only `bun run start` / medusa cli, that is **mercur-api** (do not kill)
 - Kill builds: `pkill -9 -f 'turbo run build'` etc.
 - Slowness with high `%wa` + swap = RAM/disk pressure (php-fpm + low RAM), not necessarily an active build
 - **Recovery without sudo:** `pm2 restart mercur-api` then `pm2 restart elai-client`; or `pm2 stop elai-client` briefly to free RAM

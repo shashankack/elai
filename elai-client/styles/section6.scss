@@ -218,8 +218,13 @@ $highlight: #748956;
 
 .clients-track {
   display: flex;
-  animation: marquee-scroll 28s linear infinite;
   width: max-content;
+  animation: marquee-scroll 36s linear infinite;
+}
+
+.clients-track__group {
+  display: flex;
+  flex-shrink: 0;
 }
 
 .client-logo {
@@ -247,5 +252,11 @@ $highlight: #748956;
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clients-track {
+    animation: none;
   }
 }

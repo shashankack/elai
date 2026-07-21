@@ -1,5 +1,10 @@
 import type { SubscriberArgs, SubscriberConfig } from "@medusajs/framework"
 import { Modules } from "@medusajs/framework/utils"
+import {
+  adminBaseUrl,
+  storefrontBaseUrl,
+  vendorBaseUrl,
+} from "../utils/app-urls"
 
 type PasswordResetEvent = {
   entity_id: string
@@ -10,24 +15,13 @@ type PasswordResetEvent = {
 function resetBaseUrl(actorType: string): string {
   switch (actorType) {
     case "user":
-      return (
-        process.env.MERCUR_ADMIN_URL ||
-        process.env.ADMIN_URL ||
-        "http://localhost:7000"
-      ).replace(/\/$/, "")
+      return adminBaseUrl()
     case "seller":
     case "member":
-      return (
-        process.env.MERCUR_VENDOR_URL ||
-        "http://localhost:7001"
-      ).replace(/\/$/, "")
+      return vendorBaseUrl()
     case "customer":
     default:
-      return (
-        process.env.STOREFRONT_URL ||
-        process.env.MERCUR_STOREFRONT_URL ||
-        "http://localhost:3000"
-      ).replace(/\/$/, "")
+      return storefrontBaseUrl()
   }
 }
 

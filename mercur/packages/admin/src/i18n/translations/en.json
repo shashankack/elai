@@ -1351,8 +1351,11 @@
     },
     "shipment": {
       "title": "Mark fulfillment shipped",
+      "trackingUrl": "Tracking URL",
       "trackingNumber": "Tracking number",
       "addTracking": "Add tracking number",
+      "addTrackingUrl": "Add tracking URL",
+      "trackingUrlPlaceholder": "https://www.dhl.com/shipment/1234567890",
       "sendNotification": "Send notification",
       "sendNotificationHint": "Notify the customer about this shipment.",
       "toastCreated": "Shipment created successfully."

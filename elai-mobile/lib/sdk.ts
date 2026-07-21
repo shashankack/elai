@@ -7,7 +7,7 @@ const MEDUSA_BACKEND_URL =
   process.env.EXPO_PUBLIC_MEDUSA_URL ||
   "http://localhost:9000";
 
-const MEDUSA_PUBLISHABLE_API_KEY = 
+const MEDUSA_PUBLISHABLE_API_KEY =
   Constants.expoConfig?.extra?.EXPO_PUBLIC_MEDUSA_PUBLISHABLE_API_KEY ||
   process.env.EXPO_PUBLIC_MEDUSA_PUBLISHABLE_API_KEY ||
   "";
@@ -22,4 +22,6 @@ export const sdk = new Medusa({
   },
   publishableKey: MEDUSA_PUBLISHABLE_API_KEY,
 });
+
+export { MEDUSA_BACKEND_URL, MEDUSA_PUBLISHABLE_API_KEY };
 

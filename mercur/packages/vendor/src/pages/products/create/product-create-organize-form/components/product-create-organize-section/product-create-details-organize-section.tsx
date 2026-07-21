@@ -89,6 +89,7 @@ export const ProductCreateOrganizationSection = () => {
                     fetchNextPage={tags.fetchNextPage}
                   />
                 </Form.Control>
+                <Form.Hint>{t("products.fields.tags.hint")}</Form.Hint>
                 <Form.ErrorMessage />
               </Form.Item>
             );
@@ -113,6 +114,7 @@ export const ProductCreateOrganizationSection = () => {
                     allowClear
                   />
                 </Form.Control>
+                <Form.Hint>{t("products.fields.type.hint")}</Form.Hint>
                 <Form.ErrorMessage />
               </Form.Item>
             );
@@ -143,6 +145,9 @@ export const ProductCreateOrganizationSection = () => {
                     allowClear={false}
                   />
                 </Form.Control>
+                <Form.Hint>
+                  {t("products.fields.primaryCategory.hint")}
+                </Form.Hint>
                 {!isFocused && <Form.ErrorMessage />}
               </Form.Item>
             );
@@ -166,6 +171,9 @@ export const ProductCreateOrganizationSection = () => {
                     value={field.value || []}
                   />
                 </Form.Control>
+                <Form.Hint>
+                  {t("products.fields.secondaryCategories.hint")}
+                </Form.Hint>
                 <Form.ErrorMessage />
               </Form.Item>
             );
@@ -195,6 +203,7 @@ export const ProductCreateOrganizationSection = () => {
                     allowClear
                   />
                 </Form.Control>
+                <Form.Hint>{t("products.fields.collection.hint")}</Form.Hint>
                 <Form.ErrorMessage />
               </Form.Item>
             );

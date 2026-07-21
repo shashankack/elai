@@ -1,22 +1,20 @@
-import { Colors } from "@/constants/theme";
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import React from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { Colors } from '@/constants/theme';
+import React from 'react';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
 interface LoadingProps {
   message?: string;
 }
 
 export function Loading({ message }: LoadingProps) {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? "light"];
+  const colors = Colors.light;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <ActivityIndicator size="large" color={colors.tint} />
-      {message && (
-        <Text style={[styles.message, { color: colors.text }]}>{message}</Text>
-      )}
+      {message ? (
+        <Text style={[styles.message, { color: colors.textMuted }]}>{message}</Text>
+      ) : null}
     </View>
   );
 }
@@ -24,13 +22,12 @@ export function Loading({ message }: LoadingProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
   },
   message: {
     marginTop: 12,
-    fontSize: 16,
+    fontSize: 15,
   },
 });
-

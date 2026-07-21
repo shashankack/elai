@@ -1,35 +1,27 @@
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import { DrawerActions } from '@react-navigation/native';
-import { Stack, useNavigation } from 'expo-router';
+import { Colors, FontFamily } from '@/constants/theme';
+import { Stack } from 'expo-router';
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
-
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
 
 export default function CartStackLayout() {
-  const colorScheme = useColorScheme();
-  const navigation = useNavigation();
-  const colors = Colors[colorScheme ?? 'light'];
+  const colors = Colors.light;
 
   return (
     <Stack
       screenOptions={{
-        headerShown: true,
+        headerStyle: { backgroundColor: colors.background },
+        headerTintColor: colors.text,
+        headerTitleStyle: {
+          color: colors.text,
+          fontFamily: FontFamily.heading,
+          fontSize: 22,
+        },
+        contentStyle: { backgroundColor: colors.background },
       }}
     >
-      <Stack.Screen 
+      <Stack.Screen
         name="index"
         options={{
-          title: 'Cart',
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-              style={{ height: 36, width: 36, display: "flex", alignItems: "center", justifyContent: "center" }}
-            >
-              <IconSymbol size={28} name="line.3.horizontal" color={colors.icon} />
-            </TouchableOpacity>
-          ),
+          title: 'Bag',
         }}
       />
     </Stack>

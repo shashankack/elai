@@ -1,11 +1,9 @@
 import { Colors } from "@/constants/theme";
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import React, { useEffect, useRef } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 
 export function ProductSkeleton() {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? "light"];
+  const colors = Colors.light;
   const shimmerAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -30,7 +28,7 @@ export function ProductSkeleton() {
     outputRange: [0.3, 0.7],
   });
 
-  const skeletonColor = colorScheme === 'dark' ? '#333' : '#e0e0e0';
+  const skeletonColor = colors.imagePlaceholder;
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>

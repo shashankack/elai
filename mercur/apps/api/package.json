@@ -20,10 +20,15 @@
   "scripts": {
     "seed": "bun x medusa exec ./src/scripts/seed.ts",
     "seed:elai-catalog": "bun x medusa exec ./src/scripts/seed-elai-catalog.ts",
+    "seed:elai-products": "bun ./src/scripts/run-seed-elai-products.ts",
     "wipe-db": "bun ./src/scripts/wipe-db.ts",
     "wipe-db:reset": "bun ./src/scripts/wipe-db.ts --force --seed",
     "wipe:admin-catalog": "bun ./src/scripts/run-wipe-admin-catalog.ts",
     "wipe:vendor": "bun ./src/scripts/run-wipe-vendor.ts",
+    "wipe:customers-dev": "bun ./src/scripts/wipe-customers-dev.ts",
+    "link:razorpay": "bun ./src/scripts/run-link-razorpay.ts",
+    "seed:seller-shipping": "bun ./src/scripts/run-seed-seller-shipping.ts",
+    "fix:product-shipping-profiles": "bun ./src/scripts/run-fix-product-shipping-profiles.ts",
     "start": "bun ../../packages/cli/dist/index.js start",
     "dev": "bun ../../packages/cli/dist/index.js develop",
     "test:integration:http": "TEST_TYPE=integration:http NODE_OPTIONS=--experimental-vm-modules jest --silent=false --runInBand --forceExit",
@@ -42,6 +47,7 @@
     "@mercurjs/core": "*",
     "@mercurjs/types": "*",
     "http-proxy-middleware": "^3.0.3",
+    "razorpay": "^2.9.8",
     "resend": "^6.17.2"
   },
   "devDependencies": {

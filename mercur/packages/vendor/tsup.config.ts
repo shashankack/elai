@@ -1,7 +1,7 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig((options) => ({
-  // Avoid wiping dist on every watch rebuild — that races with Vite and
+  // Avoid wiping dist on every watch rebuild  that races with Vite and
   // produces "does not provide an export named …" chunk errors in dev.
   clean: !options.watch,
   dts: process.env.TSUP_DTS !== "0",

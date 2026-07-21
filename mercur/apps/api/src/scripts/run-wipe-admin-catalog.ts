@@ -2,7 +2,7 @@
  * Hard-wipe admin catalog data (categories, collections, types, tags, attributes).
  * Uses SQL so soft-delete leftovers cannot block a reseed.
  *
- * Always clears orphan inventory (inventory items/levels) — products can be
+ * Always clears orphan inventory (inventory items/levels)  products can be
  * deleted while inventory rows linger in Admin → Inventory.
  *
  * Does NOT touch: sellers, auth, regions, shipping, API keys, orders.
@@ -210,7 +210,7 @@ try {
     "product_type",
     "product_product_type",
     "product_tag",
-    // inventory (always — orphans after product delete)
+    // inventory (always  orphans after product delete)
     "reservation_item",
     "product_variant_inventory_item",
     "inventory_level",

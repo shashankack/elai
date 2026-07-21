@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { isRazorpayProvider } from '@/lib/checkout';
 import { formatPrice } from '@/lib/format-price';
 import { getPaymentProviderInfo } from '@/lib/payment-providers';
 import type { HttpTypes } from '@medusajs/types';
@@ -134,7 +135,11 @@ export function PaymentStep({
             style={styles.halfButton}
           />
           <Button
-            title="Place Order"
+            title={
+              isRazorpayProvider(selectedPaymentProvider)
+                ? 'Pay with Razorpay'
+                : 'Place Order'
+            }
             onPress={onPlaceOrder}
             loading={loading}
             disabled={!selectedPaymentProvider}

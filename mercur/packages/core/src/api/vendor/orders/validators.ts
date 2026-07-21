@@ -62,4 +62,5 @@ export const VendorCreateShipment = z.object({
       })
     )
     .optional(),
+  no_notification: z.boolean().optional(),
 })

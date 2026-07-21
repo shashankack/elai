@@ -8,6 +8,29 @@ import "../styles/section4.scss";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const UVP_MARQUEE_TAGS = [
+  "Curated Collections",
+  "Trend Discovery",
+  "Style Expression",
+  "Verified Sellers",
+  "Effortless Browsing",
+  "Jewellery Finds",
+  "Hair Essentials",
+  "Bag Edit",
+  "Beauty Add-Ons",
+  "Tech Accents",
+  "Festive Looks",
+  "Everyday Glam",
+  "Statement Pieces",
+  "Layered Styles",
+  "New Arrivals",
+  "Seller Spotlight",
+  "Mood Boards",
+  "Accessory First",
+  "Handpicked Finds",
+  "Wear Your Flavour",
+];
+
 const Section4 = () => {
   const benefits = [...UVP_BENEFITS];
 
@@ -108,24 +131,19 @@ const Section4 = () => {
         </div>
       </section>
 
-      <div className="uvp-strip">
+      <div className="uvp-strip" aria-hidden>
         <div className="uvp-strip__inner">
-          {[
-            "Curated Collections",
-            "Trend Discovery",
-            "Style Expression",
-            "Verified Sellers",
-            "Effortless Browsing",
-            "Curated Collections",
-            "Trend Discovery",
-            "Style Expression",
-            "Verified Sellers",
-            "Effortless Browsing",
-          ].map((tag, i) => (
-            <span key={i} className="uvp-strip__tag">
-              {tag}
-              <span className="uvp-strip__dot"> &#183; </span>
-            </span>
+          {[0, 1].map((copy) => (
+            <div key={copy} className="uvp-strip__group">
+              {UVP_MARQUEE_TAGS.map((tag) => (
+                <span key={`${copy}-${tag}`} className="uvp-strip__item">
+                  <span className="uvp-strip__tag">{tag}</span>
+                  <span className="uvp-strip__dot" aria-hidden>
+                    ·
+                  </span>
+                </span>
+              ))}
+            </div>
           ))}
         </div>
       </div>

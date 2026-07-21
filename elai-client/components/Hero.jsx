@@ -1,39 +1,61 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { usePathname } from "next/navigation";
 import { VENDOR_PORTAL_URL } from "@/lib/vendor-portal-url";
 import { HERO_STATS } from "@/lib/site-content";
 import "../styles/hero.scss";
 
+gsap.registerPlugin(useGSAP);
+
 const Hero = () => {
+  const rootRef = useRef(null);
   const heroImageRef = useRef(null);
   const heroTextRef = useRef(null);
+  const pathname = usePathname();
 
-  // Initial entry animation
-  useEffect(() => {
-    const tl = gsap.timeline();
-    tl.from(heroImageRef.current, {
-      scale: 1.15,
-      opacity: 0,
-      duration: 1.6,
-      ease: "power3.out",
-    }).from(
-      heroTextRef.current,
-      { y: 80, opacity: 0, duration: 1.1, ease: "power3.out" },
-      "-=0.9",
-    );
-  }, []);
+  // Re-run on every visit to `/` (client navigations remount, but
+  // pathname keeps the timeline honest if the instance is reused).
+  useGSAP(
+    () => {
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      if (reduceMotion) {
+        gsap.set([heroImageRef.current, heroTextRef.current], {
+          clearProps: "all",
+          opacity: 1,
+          scale: 1,
+          y: 0,
+        });
+        return;
+      }
+
+      gsap
+        .timeline()
+        .fromTo(
+          heroImageRef.current,
+          { scale: 1.15, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 1.6, ease: "power3.out" },
+        )
+        .fromTo(
+          heroTextRef.current,
+          { y: 80, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1.1, ease: "power3.out" },
+          "-=0.9",
+        );
+    },
+    { scope: rootRef, dependencies: [pathname], revertOnUpdate: true },
+  );
 
   return (
-    <div className="elai-container">
+    <div className="elai-container" ref={rootRef}>
       <section className="hero">
         <div className="hero-carousel">
-          <div
-            className="hero-image active"
-            ref={heroImageRef}
-            style={{ opacity: 1 }}
-          >
+          <div className="hero-image active" ref={heroImageRef}>
             <img src="/Gradient.png" alt="Elai hero background" />
           </div>
         </div>
@@ -76,16 +98,15 @@ const Hero = () => {
           className="scroll-indicator"
           onClick={() => {
             document
-              .getElementById("about")
+              .getElementById("categories")
               ?.scrollIntoView({ behavior: "smooth" });
           }}
         >
           <span>↓</span>
-          <span>Scroll to explore</span>
+          <span>Shop by category</span>
         </button>
       </section>
 
-      {/* Stats bar */}
       <div className="hero-stats">
         <div className="elai-shell hero-stats__inner">
           {HERO_STATS.flatMap((stat, index) => [

@@ -1,67 +1,121 @@
 import { Loading } from '@/components/loading';
 import { Button } from '@/components/ui/button';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
+import { Colors, Radii, Spacing } from '@/constants/theme';
 import { useCart } from '@/context/cart-context';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { formatPrice } from '@/lib/format-price';
+import {
+  flattenOrderGroup,
+  retrieveCustomerOrderGroup,
+} from '@/lib/order-groups';
+import {
+  asOrderLike,
+  ORDER_STATUS_FIELDS,
+  orderTrackingLinks,
+  presentOrderStatus,
+  statusPillColors,
+} from '@/lib/orders';
 import { getPaymentProviderInfo } from '@/lib/payment-providers';
 import { sdk } from '@/lib/sdk';
 import type { HttpTypes } from '@medusajs/types';
 import { Image } from 'expo-image';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function OrderConfirmationScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
-  const router = useRouter();
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
-  const { clearCart } = useCart();
+  const { id, fresh, group } = useLocalSearchParams<{
+    id: string
+    fresh?: string
+    group?: string
+  }>()
+  const router = useRouter()
+  const navigation = useNavigation()
+  const colors = Colors.light
+  const { clearCart } = useCart()
 
-  const [order, setOrder] = useState<HttpTypes.StoreOrder | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const hasCleared = useRef(false);
+  const [order, setOrder] = useState<HttpTypes.StoreOrder | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const hasCleared = useRef(false)
 
   const fetchOrder = useCallback(async () => {
+    if (!id) return
     try {
-      setLoading(true);
-      setError(null);
+      setLoading(true)
+      setError(null)
 
-      const { order: fetchedOrder } = await sdk.store.order.retrieve(id, {
-        fields: '*payment_collections.payments',
-      });
-      setOrder(fetchedOrder);
+      const preferGroup = group === '1'
+      if (preferGroup) {
+        const orderGroup = await retrieveCustomerOrderGroup(id)
+        if (orderGroup) {
+          setOrder(flattenOrderGroup(orderGroup) as unknown as HttpTypes.StoreOrder)
+          return
+        }
+      }
+
+      try {
+        const { order: fetchedOrder } = await sdk.store.order.retrieve(id, {
+          fields: ORDER_STATUS_FIELDS,
+        })
+        setOrder(fetchedOrder)
+      } catch {
+        const orderGroup = await retrieveCustomerOrderGroup(id)
+        if (!orderGroup) {
+          throw new Error('Order not found')
+        }
+        setOrder(flattenOrderGroup(orderGroup) as unknown as HttpTypes.StoreOrder)
+      }
     } catch (err) {
-      console.error('Failed to fetch order:', err);
-      setError('Failed to load order details');
+      console.error('Failed to fetch order:', err)
+      setError('Failed to load order details')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  }, [id]);
+  }, [id, group])
 
-  // Fetch order when id changes
   useEffect(() => {
     if (id) {
       fetchOrder();
     }
   }, [id, fetchOrder]);
 
-  // Clear cart when order confirmation page loads (only once)
+  // Only clear cart after a fresh checkout — not when reopening from Account.
   useEffect(() => {
-    if (!hasCleared.current) {
+    if (fresh === '1' && !hasCleared.current) {
       hasCleared.current = true;
       clearCart();
     }
-  }, [clearCart]);
+  }, [fresh, clearCart]);
+
+  const status = useMemo(
+    () => (order ? presentOrderStatus(asOrderLike(order)) : null),
+    [order],
+  );
+  const tracking = useMemo(
+    () => (order ? orderTrackingLinks(asOrderLike(order)) : []),
+    [order],
+  );
+  const pill = status
+    ? statusPillColors(status.key, {
+        tint: colors.tint,
+        success: colors.success,
+        error: colors.error,
+        textMuted: colors.textMuted,
+      })
+    : null;
+
+  useEffect(() => {
+    if (status) {
+      navigation.setOptions({ title: status.title });
+    }
+  }, [navigation, status]);
 
   if (loading) {
     return <Loading message="Loading order details..." />;
   }
 
-  if (error || !order) {
+  if (error || !order || !status || !pill) {
     return (
       <View style={[styles.centerContainer, { backgroundColor: colors.background }]}>
         <Text style={[styles.errorText, { color: colors.text }]}>
@@ -70,7 +124,6 @@ export default function OrderConfirmationScreen() {
         <Button
           title="Go to Home"
           onPress={() => {
-            // Reset to home screen and clear the navigation stack
             router.dismissAll();
             router.replace('/(drawer)/(tabs)/(home)');
           }}
@@ -80,52 +133,91 @@ export default function OrderConfirmationScreen() {
     );
   }
 
+  const iconBg =
+    status.key === 'canceled'
+      ? colors.error
+      : status.key === 'delivered'
+        ? colors.success
+        : colors.tint;
+
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.content}>
-        <View style={[styles.successIcon, { backgroundColor: colors.success }]}>
-          <Text style={styles.checkmark}>✓</Text>
+        <View style={[styles.successIcon, { backgroundColor: iconBg }]}>
+          <Text style={styles.checkmark}>
+            {status.key === 'canceled' ? '!' : '✓'}
+          </Text>
         </View>
 
-        <Text style={[styles.title, { color: colors.text }]}>Order Confirmed!</Text>
-        <Text style={[styles.subtitle, { color: colors.icon }]}>
-          We have received your order and will process it as soon as possible.
-        </Text>
+        <View style={[styles.statusPill, { backgroundColor: pill.bg }]}>
+          <Text style={[styles.statusPillText, { color: pill.text }]}>{status.pill}</Text>
+        </View>
+
+        <Text style={[styles.title, { color: colors.text }]}>{status.title}</Text>
+        <Text style={[styles.subtitle, { color: colors.textMuted }]}>{status.subtitle}</Text>
+
+        {tracking.length > 0 ? (
+          <View style={styles.trackingBlock}>
+            {tracking.map((link) => (
+              <TouchableOpacity
+                key={link.url}
+                style={[styles.trackBtn, { borderColor: colors.border }]}
+                onPress={() => Linking.openURL(link.url)}
+              >
+                <Text style={[styles.trackBtnText, { color: colors.tint }]}>{link.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        ) : null}
 
         <Button
           title="Continue Shopping"
           onPress={() => {
-            // Reset to home screen and clear the navigation stack
             router.dismissAll();
             router.replace('/(drawer)/(tabs)/(home)');
           }}
           style={styles.continueButton}
         />
 
-        <View style={[styles.card, { backgroundColor: colors.background, borderColor: colors.icon + '30' }]}>
+        <View
+          style={[
+            styles.card,
+            { backgroundColor: colors.cardBackground, borderColor: colors.border },
+          ]}
+        >
           <Text style={[styles.cardTitle, { color: colors.text }]}>Order Details</Text>
-          
+
           <View style={styles.infoRow}>
-            <Text style={[styles.label, { color: colors.icon }]}>Order ID</Text>
-            <Text style={[styles.value, { color: colors.text }]}>{order.display_id}</Text>
+            <Text style={[styles.label, { color: colors.textMuted }]}>Order ID</Text>
+            <Text style={[styles.value, { color: colors.text }]}>#{order.display_id}</Text>
           </View>
 
           <View style={styles.infoRow}>
-            <Text style={[styles.label, { color: colors.icon }]}>Email</Text>
+            <Text style={[styles.label, { color: colors.textMuted }]}>Status</Text>
+            <Text style={[styles.value, { color: pill.text }]}>{status.pill}</Text>
+          </View>
+
+          <View style={styles.infoRow}>
+            <Text style={[styles.label, { color: colors.textMuted }]}>Email</Text>
             <Text style={[styles.value, { color: colors.text }]}>{order.email}</Text>
           </View>
         </View>
 
-        <View style={[styles.card, { backgroundColor: colors.background, borderColor: colors.icon + '30' }]}>
+        <View
+          style={[
+            styles.card,
+            { backgroundColor: colors.cardBackground, borderColor: colors.border },
+          ]}
+        >
           <Text style={[styles.cardTitle, { color: colors.text }]}>Order Items</Text>
-          
+
           {order.items?.map((item, index) => (
-            <View 
-              key={item.id} 
+            <View
+              key={item.id}
               style={[
                 styles.itemRow,
                 index === order.items!.length - 1 && styles.lastItemRow,
-                { borderBottomColor: colors.icon + '30' }
+                { borderBottomColor: colors.border },
               ]}
             >
               <Image
@@ -137,12 +229,12 @@ export default function OrderConfirmationScreen() {
                 <Text style={[styles.itemTitle, { color: colors.text }]}>
                   {item.product_title || item.title}
                 </Text>
-                {item.variant_title && (
-                  <Text style={[styles.itemVariant, { color: colors.icon }]}>
+                {item.variant_title ? (
+                  <Text style={[styles.itemVariant, { color: colors.textMuted }]}>
                     {item.variant_title}
                   </Text>
-                )}
-                <Text style={[styles.itemQuantity, { color: colors.icon }]}>
+                ) : null}
+                <Text style={[styles.itemQuantity, { color: colors.textMuted }]}>
                   Qty: {item.quantity}
                 </Text>
               </View>
@@ -153,14 +245,17 @@ export default function OrderConfirmationScreen() {
           ))}
         </View>
 
-        <View style={[styles.card, { backgroundColor: colors.background, borderColor: colors.icon + '30' }]}>
+        <View
+          style={[
+            styles.card,
+            { backgroundColor: colors.cardBackground, borderColor: colors.border },
+          ]}
+        >
           <Text style={[styles.cardTitle, { color: colors.text }]}>Shipping</Text>
-          
-          {order.shipping_address && (
+
+          {order.shipping_address ? (
             <>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>
-                Shipping Address
-              </Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Shipping Address</Text>
               <Text style={[styles.addressText, { color: colors.text }]}>
                 {order.shipping_address.first_name} {order.shipping_address.last_name}
               </Text>
@@ -174,30 +269,31 @@ export default function OrderConfirmationScreen() {
                 {order.shipping_address.country_code?.toUpperCase()}
               </Text>
             </>
-          )}
+          ) : null}
 
-          {order.shipping_methods && order.shipping_methods.length > 0 && (
+          {order.shipping_methods && order.shipping_methods.length > 0 ? (
             <>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>
-                Shipping Method
-              </Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Shipping Method</Text>
               {order.shipping_methods.map((method) => (
                 <Text key={method.id} style={[styles.addressText, { color: colors.text }]}>
                   {method.name} - {formatPrice(method.amount || 0, order.currency_code)}
                 </Text>
               ))}
             </>
-          )}
+          ) : null}
         </View>
 
-        <View style={[styles.card, { backgroundColor: colors.background, borderColor: colors.icon + '30' }]}>
+        <View
+          style={[
+            styles.card,
+            { backgroundColor: colors.cardBackground, borderColor: colors.border },
+          ]}
+        >
           <Text style={[styles.cardTitle, { color: colors.text }]}>Payment</Text>
-          
-          {order.payment_collections && order.payment_collections.length > 0 && (
+
+          {order.payment_collections && order.payment_collections.length > 0 ? (
             <>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>
-                Payment Method
-              </Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Payment Method</Text>
               {order.payment_collections[0].payments?.map((payment) => {
                 const providerInfo = getPaymentProviderInfo(payment.provider_id);
                 return (
@@ -214,13 +310,11 @@ export default function OrderConfirmationScreen() {
                 );
               })}
             </>
-          )}
+          ) : null}
 
-          {order.billing_address && (
+          {order.billing_address ? (
             <>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>
-                Billing Address
-              </Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Billing Address</Text>
               <Text style={[styles.addressText, { color: colors.text }]}>
                 {order.billing_address.first_name} {order.billing_address.last_name}
               </Text>
@@ -234,12 +328,17 @@ export default function OrderConfirmationScreen() {
                 {order.billing_address.country_code?.toUpperCase()}
               </Text>
             </>
-          )}
+          ) : null}
         </View>
 
-        <View style={[styles.card, { backgroundColor: colors.background, borderColor: colors.icon + '30' }]}>
+        <View
+          style={[
+            styles.card,
+            { backgroundColor: colors.cardBackground, borderColor: colors.border },
+          ]}
+        >
           <Text style={[styles.cardTitle, { color: colors.text }]}>Order Summary</Text>
-          
+
           <View style={styles.summaryRow}>
             <Text style={[styles.summaryLabel, { color: colors.text }]}>Subtotal</Text>
             <Text style={[styles.summaryValue, { color: colors.text }]}>
@@ -250,7 +349,8 @@ export default function OrderConfirmationScreen() {
           <View style={styles.summaryRow}>
             <Text style={[styles.summaryLabel, { color: colors.text }]}>Discount</Text>
             <Text style={[styles.summaryValue, { color: colors.text }]}>
-              {(order.discount_total || 0) > 0 ? '-' : ''}{formatPrice(order.discount_total || 0, order.currency_code)}
+              {(order.discount_total || 0) > 0 ? '-' : ''}
+              {formatPrice(order.discount_total || 0, order.currency_code)}
             </Text>
           </View>
 
@@ -291,113 +391,149 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   content: {
-    padding: 20,
+    padding: Spacing.xl,
+    alignItems: 'center',
   },
   successIcon: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 72,
+    height: 72,
+    borderRadius: 36,
     alignItems: 'center',
     justifyContent: 'center',
-    alignSelf: 'center',
-    marginBottom: 24,
+    marginBottom: Spacing.md,
   },
   checkmark: {
-    fontSize: 48,
     color: '#fff',
+    fontSize: 36,
     fontWeight: '700',
+  },
+  statusPill: {
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: Radii.pill,
+    marginBottom: Spacing.sm,
+  },
+  statusPillText: {
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   title: {
     fontSize: 28,
     fontWeight: '700',
     textAlign: 'center',
-    marginBottom: 8,
+    marginBottom: Spacing.sm,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 15,
     textAlign: 'center',
-    marginBottom: 32,
+    lineHeight: 22,
+    marginBottom: Spacing.lg,
+    paddingHorizontal: Spacing.md,
+  },
+  trackingBlock: {
+    width: '100%',
+    gap: Spacing.sm,
+    marginBottom: Spacing.md,
+  },
+  trackBtn: {
+    borderWidth: 1,
+    borderRadius: Radii.md,
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  trackBtnText: {
+    fontWeight: '700',
+    fontSize: 14,
+  },
+  continueButton: {
+    width: '100%',
+    marginBottom: Spacing.xl,
+  },
+  button: {
+    marginTop: Spacing.lg,
+    minWidth: 180,
   },
   card: {
+    width: '100%',
     borderWidth: 1,
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
+    borderRadius: Radii.lg,
+    padding: Spacing.lg,
+    marginBottom: Spacing.lg,
   },
   cardTitle: {
     fontSize: 18,
     fontWeight: '700',
-    marginBottom: 16,
+    marginBottom: Spacing.md,
   },
   infoRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 12,
+    marginBottom: Spacing.sm,
+    gap: Spacing.md,
   },
   label: {
     fontSize: 14,
   },
   value: {
     fontSize: 14,
-    fontWeight: '500',
-  },
-  sectionTitle: {
-    fontSize: 16,
     fontWeight: '600',
-    marginTop: 16,
-    marginBottom: 8,
-  },
-  addressText: {
-    fontSize: 14,
-    marginBottom: 4,
-  },
-  paymentMethodRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 4,
+    flexShrink: 1,
+    textAlign: 'right',
   },
   itemRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
-    paddingBottom: 16,
-    borderBottomWidth: 1,
+    paddingVertical: Spacing.md,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   lastItemRow: {
     borderBottomWidth: 0,
-    marginBottom: 0,
-    paddingBottom: 0,
   },
   itemImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 8,
-    marginRight: 12,
+    width: 56,
+    height: 56,
+    borderRadius: Radii.sm,
   },
   itemInfo: {
     flex: 1,
+    marginHorizontal: Spacing.md,
+    minWidth: 0,
   },
   itemTitle: {
     fontSize: 14,
     fontWeight: '600',
-    marginBottom: 4,
   },
   itemVariant: {
     fontSize: 12,
-    marginBottom: 4,
+    marginTop: 2,
   },
   itemQuantity: {
     fontSize: 12,
+    marginTop: 2,
   },
   itemPrice: {
     fontSize: 14,
-    fontWeight: '600',
-    marginLeft: 12,
+    fontWeight: '700',
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    marginTop: Spacing.md,
+    marginBottom: Spacing.sm,
+  },
+  addressText: {
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  paymentMethodRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   summaryRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 12,
+    marginBottom: Spacing.sm,
   },
   summaryLabel: {
     fontSize: 14,
@@ -407,28 +543,20 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   totalRow: {
-    marginTop: 12,
-    paddingTop: 12,
-    borderTopWidth: 1,
+    marginTop: Spacing.sm,
+    paddingTop: Spacing.md,
+    borderTopWidth: StyleSheet.hairlineWidth,
   },
   totalLabel: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
   },
   totalValue: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '700',
-  },
-  button: {
-    marginTop: 20,
-  },
-  continueButton: {
-    marginBottom: 24,
   },
   errorText: {
     fontSize: 16,
     textAlign: 'center',
-    marginBottom: 20,
   },
 });
-

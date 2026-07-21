@@ -2,15 +2,24 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { VENDOR_PORTAL_URL } from "@/lib/vendor-portal-url";
 import { SITE_CATEGORIES } from "@/lib/site-content";
 import "../styles/section2.scss";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const categories = [...SITE_CATEGORIES];
+const FALLBACK_CATEGORIES = SITE_CATEGORIES.map((c) => ({
+  id: `static:${c.handle}`,
+  title: c.title,
+  handle: c.handle,
+  items: c.items,
+  img: c.img,
+}));
 
-const Section2 = () => {
+const Section2 = ({ categories: categoriesProp }) => {
+  const categories =
+    categoriesProp && categoriesProp.length
+      ? categoriesProp
+      : FALLBACK_CATEGORIES;
   const sectionRef = useRef(null);
   const eyebrowRef = useRef(null);
   const headingRef = useRef(null);
@@ -110,8 +119,8 @@ const Section2 = () => {
                 together every category that completes a look, with clean
                 segmentation and curated collections.
               </p>
-              <a href={VENDOR_PORTAL_URL} className="categories-cta">
-                Apply as Seller →
+              <a href="/shop" className="categories-cta">
+                Shop all categories →
               </a>
             </div>
           </div>
@@ -120,8 +129,9 @@ const Section2 = () => {
         {/* ── Grid ── */}
         <div className="categories-grid">
           {categories.map((cat, index) => (
-            <div
-              key={cat.title}
+            <a
+              key={cat.handle}
+              href={`/shop?category=${encodeURIComponent(cat.handle)}`}
               className="category-card"
               ref={(el) => (cardsRef.current[index] = el)}
             >
@@ -140,7 +150,7 @@ const Section2 = () => {
                 <span className="category-card__name">{cat.title}</span>
                 <span className="category-card__tags">{cat.items}</span>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>

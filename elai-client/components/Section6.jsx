@@ -13,9 +13,16 @@ import "../styles/section6.scss";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Section6 = () => {
+const FALLBACK_MARQUEE = SITE_CATEGORIES.map((c) => ({
+  handle: c.handle,
+  title: c.title,
+}));
+
+const Section6 = ({ categories: categoriesProp }) => {
   const features = [...PLATFORM_FEATURES];
   const revenueStreams = [...SELLER_BENEFITS];
+  const marqueeCategories =
+    categoriesProp && categoriesProp.length ? categoriesProp : FALLBACK_MARQUEE;
 
   const sectionRef = useRef(null);
   const featCardsRef = useRef([]);
@@ -127,13 +134,20 @@ const Section6 = () => {
         </div>
       </div>
 
-      <div className="clients-carousel">
+      <div className="clients-carousel" aria-hidden>
         <div className="clients-track">
-          {[...SITE_CATEGORIES, ...SITE_CATEGORIES].map((category, i) => (
-            <div key={`${category.title}-${i}`} className="client-logo">
-              <div className="logo-frame">
-                <span className="logo-text">{category.title}</span>
-              </div>
+          {[0, 1].map((copy) => (
+            <div key={copy} className="clients-track__group">
+              {marqueeCategories.map((category) => (
+                <div
+                  key={`${copy}-${category.handle}`}
+                  className="client-logo"
+                >
+                  <div className="logo-frame">
+                    <span className="logo-text">{category.title}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           ))}
         </div>

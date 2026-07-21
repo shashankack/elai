@@ -1,4 +1,4 @@
-import { Heading } from "@medusajs/ui";
+import { Heading, Text } from "@medusajs/ui";
 import { Children, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -41,8 +41,11 @@ const Header = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col">
-      <Heading>{t("products.create.tabs.details")}</Heading>
+    <div className="flex flex-col gap-y-1">
+      <Heading>{t("products.create.header")}</Heading>
+      <Text size="small" className="text-ui-fg-subtle">
+        {t("products.create.detailsHint")}
+      </Text>
     </div>
   );
 };

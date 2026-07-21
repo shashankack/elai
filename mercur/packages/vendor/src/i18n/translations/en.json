@@ -468,15 +468,18 @@
       }
     },
     "create": {
-      "title": "Create Product",
-      "description": "Create a new product.",
-      "header": "General",
+      "title": "Add a product",
+      "description": "List an accessory for shoppers on Elai  start with the basics, then category, details, and price.",
+      "header": "Basics",
+      "detailsHint": "Tell shoppers what you’re selling. A clear name and a couple of photos go a long way.",
+      "mediaHeading": "Photos",
+      "mediaHint": "Add clear photos of the product. The first thumbnail is what shoppers see in search and category pages.",
       "tabs": {
-        "details": "Details",
-        "organize": "Organize",
-        "variants": "Variants",
+        "details": "Basics",
+        "organize": "Category",
+        "variants": "Price & stock",
         "inventory": "Inventory kits",
-        "attributes": "Attributes"
+        "attributes": "Details"
       },
       "defaults": {
         "optionTitle": "Default option",
@@ -484,51 +487,54 @@
         "variantTitle": "Default variant"
       },
       "errors": {
-        "variants": "Please select at least one variant.",
-        "options": "Please create at least one option.",
-        "uniqueSku": "SKU must be unique across variants",
-        "primaryCategoryRequired": "Primary category is required",
-        "titleRequired": "Title is required",
-        "handleInvalidFormat": "Handle must contain only lowercase letters, numbers, and hyphens",
-        "handleMustContainLetter": "Handle must contain at least one letter"
+        "variants": "Please select at least one variant to sell.",
+        "options": "Please add at least one option (e.g. Colour or Size).",
+        "uniqueSku": "Each SKU must be unique",
+        "primaryCategoryRequired": "Pick a primary category so we know where this product belongs",
+        "titleRequired": "Give your product a name",
+        "handleInvalidFormat": "URL slug can only use lowercase letters, numbers, and hyphens",
+        "handleMustContainLetter": "URL slug must include at least one letter"
       },
       "inventory": {
         "heading": "Inventory kits",
-        "label": "Add inventory items to the variant's inventory kit.",
+        "label": "Only needed if one listing uses several stock items together.",
         "itemPlaceholder": "Select inventory item",
         "quantityPlaceholder": "How many of these are needed for the kit?"
       },
       "variants": {
-        "header": "Variants",
-        "optionsHeader": "Options",
-        "subHeadingTitle": "Yes, this is a product with variants",
-        "subHeadingDescription": "When unchecked, we will create a default variant for you",
+        "header": "Price & stock",
+        "headerHint": "Set what shoppers pay and how many you have. Leave options empty if you sell only one version.",
+        "optionsHeader": "Options (colour, size, etc.)",
+        "subHeadingTitle": "This product has more than one version",
+        "subHeadingDescription": "Turn on if you sell colours, sizes, or styles as separate choices. Otherwise we’ll create one default listing for you.",
         "optionTitle": {
-          "placeholder": "Size"
+          "placeholder": "e.g. Colour"
         },
         "optionValues": {
-          "placeholder": "Small, Medium, Large"
+          "placeholder": "e.g. Gold, Silver, Rose gold"
         },
         "productVariants": {
-          "searchPlaceholder": "Search variants...",
-          "media": "Media",
-          "tip": "Only variants with prices and stock will be visible to customers."
+          "searchPlaceholder": "Search versions...",
+          "media": "Photos",
+          "tip": "Shoppers only see versions that have a price. Add stock if you track inventory."
         },
         "productOptions": {
-          "label": "Product options",
-          "hint": "Define the options for the product, e.g. color, size, etc."
+          "label": "What differs between versions?",
+          "hint": "Examples: Colour, Size, Material. We’ll create a row for each combination."
         }
       },
-      "successToast": "Product {{title}} was successfully created.",
+      "successToast": "{{title}} was added. It may need admin approval before it appears in the shop.",
+      "publishAction": "Submit for review",
       "attributes": {
-        "description": "Add attributes to your product. Select from admin-defined attributes or create your own.",
-        "requiredHeading": "Required Attributes",
-        "requiredDescription": "These attributes are required for products in this category.",
-        "buttonLabel": "Attribute",
-        "loading": "Loading attributes...",
+        "description": "Fill in the details for your category (material, closure, etc.). You can also add your own options like colour or size.",
+        "requiredHeading": "Required for this category",
+        "requiredDescription": "These come from your primary category  they help shoppers filter and find your product.",
+        "buttonLabel": "your own option",
+        "loading": "Loading category details...",
+        "emptyRequired": "Pick a primary category first (previous step) to see required details here.",
         "learnMore": {
-          "label": "Learn more about attributes",
-          "content": "Attributes help customers find and filter your products. Admin-defined attributes appear in search results."
+          "label": "Why these details?",
+          "content": "Category details help shoppers filter on Elai. Required fields come from the marketplace catalogue. Your own options (like colour) can create different versions to price separately."
         }
       }
     },
@@ -595,12 +601,12 @@
     "editOptions": "Edit Options",
     "editPrices": "Edit prices",
     "media": {
-      "label": "Media",
-      "editHint": "Add media to the product to showcase it in your storefront.",
+      "label": "Photos",
+      "editHint": "Add photos so shoppers can see your product clearly.",
       "manageImageVariants": "Manage associated variants",
-      "makeThumbnail": "Make Thumbnail",
-      "uploadImagesLabel": "Upload images",
-      "uploadImagesHint": "Drag and drop images here or click to upload.",
+      "makeThumbnail": "Use as main photo",
+      "uploadImagesLabel": "Upload photos",
+      "uploadImagesHint": "Drag photos here, or click to choose. JPEG, PNG, or WebP work best.",
       "invalidFileType": "'{{name}}' is not a supported file type. Supported file types are: {{types}}.",
       "fileTooLarge": "One or more files exceed the maximum file size of {{size}}: {{name}}",
       "failedToUpload": "Failed to upload the added media. Please try again.",
@@ -665,52 +671,54 @@
     },
     "fields": {
       "title": {
-        "label": "Title",
-        "hint": "Give your product a short and clear title.<0/>50-60 characters is the recommended length for search engines.",
-        "placeholder": "Winter jacket",
-        "required": "Please enter a title"
+        "label": "Product name",
+        "hint": "What shoppers will see first  keep it clear and specific. Examples: Kundan choker set, Oversized claw clip.",
+        "placeholder": "e.g. Jaipur kundan choker",
+        "required": "Please enter a product name"
       },
       "subtitle": {
-        "label": "Subtitle",
-        "placeholder": "Warm and cosy"
+        "label": "Short line",
+        "hint": "Optional one-liner under the name  material, vibe, or occasion.",
+        "placeholder": "e.g. Handcrafted · festive wear"
       },
       "handle": {
-        "label": "Handle",
-        "tooltip": "The handle is used to reference the product in your storefront. If not specified, the handle will be generated from the product title.",
-        "placeholder": "winter-jacket"
+        "label": "URL slug",
+        "hint": "Optional. Leave blank and we’ll create it from the product name.",
+        "tooltip": "Appears in the product link on the shop. Leave blank to auto-generate from the name.",
+        "placeholder": "e.g. jaipur-kundan-choker"
       },
       "description": {
         "label": "Description",
-        "hint": "Give your product a short and clear description.<0/>120-160 characters is the recommended length for search engines.",
-        "placeholder": "A warm and cozy jacket"
+        "hint": "Share materials, size, care tips, and what makes it special. A short paragraph is enough.",
+        "placeholder": "e.g. Lightweight brass with kundan work. Fits most neck sizes. Wipe gently with a soft cloth."
       },
       "discountable": {
-        "label": "Discountable",
-        "hint": "When unchecked, discounts will not be applied to this product"
+        "label": "Allow discounts",
+        "hint": "Turn off if this product should never use promo codes or sale prices."
       },
       "shipping_profile": {
         "label": "Shipping profile",
         "hint": "Connect the product to a shipping profile"
       },
       "type": {
-        "label": "Type",
-        "hint": "Types are set up by ELAI Admin. Pick one for this product."
+        "label": "Product type",
+        "hint": "What is it? e.g. Necklace, Earrings, Bag. Pick from the Elai list."
       },
       "collection": {
         "label": "Collection",
-        "hint": "Collections are set up by ELAI Admin. Optional — use for shop groupings."
+        "hint": "Optional shop grouping set up by Elai  e.g. Festive edit, New arrivals."
       },
       "categories": {
         "label": "Categories",
-        "hint": "Categories are set up by ELAI Admin. Assign this product to the right ones."
+        "hint": "Choose where this product should appear in the Elai shop."
       },
       "tags": {
         "label": "Tags",
-        "hint": "Tags are set up by ELAI Admin. Optional labels for filtering."
+        "hint": "Optional labels for filtering  e.g. festive, everyday, gift."
       },
       "sales_channels": {
         "label": "Sales channels",
-        "hint": "Sales channels are set up by ELAI Admin. This product will only be available in the default channel if left untouched."
+        "hint": "Usually leave the default. Only change if Elai support asked you to."
       },
       "countryOrigin": {
         "label": "Country of origin"
@@ -731,17 +739,17 @@
         "label": "Weight"
       },
       "options": {
-        "label": "Product options",
-        "hint": "Options are used to define the color, size, etc. of the product",
+        "label": "What differs between versions?",
+        "hint": "e.g. Colour, Size, Material  used when one product has multiple choices.",
         "add": "Add option",
-        "optionTitle": "Title",
-        "optionTitlePlaceholder": "Color",
-        "variations": "Values",
-        "variantionsPlaceholder": "Red, Blue, Green"
+        "optionTitle": "Option name",
+        "optionTitlePlaceholder": "e.g. Colour",
+        "variations": "Choices",
+        "variantionsPlaceholder": "e.g. Gold, Silver, Rose gold"
       },
       "variants": {
-        "label": "Product variants",
-        "hint": "Variants left unchecked won't be created, This ranking will affect how the variants are ranked in your frontend."
+        "label": "Versions to sell",
+        "hint": "Untick any combination you don’t sell. Set price (and stock if you track it) for each one you keep."
       },
       "mid_code": {
         "label": "Mid code"
@@ -752,24 +760,24 @@
       "attributes": {
         "add": {
           "title": {
-            "label": "Title",
-            "placeholder": "Search or type attribute name...",
-            "required": "Attribute title is required"
+            "label": "Option name",
+            "placeholder": "e.g. Colour, Size, Length…",
+            "required": "Give this option a name"
           },
           "values": {
-            "label": "Values",
-            "placeholder": "Type values separated by commas",
-            "required": "At least one value is required"
+            "label": "Choices",
+            "placeholder": "Type choices separated by commas  e.g. Gold, Silver",
+            "required": "Add at least one choice"
           }
         },
         "useForVariants": {
-          "label": "Use for Variations",
-          "description": "Enable this to create product variants based on this attribute.",
-          "editDescription": "Changing this will affect existing product variants."
+          "label": "Create separate versions for each choice",
+          "description": "Turn on so each choice (e.g. Gold / Silver) gets its own price and stock row.",
+          "editDescription": "Changing this can affect existing versions of the product."
         },
         "validation": {
           "required": "{{name}} is required",
-          "requiredSelect": "Please select a value",
+          "requiredSelect": "Please pick a value",
           "requiredEnter": "Please enter a value",
           "requiredSelectMultiple": "Please select at least one value"
         },
@@ -777,12 +785,13 @@
         "selectValuePlaceholder": "Select a value"
       },
       "primaryCategory": {
-        "label": "Primary Category",
-        "tooltip": "Categories and attributes are set up by ELAI Admin. The primary category controls which attributes appear for this product."
+        "label": "Primary category",
+        "hint": "Start with the closest match  e.g. Jewellery → Earrings. This also unlocks the required details on the next step.",
+        "tooltip": "Your main shop category. It controls which required details appear for this product."
       },
       "secondaryCategories": {
-        "label": "Secondary Categories",
-        "hint": "Optional extra categories from the marketplace list set up by ELAI Admin."
+        "label": "Also show in",
+        "hint": "Optional. Extra categories if the product fits more than one place in the shop."
       }
     },
     "variant": {
@@ -845,12 +854,12 @@
       }
     },
     "organization": {
-      "header": "Organize",
-      "hint": "Type, tags, categories, and collections are set up by ELAI Admin. Assign them to this product here.",
+      "header": "Where it sits in the shop",
+      "hint": "Pick a primary category first  that’s the most important. Type, tags, and collections are optional.",
       "edit": {
-        "header": "Edit Organization",
+        "header": "Edit categories & tags",
         "toasts": {
-          "success": "Successfully updated the organization of {{title}}."
+          "success": "Updated where {{title}} appears in the shop."
         }
       }
     },
@@ -897,7 +906,7 @@
   },
   "collections": {
     "domain": "Collections",
-    "subtitle": "Marketplace collections are set up by ELAI Admin. Add your products to them here — you can’t create new collections.",
+    "subtitle": "Marketplace collections are set up by ELAI Admin. Add your products to them here  you can’t create new collections.",
     "createCollection": "Create Collection",
     "createCollectionHint": "Collections are created by ELAI Admin. Contact admin if you need a new collection.",
     "list": {
@@ -926,7 +935,7 @@
   },
   "categories": {
     "domain": "Categories",
-    "subtitle": "Marketplace categories are set up by ELAI Admin. Assign your products to them — you can’t create or reorder categories.",
+    "subtitle": "Marketplace categories are set up by ELAI Admin. Assign your products to them  you can’t create or reorder categories.",
     "list": {
       "noRecordsMessage": "No categories yet. ELAI Admin will add marketplace categories you can use."
     },
@@ -1524,7 +1533,7 @@
       "addTrackingUrl": "Add tracking URL",
       "trackingUrlPlaceholder": "https://www.dhl.com/shipment/1234567890",
       "sendNotification": "Send notification",
-      "sendNotificationHint": "Notify the customer about this shipment.",
+      "sendNotificationHint": "Email the customer with the tracking link for this shipment.",
       "toastCreated": "Shipment created successfully."
     },
     "fulfillment": {
@@ -1741,12 +1750,12 @@
     "list": {
       "description": "Set where you pack orders from, and how customers get them (delivery or pickup).",
       "noRecordsMessage": "No records",
-      "noRecordsMessageEmpty": "No packing locations yet — add one to start shipping.",
+      "noRecordsMessageEmpty": "No packing locations yet  add one to start shipping.",
       "noRecordsMessageFiltered": "No locations match your filters"
     },
     "create": {
       "header": "Add a packing location",
-      "hint": "This is where you keep stock and pack orders from — for example your home studio, shop, or warehouse.",
+      "hint": "This is where you keep stock and pack orders from  for example your home studio, shop, or warehouse.",
       "name": "Location nickname",
       "nameHint": "A short name only you will see in the dashboard (not your company legal name). Examples: Home studio, Mumbai warehouse, Main shop.",
       "namePlaceholder": "e.g. Home studio",
@@ -1758,7 +1767,7 @@
       "cityHint": "City or town for this location.",
       "cityPlaceholder": "e.g. Mumbai",
       "state": "State / UT",
-      "companyHint": "Optional — company name on shipping labels if different from your store name.",
+      "companyHint": "Optional  company name on shipping labels if different from your store name.",
       "phoneHint": "Optional contact number for this location.",
       "successToast": "Location {{name}} was created."
     },
@@ -1776,7 +1785,7 @@
     },
     "fulfillmentProviders": {
       "header": "How orders are fulfilled",
-      "hint": "This is the system that handles dispatch. For most sellers, leave Manual — you pack the order and book BlueDart / Shiprocket / your courier yourself. ELAI courier APIs can be connected later.",
+      "hint": "This is the system that handles dispatch. For most sellers, leave Manual  you pack the order and book BlueDart / Shiprocket / your courier yourself. ELAI courier APIs can be connected later.",
       "shippingOptionsTooltip": "Only providers connected to this location appear when creating delivery options.",
       "label": "Connected fulfillment methods",
       "connectedTo": "{{count}} of {{total}} methods connected",
@@ -1805,7 +1814,7 @@
       "header": "More shipping settings",
       "shippingProfiles": {
         "label": "Product shipping groups",
-        "description": "Optional — group products that ship differently (e.g. fragile vs standard)"
+        "description": "Optional  group products that ship differently (e.g. fragile vs standard)"
       },
       "shippingOptionTypes": {
         "label": "Delivery option types",
@@ -1830,7 +1839,7 @@
       "create": {
         "shipping": {
           "header": "Add a delivery option for {{zone}}",
-          "hint": "This is what customers choose at checkout — e.g. Standard delivery. Next you’ll set the price.",
+          "hint": "This is what customers choose at checkout  e.g. Standard delivery. Next you’ll set the price.",
           "label": "Delivery options",
           "successToast": "Delivery option {{name}} was created."
         },
@@ -1866,7 +1875,7 @@
       },
       "conditionalPrices": {
         "header": "Special prices for {{name}}",
-        "description": "Optional rules — e.g. free delivery above a cart total.",
+        "description": "Optional rules  e.g. free delivery above a cart total.",
         "attributes": {
           "cartItemTotal": "Cart total"
         },
@@ -1909,7 +1918,7 @@
           "returns_other": "{{count}} return options"
         },
         "name": "Name at checkout",
-        "nameHint": "What the customer sees — e.g. Standard delivery, Express (2–3 days).",
+        "nameHint": "What the customer sees  e.g. Standard delivery, Express (2–3 days).",
         "namePlaceholder": "e.g. Standard delivery",
         "priceType": {
           "label": "How is the price set?",
@@ -1944,7 +1953,7 @@
         "hint": "Most sellers ship across India. You can change this later if you only deliver to certain places.",
         "action": "Add delivery area",
         "name": "Label (for you)",
-        "nameHint": "A short name you’ll see in the dashboard — e.g. India, or Maharashtra only.",
+        "nameHint": "A short name you’ll see in the dashboard  e.g. India, or Maharashtra only.",
         "namePlaceholder": "e.g. India",
         "successToast": "Delivery area {{name}} was added."
       },
@@ -3362,7 +3371,7 @@
       "elai": {
         "eyebrow": "Vendor application",
         "title": "Join the ELAI marketplace",
-        "description": "Curated essentials, trusted vendors. Complete four quick steps — we review and approve within a few business days.",
+        "description": "Curated essentials, trusted vendors. Complete four quick steps  we review and approve within a few business days.",
         "progress": "Progress",
         "contact": "Questions? Blameus2026@gmail.com",
         "alreadyApproved": "Already approved?",
@@ -3408,7 +3417,7 @@
       "address": {
         "title": "Enter your address",
         "name": "Location name",
-        "nameHint": "A short label for this place — not your personal name (e.g. Main studio, Head office).",
+        "nameHint": "A short label for this place  not your personal name (e.g. Main studio, Head office).",
         "namePlaceholder": "e.g. Main studio",
         "address": "Street address",
         "addressHint": "Building, street, and landmark so couriers and ELAI can reach you.",
@@ -3581,7 +3590,7 @@
   },
   "productTypes": {
     "domain": "Product Types",
-    "subtitle": "Product types are set up by ELAI Admin. Assign a type when organizing a product — you can’t create new types here.",
+    "subtitle": "Product types are set up by ELAI Admin. Assign a type when organizing a product  you can’t create new types here.",
     "list": {
       "noRecordsMessage": "No product types yet. ELAI Admin will add types you can use."
     },
@@ -3604,7 +3613,7 @@
   },
   "productTags": {
     "domain": "Product Tags",
-    "subtitle": "Product tags are set up by ELAI Admin. Assign tags when organizing a product — you can’t create new tags here.",
+    "subtitle": "Product tags are set up by ELAI Admin. Assign tags when organizing a product  you can’t create new tags here.",
     "list": {
       "noRecordsMessage": "No product tags yet. ELAI Admin will add tags you can use."
     },

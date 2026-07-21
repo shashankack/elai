@@ -1,5 +1,6 @@
 import type { SubscriberArgs, SubscriberConfig } from "@medusajs/framework"
 import { ContainerRegistrationKeys, Modules } from "@medusajs/framework/utils"
+import { vendorBaseUrl } from "../utils/app-urls"
 
 type MemberInviteCreatedPayload = {
   id: string
@@ -8,10 +9,7 @@ type MemberInviteCreatedPayload = {
 }
 
 function vendorInviteUrl(token: string): string {
-  const base = (
-    process.env.MERCUR_VENDOR_URL || "http://localhost:7001"
-  ).replace(/\/$/, "")
-  return `${base}/invite?token=${encodeURIComponent(token)}`
+  return `${vendorBaseUrl()}/invite?token=${encodeURIComponent(token)}`
 }
 
 export default async function memberInviteCreatedHandler({

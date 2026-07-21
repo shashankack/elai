@@ -197,7 +197,7 @@ export default async function wipeVendor({ container, args }: ExecArgs) {
   })
   if (orders.length) {
     logger.warn(
-      `Seller has ${orders.length} order link(s) — leaving orders/payouts intact for audit.`
+      `Seller has ${orders.length} order link(s)  leaving orders/payouts intact for audit.`
     )
   }
 

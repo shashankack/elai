@@ -41,7 +41,7 @@ const Section7 = () => {
   };
 
   return (
-    <section className="section7" ref={sectionRef}>
+    <section className="section7" id="faq" ref={sectionRef}>
       <div className="elai-shell">
         <div className="section7-content">
           <div className="section7-header">

@@ -1,0 +1,221 @@
+/* Customer auth forms   cream/olive Elai */
+
+.auth-page {
+  min-height: 60vh;
+  padding-block: 2.5rem 4rem;
+  padding-inline: clamp(1.25rem, 5vw, 2.75rem);
+  box-sizing: border-box;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: 1.75rem 1.5rem 1.85rem;
+  background: #fffef8;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 36px rgba(46, 62, 32, 0.06);
+}
+
+.auth-card__eyebrow {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--highlight);
+}
+
+.auth-card__title {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-heading), serif;
+  font-size: clamp(1.85rem, 4vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--foreground);
+}
+
+.auth-card__lead {
+  margin: 0.65rem 0 0;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.55;
+  color: color-mix(in srgb, var(--foreground) 65%, transparent);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  margin-top: 1.5rem;
+}
+
+.auth-form__row {
+  display: grid;
+  gap: 0.95rem;
+}
+
+@media (min-width: 520px) {
+  .auth-form__row--2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.auth-field label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--foreground) 70%, transparent);
+}
+
+.auth-field input {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: #fff;
+  padding: 0.72rem 1rem;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--foreground);
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.25s var(--ease-out);
+}
+
+.auth-field input:focus {
+  border-color: color-mix(in srgb, var(--highlight) 55%, var(--border-color));
+  box-shadow: 0 0 0 4px var(--highlight-light);
+}
+
+.auth-error {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, #b42318 10%, #fff);
+  color: #8a1c14;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.auth-success {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--highlight-light);
+  color: var(--highlight-dark);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.auth-submit {
+  margin-top: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 0;
+  border-radius: 999px;
+  background: var(--foreground);
+  color: var(--background);
+  padding: 0.85rem 1.25rem;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    transform 0.3s var(--ease-spring);
+}
+
+.auth-submit:hover:not(:disabled) {
+  background: var(--highlight-dark);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.auth-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-foot {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: color-mix(in srgb, var(--foreground) 65%, transparent);
+}
+
+.auth-foot a {
+  color: var(--highlight-dark);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-foot a:hover {
+  text-decoration: underline;
+}
+
+.auth-account {
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.auth-account__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.5rem;
+}
+
+.auth-account__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 999px;
+  padding: 0.65rem 1.1rem;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    transform 0.3s var(--ease-spring),
+    border-color 0.2s ease;
+}
+
+.auth-account__btn--primary {
+  border: 0;
+  background: var(--foreground);
+  color: var(--background);
+}
+
+.auth-account__btn--primary:hover {
+  background: var(--highlight-dark);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.auth-account__btn--ghost {
+  border: 1px solid var(--border-color);
+  background: #fffef8;
+  color: var(--foreground);
+}
+
+.auth-account__btn--ghost:hover {
+  border-color: var(--highlight);
+  color: var(--highlight-dark);
+}

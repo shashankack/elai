@@ -1,37 +1,46 @@
+import { CategoryStrip } from '@/components/category-strip';
+import { HomeBanner } from '@/components/home-banner';
+import { HomeEditorial, HomeFooterNote } from '@/components/home-editorial';
 import { Loading } from '@/components/loading';
 import { ProductCard } from '@/components/product-card';
-import { Colors } from '@/constants/theme';
+import { SiteHeader } from '@/components/site-header';
+import { Colors, FontFamily, Spacing } from '@/constants/theme';
 import { useRegion } from '@/context/region-context';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useLayout } from '@/hooks/use-layout';
+import { listStoreCategories, type StoreCategory } from '@/lib/categories';
 import { sdk } from '@/lib/sdk';
 import type { HttpTypes } from '@medusajs/types';
-import { Image } from 'expo-image';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
 
 export default function HomeScreen() {
-  const colorScheme = useColorScheme();
-  const colors = Colors[colorScheme ?? 'light'];
+  const colors = Colors.light;
   const { selectedRegion } = useRegion();
-  
+  const { columns, contentPad, gridGap, productImageHeight, sectionTitleSize } =
+    useLayout();
+
   const [products, setProducts] = useState<HttpTypes.StoreProduct[]>([]);
+  const [categories, setCategories] = useState<StoreCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
 
-  const fetchProducts = useCallback(async () => {
+  const fetchData = useCallback(async () => {
     try {
-      setLoading(true);
       setError(null);
-      
-      const { products: fetchedProducts } = await sdk.store.product.list({
-        region_id: selectedRegion?.id,
-        fields: '*variants.calculated_price,+variants.inventory_quantity',
-      });
-      
+      const [{ products: fetchedProducts }, cats] = await Promise.all([
+        sdk.store.product.list({
+          region_id: selectedRegion?.id,
+          fields: '*variants.calculated_price,+variants.inventory_quantity',
+          limit: 40,
+        }),
+        listStoreCategories(),
+      ]);
       setProducts(fetchedProducts);
+      setCategories(cats);
     } catch (err) {
-      console.error('Failed to fetch products:', err);
+      console.error('Failed to fetch home data:', err);
       setError('Failed to load products. Please try again.');
     } finally {
       setLoading(false);
@@ -41,51 +50,91 @@ export default function HomeScreen() {
 
   useEffect(() => {
     if (selectedRegion) {
-      fetchProducts();
+      setLoading(true);
+      fetchData();
     }
-  }, [selectedRegion, fetchProducts]);
+  }, [selectedRegion, fetchData]);
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return products;
+    return products.filter(
+      (p) =>
+        p.title?.toLowerCase().includes(q) ||
+        p.description?.toLowerCase().includes(q) ||
+        p.handle?.toLowerCase().includes(q),
+    );
+  }, [products, search]);
 
   const onRefresh = () => {
     setRefreshing(true);
-    fetchProducts();
+    fetchData();
   };
 
+  const searching = search.trim().length > 0;
+
   if (loading) {
-    return <Loading message="Loading products..." />;
+    return (
+      <View style={[styles.flex, { backgroundColor: colors.background }]}>
+        <SiteHeader searchValue={search} onSearchChange={setSearch} />
+        <Loading message="Loading products..." />
+      </View>
+    );
   }
 
   if (error) {
     return (
-      <View style={[styles.centerContainer, { backgroundColor: colors.background }]}>
-        <Text style={[styles.errorText, { color: colors.text }]}>{error}</Text>
+      <View style={[styles.flex, { backgroundColor: colors.background }]}>
+        <SiteHeader searchValue={search} onSearchChange={setSearch} />
+        <View style={styles.centerContainer}>
+          <Text style={[styles.errorText, { color: colors.text }]}>{error}</Text>
+        </View>
       </View>
     );
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <View style={[styles.flex, { backgroundColor: colors.background }]}>
+      <SiteHeader searchValue={search} onSearchChange={setSearch} />
       <FlatList
-        data={products}
+        key={`home-cols-${columns}`}
+        data={filtered}
         keyExtractor={(item) => item.id}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        initialNumToRender={6}
-        maxToRenderPerBatch={6}
+        numColumns={columns}
+        columnWrapperStyle={
+          columns > 1
+            ? [styles.row, { paddingHorizontal: contentPad, gap: gridGap }]
+            : undefined
+        }
+        initialNumToRender={columns * 3}
+        maxToRenderPerBatch={columns * 3}
         windowSize={5}
-        removeClippedSubviews={true}
+        removeClippedSubviews
         ListHeaderComponent={
-          <View style={styles.header}>
-            <Image
-              source={{ uri: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=800' }}
-              style={[styles.banner, { backgroundColor: colors.imagePlaceholder }]}
-              contentFit="cover"
-            />
-            <Text style={[styles.sectionTitle, { color: colors.text }]}>
-              Latest Products
+          <View>
+            <CategoryStrip categories={categories} />
+            <HomeBanner />
+            {!searching ? <HomeEditorial /> : null}
+            <Text
+              style={[
+                styles.sectionTitle,
+                {
+                  color: colors.text,
+                  fontSize: sectionTitleSize,
+                  paddingHorizontal: contentPad,
+                },
+              ]}
+            >
+              {searching ? 'Search results' : 'New in'}
             </Text>
           </View>
         }
-        renderItem={({ item }) => <ProductCard product={item} />}
+        ListFooterComponent={!searching ? <HomeFooterNote /> : null}
+        renderItem={({ item }) => (
+          <View style={styles.cell}>
+            <ProductCard product={item} imageHeight={productImageHeight} />
+          </View>
+        )}
         contentContainerStyle={styles.listContent}
         refreshControl={
           <RefreshControl
@@ -96,8 +145,8 @@ export default function HomeScreen() {
         }
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Text style={[styles.emptyText, { color: colors.text }]}>
-              No products available
+            <Text style={[styles.emptyText, { color: colors.textMuted }]}>
+              {searching ? 'No matches for that search' : 'No products available'}
             </Text>
           </View>
         }
@@ -107,8 +156,9 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  flex: {
     flex: 1,
+    width: '100%',
   },
   centerContainer: {
     flex: 1,
@@ -116,26 +166,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  header: {
-    width: '100%',
-  },
-  banner: {
-    width: '100%',
-    height: 200,
-  },
   sectionTitle: {
-    fontSize: 24,
-    fontWeight: '700',
-    marginTop: 24,
-    marginBottom: 16,
-    paddingHorizontal: 16,
+    fontFamily: FontFamily.heading,
+    marginTop: Spacing.sm,
+    marginBottom: Spacing.md,
   },
   listContent: {
-    paddingBottom: 20,
+    paddingBottom: Spacing.xxl,
+    width: '100%',
   },
   row: {
-    justifyContent: 'space-between',
-    paddingHorizontal: 8,
+    marginBottom: Spacing.sm,
+  },
+  cell: {
+    flex: 1,
+    minWidth: 0,
   },
   errorText: {
     fontSize: 16,
@@ -146,7 +191,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emptyText: {
-    fontSize: 16,
+    fontSize: 15,
   },
 });
-

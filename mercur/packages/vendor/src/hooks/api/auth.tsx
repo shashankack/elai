@@ -176,7 +176,7 @@ export const usePerformLogout = () => {
     try {
       await logoutMutation();
     } catch {
-      // Session may already be invalid — still sign out locally.
+      // Session may already be invalid  still sign out locally.
     } finally {
       queryClient.clear();
       navigate("/login", { replace: true });

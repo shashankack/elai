@@ -45,6 +45,7 @@ const dropAnimationConfig: DropAnimation = {
 }
 
 export const ProductCreateMediaSection = () => {
+  const { t } = useTranslation()
   const form = useTabbedForm<ProductCreateSchemaType>()
 
   const { fields, append, remove } = useFieldArray({
@@ -115,8 +116,16 @@ export const ProductCreateMediaSection = () => {
   }
 
   return (
-    <div id="media" className="flex flex-col gap-y-2">
-      <UploadMediaFormItem form={form} append={append} showHint={false} />
+    <div id="media" className="flex flex-col gap-y-3">
+      <div className="flex flex-col gap-y-1">
+        <Text size="small" leading="compact" weight="plus">
+          {t("products.create.mediaHeading")}
+        </Text>
+        <Text size="small" className="text-ui-fg-subtle">
+          {t("products.create.mediaHint")}
+        </Text>
+      </div>
+      <UploadMediaFormItem form={form} append={append} showHint />
       <DndContext
         sensors={sensors}
         onDragEnd={handleDragEnd}

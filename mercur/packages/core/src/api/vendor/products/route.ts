@@ -6,6 +6,7 @@ import {
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
+import { ensureSellerDefaultShippingProfile } from "../shipping-profiles/helpers"
 import { VendorCreateProductType, VendorGetProductsParamsType } from "./validators"
 
 export const GET = async (
@@ -37,11 +38,17 @@ export const POST = async (
   const sellerId =  req.seller_context!.seller_id
   const { additional_data, ...productData } = req.validatedBody
 
+  // Cart complete requires every shippable product's shipping profile to be
+  // covered by the selected shipping option. Vendor UI often omits this field.
+  const shipping_profile_id =
+    productData.shipping_profile_id ||
+    (await ensureSellerDefaultShippingProfile(req.scope, sellerId))
+
   const {
     result: [createdProduct],
   } = await createProductsWorkflow(req.scope).run({
     input: {
-      products: [productData],
+      products: [{ ...productData, shipping_profile_id }],
       additional_data: {
         ...additional_data,
         seller_id: sellerId,

@@ -456,6 +456,9 @@ export type Routes = {
                 promotions: typeof import("@mercurjs/core/api/store/carts/[id]/promotions/route");
                 shippingMethods: typeof import("@mercurjs/core/api/store/carts/[id]/shipping-methods/route");
                 taxes: typeof import("@medusajs/medusa/api/store/carts/[id]/taxes/route");
+                razorpay: {
+                    confirm: typeof import("../../src/api/store/carts/[id]/razorpay/confirm/route");
+                };
             };
         };
         collections: typeof import("@medusajs/medusa/api/store/collections/route") & {

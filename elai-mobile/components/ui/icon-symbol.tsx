@@ -1,41 +1,55 @@
-// Fallback for using MaterialIcons on Android and web.
-
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { SymbolWeight, SymbolViewProps } from 'expo-symbols';
-import { ComponentProps } from 'react';
-import { OpaqueColorValue, type StyleProp, type TextStyle } from 'react-native';
-
-type IconMapping = Record<SymbolViewProps['name'], ComponentProps<typeof MaterialIcons>['name']>;
-type IconSymbolName = keyof typeof MAPPING;
+import Feather from '@expo/vector-icons/Feather';
+import React from 'react';
+import { type StyleProp, type TextStyle } from 'react-native';
 
 /**
- * Add your SF Symbols to Material Icons mappings here.
- * - see Material Icons in the [Icons Directory](https://icons.expo.fyi).
- * - see SF Symbols in the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
+ * Semantic names → Feather outline icons.
+ * Feather ships with Expo (@expo/vector-icons) and matches the thin
+ * stroke look of Lucide on the web storefront — without Metro/package issues.
  */
-const MAPPING = {
+const ICONS = {
+  home: 'home',
   'house.fill': 'home',
-  'paperplane.fill': 'send',
-  'chevron.left.forwardslash.chevron.right': 'code',
+  bag: 'shopping-bag',
+  'bag.fill': 'shopping-bag',
+  'cart.fill': 'shopping-bag',
+  account: 'user',
+  'person.fill': 'user',
+  categories: 'grid',
+  'square.grid.2x2.fill': 'grid',
+  menu: 'menu',
+  'line.3.horizontal': 'menu',
+  search: 'search',
+  magnifyingglass: 'search',
+  trash: 'trash-2',
+  close: 'x',
+  xmark: 'x',
+  'xmark.circle.fill': 'x',
   'chevron.right': 'chevron-right',
-} as IconMapping;
+  'chevron.down': 'chevron-down',
+  'chevron.up': 'chevron-up',
+  creditcard: 'credit-card',
+  'creditcard.fill': 'credit-card',
+  storefront: 'shopping-bag',
+} as const;
 
-/**
- * An icon component that uses native SF Symbols on iOS, and Material Icons on Android and web.
- * This ensures a consistent look across platforms, and optimal resource usage.
- * Icon `name`s are based on SF Symbols and require manual mapping to Material Icons.
- */
+export type AppIconName = keyof typeof ICONS;
+
+type IconSymbolProps = {
+  name: AppIconName | string;
+  size?: number;
+  color: string;
+  /** Kept for call-site compatibility; Feather uses a fixed stroke weight. */
+  strokeWidth?: number;
+  style?: StyleProp<TextStyle>;
+};
+
 export function IconSymbol({
   name,
-  size = 24,
+  size = 22,
   color,
   style,
-}: {
-  name: IconSymbolName;
-  size?: number;
-  color: string | OpaqueColorValue;
-  style?: StyleProp<TextStyle>;
-  weight?: SymbolWeight;
-}) {
-  return <MaterialIcons color={color} size={size} name={MAPPING[name]} style={style} />;
+}: IconSymbolProps) {
+  const glyph = ICONS[name as AppIconName] ?? 'circle';
+  return <Feather name={glyph} size={size} color={color} style={style} />;
 }

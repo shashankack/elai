@@ -137,7 +137,12 @@ export default async function seedDemoData({ container }: ExecArgs) {
             name: "India",
             currency_code: "inr",
             countries: unassignedCountries,
-            payment_providers: ["pp_system_default"],
+            payment_providers: [
+              "pp_system_default",
+              ...(process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET
+                ? ["pp_razorpay_razorpay"]
+                : []),
+            ],
           },
         ],
       },
@@ -151,7 +156,12 @@ export default async function seedDemoData({ container }: ExecArgs) {
             name: "India",
             currency_code: "inr",
             countries,
-            payment_providers: ["pp_system_default"],
+            payment_providers: [
+              "pp_system_default",
+              ...(process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET
+                ? ["pp_razorpay_razorpay"]
+                : []),
+            ],
           },
         ],
       },
@@ -471,7 +481,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
   // Products, categories, collections, and seller stores stay empty for admin.
   // Catalog taxonomy: bun run seed:elai-catalog
   logger.info(
-    "Skipping products / catalog / seller stores — leave empty for admin. Run seed:elai-catalog for types, categories, collections, and attributes."
+    "Skipping products / catalog / seller stores  leave empty for admin. Run seed:elai-catalog for types, categories, collections, and attributes."
   );
 
   await createSellerDefaultsWorkflow(container).run({})

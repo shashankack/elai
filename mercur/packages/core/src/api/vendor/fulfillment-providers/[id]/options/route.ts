@@ -35,7 +35,7 @@ export const GET = async (
         : 0,
     })
   } catch {
-    // Manual provider fallback — enough for flat-rate shipping options
+    // Manual provider fallback  enough for flat-rate shipping options
     const fulfillment_options =
       id === "manual_manual" || id === "manual"
         ? [

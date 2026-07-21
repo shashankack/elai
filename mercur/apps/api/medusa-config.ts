@@ -3,12 +3,44 @@ import { withMercur } from '@mercurjs/core'
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
+const isProduction = process.env.NODE_ENV === 'production'
+
+function requireHttpSecret(name: string, value: string | undefined): string {
+  const trimmed = value?.trim()
+  if (isProduction && (!trimmed || trimmed === 'supersecret')) {
+    throw new Error(
+      `${name} must be set to a strong secret in production (not empty or "supersecret").`,
+    )
+  }
+  return trimmed || 'supersecret'
+}
+
 const isLocalDb =
   !process.env.DATABASE_URL ||
   process.env.DATABASE_URL.includes('localhost') ||
   process.env.DATABASE_URL.includes('127.0.0.1')
 
 const hasResend = Boolean(process.env.RESEND_API_KEY)
+const hasRazorpay = Boolean(
+  process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET,
+)
+
+const paymentProviders = [
+  ...(hasRazorpay
+    ? [
+        {
+          resolve: './src/modules/razorpay',
+          id: 'razorpay',
+          options: {
+            key_id: process.env.RAZORPAY_KEY_ID,
+            key_secret: process.env.RAZORPAY_KEY_SECRET,
+            webhook_secret: process.env.RAZORPAY_WEBHOOK_SECRET,
+            payment_capture: 1,
+          },
+        },
+      ]
+    : []),
+]
 
 const notificationProviders = [
   {
@@ -65,8 +97,8 @@ module.exports = withMercur({
       adminCors: process.env.ADMIN_CORS!,
       vendorCors: process.env.VENDOR_CORS!,
       authCors: process.env.AUTH_CORS!,
-      jwtSecret: process.env.JWT_SECRET || "supersecret",
-      cookieSecret: process.env.COOKIE_SECRET || "supersecret",
+      jwtSecret: requireHttpSecret('JWT_SECRET', process.env.JWT_SECRET),
+      cookieSecret: requireHttpSecret('COOKIE_SECRET', process.env.COOKIE_SECRET),
     }
   },
   featureFlags: {
@@ -95,5 +127,15 @@ module.exports = withMercur({
         providers: notificationProviders,
       },
     },
+    ...(paymentProviders.length
+      ? [
+          {
+            resolve: '@medusajs/medusa/payment',
+            options: {
+              providers: paymentProviders,
+            },
+          },
+        ]
+      : []),
   ],
 })

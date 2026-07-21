@@ -10,7 +10,7 @@ import { logger } from "@/src/utils/logger";
  * All route.js files under these globs get patched with
  * defineFileConfig({ isDisabled: () => true }).
  *
- * Do NOT patch middleware files — Mercur plugin routes still rely on
+ * Do NOT patch middleware files  Mercur plugin routes still rely on
  * Medusa's validateAndTransformQuery middleware for /admin/products.
  */
 const ROUTE_GLOBS_TO_DISABLE = [

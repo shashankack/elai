@@ -1,5 +1,11 @@
-import { defineMiddlewares } from "@medusajs/medusa";
+import { authenticate, defineMiddlewares } from "@medusajs/medusa"
 
 export default defineMiddlewares({
-    routes: [],
-});
+  routes: [
+    {
+      method: ["POST"],
+      matcher: "/store/carts/:id/razorpay/confirm",
+      middlewares: [authenticate("customer", ["session", "bearer"])],
+    },
+  ],
+})

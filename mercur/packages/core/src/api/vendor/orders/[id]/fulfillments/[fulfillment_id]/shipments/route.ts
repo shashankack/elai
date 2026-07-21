@@ -7,6 +7,7 @@ import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import { HttpTypes } from "@mercurjs/types"
 
 import { validateSellerOrder } from "../../../../helpers"
+import { notifyCustomerOrderShipped } from "../../../../notify-order-shipped"
 import { VendorCreateShipmentType } from "../../../../validators"
 
 export const POST = async (
@@ -18,14 +19,32 @@ export const POST = async (
 
   await validateSellerOrder(req.scope, sellerId, id)
 
+  const { no_notification, ...body } = req.validatedBody
+
   await createOrderShipmentWorkflow(req.scope).run({
     input: {
-      ...req.validatedBody,
+      ...body,
       order_id: id,
       fulfillment_id,
-      labels: req.validatedBody.labels ?? [],
+      labels: body.labels ?? [],
+      no_notification: no_notification ?? false,
     },
   })
+
+  try {
+    await notifyCustomerOrderShipped(req.scope, {
+      orderId: id,
+      labels: body.labels ?? [],
+      skip: Boolean(no_notification),
+    })
+  } catch (error) {
+    const logger = req.scope.resolve(ContainerRegistrationKeys.LOGGER)
+    logger.error(
+      `Failed to send order-shipped email for ${id}: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    )
+  }
 
   const query = req.scope.resolve(ContainerRegistrationKeys.QUERY)
 

@@ -1,25 +1,35 @@
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { HapticTab } from '@/components/haptic-tab';
+import { IconSymbol } from '@/components/ui/icon-symbol';
+import { Colors, ElaiPalette } from '@/constants/theme';
+import { useCart } from '@/context/cart-context';
 import { Tabs } from 'expo-router';
 import React from 'react';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useCart } from '@/context/cart-context';
-
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const colors = Colors.light;
   const { cart } = useCart();
-
-  const itemCount = cart?.items?.length || 0;
+  const itemCount = cart?.items?.reduce((sum, i) => sum + (i.quantity || 0), 0) ?? 0;
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: colors.tabIconSelected,
+        tabBarInactiveTintColor: colors.tabIconDefault,
         headerShown: true,
         tabBarButton: HapticTab,
-      }}>
+        tabBarStyle: {
+          backgroundColor: colors.background,
+          borderTopColor: colors.border,
+          height: 60,
+          paddingBottom: 6,
+          paddingTop: 4,
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: '600',
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
@@ -29,32 +39,69 @@ export default function TabLayout() {
       <Tabs.Screen
         name="(home)"
         options={{
-          title: 'Elai Shop',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-          headerShown: false, // Let the home stack manage its own headers
+          title: 'Home',
+          tabBarIcon: ({ color, focused }) => (
+            <IconSymbol
+              size={focused ? 23 : 22}
+              name="home"
+              color={color}
+              strokeWidth={focused ? 2.1 : 1.7}
+            />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="(categories)"
+        options={{
+          title: 'Categories',
+          tabBarIcon: ({ color, focused }) => (
+            <IconSymbol
+              size={focused ? 23 : 22}
+              name="categories"
+              color={color}
+              strokeWidth={focused ? 2.1 : 1.7}
+            />
+          ),
+          headerShown: false,
         }}
       />
       <Tabs.Screen
         name="(cart)"
         options={{
-          title: 'Cart',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="cart.fill" color={color} />,
+          title: 'Bag',
+          tabBarIcon: ({ color, focused }) => (
+            <IconSymbol
+              size={focused ? 23 : 22}
+              name="bag"
+              color={color}
+              strokeWidth={focused ? 2.1 : 1.7}
+            />
+          ),
           tabBarBadge: itemCount > 0 ? itemCount : undefined,
           tabBarBadgeStyle: {
-            backgroundColor: Colors[colorScheme ?? 'light'].tint,
+            backgroundColor: ElaiPalette.highlight,
+            color: '#fff',
+            fontSize: 10,
           },
-          headerShown: false, // Let the cart stack manage its own headers
+          headerShown: false,
         }}
       />
       <Tabs.Screen
         name="(account)"
         options={{
           title: 'Account',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
+          tabBarIcon: ({ color, focused }) => (
+            <IconSymbol
+              size={focused ? 23 : 22}
+              name="account"
+              color={color}
+              strokeWidth={focused ? 2.1 : 1.7}
+            />
+          ),
           headerShown: false,
         }}
       />
     </Tabs>
   );
 }
-

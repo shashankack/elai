@@ -1,6 +1,6 @@
-# ELAI Vendor Dashboard — Complete Guide for Sellers
+# ELAI Vendor Dashboard  Complete Guide for Sellers
 
-Welcome to ELAI. This guide explains how to use the **Vendor Dashboard** — the website where you manage your shop, products, and orders on ELAI.
+Welcome to ELAI. This guide explains how to use the **Vendor Dashboard**  the website where you manage your shop, products, and orders on ELAI.
 
 You do **not** need technical knowledge to follow this guide. Take it one section at a time.
 
@@ -8,7 +8,7 @@ You do **not** need technical knowledge to follow this guide. Take it one sectio
 
 ## Table of contents
 
-- [ELAI Vendor Dashboard — Complete Guide for Sellers](#elai-vendor-dashboard--complete-guide-for-sellers)
+- [ELAI Vendor Dashboard  Complete Guide for Sellers](#elai-vendor-dashboard--complete-guide-for-sellers)
   - [Table of contents](#table-of-contents)
   - [1. What is the Vendor Dashboard?](#1-what-is-the-vendor-dashboard)
   - [2. Before you start](#2-before-you-start)
@@ -16,10 +16,10 @@ You do **not** need technical knowledge to follow this guide. Take it one sectio
     - [Standard ELAI flow (recommended)](#standard-elai-flow-recommended)
     - [Your status while waiting](#your-status-while-waiting)
   - [4. Seller onboarding wizard (first-time setup)](#4-seller-onboarding-wizard-first-time-setup)
-    - [Step 1 — Storefront](#step-1--storefront)
-    - [Step 2 — Business address](#step-2--business-address)
-    - [Step 3 — Legal \& tax](#step-3--legal--tax)
-    - [Step 4 — Bank \& payouts](#step-4--bank--payouts)
+    - [Step 1  Storefront](#step-1--storefront)
+    - [Step 2  Business address](#step-2--business-address)
+    - [Step 3  Legal \& tax](#step-3--legal--tax)
+    - [Step 4  Bank \& payouts](#step-4--bank--payouts)
     - [After the wizard](#after-the-wizard)
   - [5. Logging in](#5-logging-in)
     - [Forgot password?](#forgot-password)
@@ -30,10 +30,10 @@ You do **not** need technical knowledge to follow this guide. Take it one sectio
     - [Top of the page](#top-of-the-page)
     - [Settings area](#settings-area)
   - [8. Setting up your shop (first-time checklist)](#8-setting-up-your-shop-first-time-checklist)
-    - [Step 1 — Store details](#step-1--store-details)
-    - [Step 2 — Address](#step-2--address)
-    - [Step 3 — Company details](#step-3--company-details)
-    - [Step 4 — Payment details](#step-4--payment-details)
+    - [Step 1  Store details](#step-1--store-details)
+    - [Step 2  Address](#step-2--address)
+    - [Step 3  Company details](#step-3--company-details)
+    - [Step 4  Payment details](#step-4--payment-details)
   - [9. Shipping and delivery setup](#9-shipping-and-delivery-setup)
     - [Simple path for small sellers](#simple-path-for-small-sellers)
     - [Per-product shipping (optional)](#per-product-shipping-optional)
@@ -47,7 +47,7 @@ You do **not** need technical knowledge to follow this guide. Take it one sectio
       - [Step 4  Variants](#step-4--variants)
       - [Step 5  Inventory](#step-5--inventory)
     - [Saving your work](#saving-your-work)
-  - [11. Product statuses — what they mean](#11-product-statuses--what-they-mean)
+  - [11. Product statuses  what they mean](#11-product-statuses--what-they-mean)
     - [If your product is rejected](#if-your-product-is-rejected)
   - [12. Managing your product list](#12-managing-your-product-list)
     - [Useful actions](#useful-actions)
@@ -85,7 +85,7 @@ You do **not** need technical knowledge to follow this guide. Take it one sectio
     - [Busy days](#busy-days)
     - [Weekly](#weekly)
   - [22. Common problems and fixes](#22-common-problems-and-fixes)
-  - [23. Glossary — simple meanings](#23-glossary--simple-meanings)
+  - [23. Glossary  simple meanings](#23-glossary--simple-meanings)
   - [24. Quick reference card](#24-quick-reference-card)
   - [25. Need help?](#25-need-help)
 
@@ -130,7 +130,7 @@ Keep these ready:
 | **Computer or large tablet** | Easier than phone for adding many products |
 | **Product photos** | Clear images help sales |
 | **Basic business info** | Shop name, address, GST/business details if you have them |
-| **Bank account details (India)** | Account holder name, bank name, account number, IFSC — for payouts |
+| **Bank account details (India)** | Account holder name, bank name, account number, IFSC  for payouts |
 
 **Browser:** Use an up-to-date version of Chrome, Edge, Firefox, or Safari.
 
@@ -138,7 +138,7 @@ Keep these ready:
 
 ## 3. How to get your account
 
-ELAI uses the **Mercur Vendor Portal** for seller registration and the dashboard. There is no separate “seller portal” app — everything starts at **vendor.elaai.co**.
+ELAI uses the **Mercur Vendor Portal** for seller registration and the dashboard. There is no separate “seller portal” app  everything starts at **vendor.elaai.co**.
 
 ### Standard ELAI flow (recommended)
 
@@ -169,52 +169,52 @@ ELAI uses the **Mercur Vendor Portal** for seller registration and the dashboard
 
 ## 4. Seller onboarding wizard (first-time setup)
 
-After you create your account at **/register**, you see the **Join the ELAI marketplace** wizard — four steps with ELAI branding. It is simplified for **Indian sellers** (INR, India address, IFSC bank details).
+After you create your account at **/register**, you see the **Join the ELAI marketplace** wizard  four steps with ELAI branding. It is simplified for **Indian sellers** (INR, India address, IFSC bank details).
 
-You can **Skip** on address, company, and payment steps if you want to finish later in **Settings → Store** — but completing them now speeds up approval and payouts.
+You can **Skip** on address, company, and payment steps if you want to finish later in **Settings → Store**  but completing them now speeds up approval and payouts.
 
-### Step 1 — Storefront
+### Step 1  Storefront
 
 **What you fill in:**
 
-- **Store name** — how customers know you (e.g. “Priya’s Accessories”)
-- **Store email** — public contact email for your shop
+- **Store name**  how customers know you (e.g. “Priya’s Accessories”)
+- **Store email**  public contact email for your shop
 
 **What ELAI sets automatically (you do not see these fields):**
 
-- **Currency** — INR (Indian Rupee)
-- **Store handle** — auto-generated from your store name (used in URLs)
+- **Currency**  INR (Indian Rupee)
+- **Store handle**  auto-generated from your store name (used in URLs)
 - Phone, description, and currency picker are hidden to keep signup short; add them later in Settings if needed.
 
-### Step 2 — Business address
+### Step 2  Business address
 
 **What you fill in:**
 
-- **Location name** — e.g. “Main studio” or “Head office”
-- **Address** — street / building
+- **Location name**  e.g. “Main studio” or “Head office”
+- **Address**  street / building
 - **PIN code**
 - **City**
 
 **What ELAI sets automatically:**
 
-- **Country** — India
+- **Country**  India
 
-You will not see a country dropdown, state/province field, or “apartment line 2” — the form assumes an Indian business address.
+You will not see a country dropdown, state/province field, or “apartment line 2”  the form assumes an Indian business address.
 
 **Skip:** You can skip and add the address later in Settings → Store → Address.
 
-### Step 3 — Legal & tax
+### Step 3  Legal & tax
 
 **What you fill in:**
 
-- **Legal business name** (optional) — registered company name if you have one
-- **GSTIN** (optional) — your GST number if registered
+- **Legal business name** (optional)  registered company name if you have one
+- **GSTIN** (optional)  your GST number if registered
 
 **Hidden:** Registration number field (not required in the wizard).
 
 **Skip:** You can skip and add details later in Settings → Store → Professional details.
 
-### Step 4 — Bank & payouts
+### Step 4  Bank & payouts
 
 **Indian bank account for ELAI payouts:**
 
@@ -223,13 +223,13 @@ You will not see a country dropdown, state/province field, or “apartment line 
 - **Account number** (optional)
 - **IFSC code** (optional)
 
-There is **no** IBAN, SWIFT/BIC, or international bank picker — payouts are India-only in this flow.
+There is **no** IBAN, SWIFT/BIC, or international bank picker  payouts are India-only in this flow.
 
 **Skip:** You can skip and add bank details later in Settings → Store → Payment details.
 
 ### After the wizard
 
-You see **Application submitted!** — your seller account is **Pending** until ELAI approves. You can **Continue to dashboard** to select your store and start adding products while you wait.
+You see **Application submitted!**  your seller account is **Pending** until ELAI approves. You can **Continue to dashboard** to select your store and start adding products while you wait.
 
 **Questions during signup?** Email **Blameus2026@gmail.com** (also shown on the registration screen).
 
@@ -318,21 +318,21 @@ When you open **Settings → Store**, you may see a box called **Complete store 
 
 If you **skipped** steps during the onboarding wizard, complete them here. If you already submitted address, GST, or bank details in the wizard, review them for accuracy.
 
-### Step 1 — Store details
+### Step 1  Store details
 
 **Go to:** Settings → Store → Edit (or **Add store details**)
 
 Fill in:
 
-- **Store name** — how customers know you
-- **Email** — shop contact email
-- **Phone** — number customers or ELAI can reach you on *(add here if you skipped it in onboarding)*
-- **Description** — a short story about your shop *(optional; not asked during signup)*
-- **Logo / banner** — upload a clear logo if you have one
+- **Store name**  how customers know you
+- **Email**  shop contact email
+- **Phone**  number customers or ELAI can reach you on *(add here if you skipped it in onboarding)*
+- **Description**  a short story about your shop *(optional; not asked during signup)*
+- **Logo / banner**  upload a clear logo if you have one
 
 **Note:** Currency is **INR** for ELAI sellers. You cannot change currency after the store is created.
 
-### Step 2 — Address
+### Step 2  Address
 
 **Go to:** Settings → Store → Address
 
@@ -340,7 +340,7 @@ Add where your business operates from (studio, shop, or dispatch address). Count
 
 Fill in street, city, and **PIN code** at minimum.
 
-### Step 3 — Company details
+### Step 3  Company details
 
 **Go to:** Settings → Store → Professional details
 
@@ -351,7 +351,7 @@ If you have them, add:
 
 Registration number is optional and not required in the ELAI signup flow.
 
-### Step 4 — Payment details
+### Step 4  Payment details
 
 **Go to:** Settings → Store → Payment details
 
@@ -378,19 +378,18 @@ If you sell **physical items** that need to be posted or couriered, you must set
 
 1. **Create a location**  
    Example name: “Main dispatch  Mumbai” or “Home studio”.  
-   This is where you pack orders from.
+   This is where you pack orders from.  
+   Link the location to the **Default Sales Channel** if asked.
 
-2. **Shipping profiles**  
-   A profile describes *how* items ship (standard box, light items, etc.).    
-   For most small sellers, the **default** profile is enough to start.
+2. **ELAI Standard Delivery (recommended)**  
+   On the location page, turn on **ELAI Standard Delivery**.  
+   ELAI arranges courier pickup (BlueDart / Shiprocket); you pack the order.  
+   Without this (or your own shipping option), checkout shows “No shipping options available”.
 
-3. **Shipping options**  
-   Add at least one option customers can choose, for example:
-   - **Standard delivery**  ₹X, 5–7 days  
-   - **Express**  ₹Y, 2–3 days (optional)
-
-4. **Service zones**  
-   Define **where you ship** (e.g. all India, or specific states).
+3. **Or configure your own shipping**  
+   - **Shipping profiles**   default profile is enough for most sellers  
+   - **Service zones**   where you ship (e.g. all India)  
+   - **Shipping options**   e.g. Standard ₹X, Express ₹Y
 
 ### Per-product shipping (optional)
 
@@ -471,7 +470,7 @@ At the end you have two important buttons:
 
 ---
 
-## 11. Product statuses — what they mean
+## 11. Product statuses  what they mean
 
 Every product has a **status**. Look for a colored label on the product page or list.
 
@@ -757,12 +756,12 @@ Customers see items on elaai.co/shop
 |---------|-------------|
 | **Cannot log in** | Check email/password; use Reset password; confirm you registered at **vendor.elaai.co/register** |
 | **“Session expired”** | Log in again; do not share your password |
-| **Published but not on elaai.co/shop** | Product is probably still **Proposed** — wait for ELAI approval; confirm seller is **Active** |
+| **Published but not on elaai.co/shop** | Product is probably still **Proposed**  wait for ELAI approval; confirm seller is **Active** |
 | **Order button greyed out** | Complete shipping setup in Settings → Locations |
 | **Wrong stock after sale** | Open order → complete fulfillment and allocation steps |
 | **Page blank or errors** | Refresh browser; try another browser; check internet |
 | **Skipped onboarding steps** | Open **Settings → Store** and complete address, GST, or bank details |
-| **Invite link does not work** | Link may be expired — ask shop admin to send a new invite |
+| **Invite link does not work** | Link may be expired  ask shop admin to send a new invite |
 | **Forgot which store to pick** | Use the store name you registered; contact ELAI if unsure |
 
 When contacting support, include:
@@ -774,7 +773,7 @@ When contacting support, include:
 
 ---
 
-## 23. Glossary — simple meanings
+## 23. Glossary  simple meanings
 
 | Term | Simple meaning |
 |------|----------------|
@@ -823,13 +822,13 @@ When contacting support, include:
 
 This guide covers the Vendor Dashboard itself. For things outside the dashboard:
 
-- **Application status** — **Blameus2026@gmail.com**
-- **Product rejection reasons** — email or dashboard message from ELAI
-- **Payment timing and fees** — refer to your seller agreement or ELAI support
-- **Technical emergencies** (site down) — ELAI technical support
+- **Application status**  **Blameus2026@gmail.com**
+- **Product rejection reasons**  email or dashboard message from ELAI
+- **Payment timing and fees**  refer to your seller agreement or ELAI support
+- **Technical emergencies** (site down)  ELAI technical support
 
 Keep this document saved. You can return to any section using the [table of contents](#table-of-contents) at the top.
 
 ---
 
-*ELAI Vendor Dashboard Guide — for Indian sellers including small-scale and local businesses. Live URLs: vendor.elaai.co (dashboard), elaai.co (shop). Last updated for Mercur vendor onboarding (India-only, simplified wizard).*
+*ELAI Vendor Dashboard Guide  for Indian sellers including small-scale and local businesses. Live URLs: vendor.elaai.co (dashboard), elaai.co (shop). Last updated for Mercur vendor onboarding (India-only, simplified wizard).*

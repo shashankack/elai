@@ -92,18 +92,42 @@ export function createClient(options: ClientOptions) {
             headers,
         }).then(async (response) => {
             if (response.status >= 300) {
-                const jsonError = (await response.json().catch(() => ({}))) as {
-                    message?: string;
-                };
-                throw new ClientError(
-                    jsonError.message ?? response.statusText,
-                    response.statusText,
-                    response.status
-                );
+                const errorBody = await response.text().catch(() => "");
+                let message = response.statusText;
+                try {
+                    const parsed = JSON.parse(errorBody) as { message?: string };
+                    if (parsed.message) message = parsed.message;
+                } catch {
+                    if (errorBody) message = errorBody;
+                }
+                throw new ClientError(message, response.statusText, response.status);
             }
 
-            const isJsonRequest = headers.get("accept")?.includes("application/json");
-            return isJsonRequest ? await response.json() : response;
+            // Medusa auth endpoints (e.g. reset-password) return 201 with plain
+            // text "Created"   never assume every success body is JSON.
+            if (response.status === 204) {
+                return null;
+            }
+
+            const text = await response.text();
+            if (!text) {
+                return null;
+            }
+
+            const contentType = response.headers.get("content-type") ?? "";
+            if (contentType.includes("application/json")) {
+                try {
+                    return JSON.parse(text);
+                } catch {
+                    return text;
+                }
+            }
+
+            try {
+                return JSON.parse(text);
+            } catch {
+                return text;
+            }
         });
     })
 }
